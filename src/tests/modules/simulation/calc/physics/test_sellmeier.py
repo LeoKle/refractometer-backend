@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from tests.modules.simulation.calc.numba import njit, prange
+from numba import njit, prange
 from modules.simulation.calc.physics.sellmeier import sellmeier_equation
 
 
