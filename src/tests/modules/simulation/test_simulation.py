@@ -2,19 +2,19 @@ from typing import List
 import unittest
 import numpy as np
 
-from backend.src.custom_types.detector_calibration import WavelengthCalibration
-from backend.src.custom_types.detector_parameters import DetectorParameters
-from backend.src.custom_types.plane import Plane, PlaneGeometry
-from backend.src.custom_types.lightsource_parameters import LightsourceParameters
-from backend.src.custom_types.sample import Sample
-from backend.src.custom_types.spectrum import Spectrum
-from backend.src.custom_types.vector import Vector
-from backend.src.custom_types.simulation_parameters import SimulationParameters
-from backend.src.modules.simulation.simulation import Simulation
-from backend.src.modules.simulation.calc.physics.refraction import refracted_direction_vector
-from backend.src.modules.simulation.calc.physics.sellmeier import sellmeier_equation
-from backend.src.modules.simulation.constants.units import DEGREES, NANO_METERS
-from backend.src.modules.simulation.calc.numba.vector import rotate_vector_3d
+from custom_types.detector_calibration import WavelengthCalibration
+from custom_types.detector_parameters import DetectorParameters
+from custom_types.plane import Plane, PlaneGeometry
+from custom_types.lightsource_parameters import LightsourceParameters
+from custom_types.sample import Sample
+from custom_types.spectrum import Spectrum
+from custom_types.vector import Vector
+from custom_types.simulation_parameters import SimulationParameters
+from modules.simulation.simulation import Simulation
+from modules.simulation.calc.physics.refraction import refracted_direction_vector
+from modules.simulation.calc.physics.sellmeier import sellmeier_equation
+from modules.simulation.constants.units import DEGREES, NANO_METERS
+from modules.simulation.calc.numba.vector import rotate_vector_3d
 
 ENTRY_ANGLE = 40
 ANGLE_PRISM = 60

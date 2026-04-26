@@ -1,9 +1,9 @@
 import unittest
 import numpy as np
-from backend.src.tests.modules.simulation.calc.numba import njit, prange
+from tests.modules.simulation.calc.numba import njit, prange
 import math
 
-from backend.src.modules.simulation.calc.numba.vector import rotate_vector_3d
+from modules.simulation.calc.numba.vector import rotate_vector_3d
 
 DEGREES = math.pi / 180
 

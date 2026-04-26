@@ -1,12 +1,12 @@
 import numpy as np
 from numba import njit, prange
 
-from backend.src.modules.simulation.calc.numba.vector import (
+from modules.simulation.calc.numba.vector import (
     cross_product,
     dot_product_vectors,
     normalize_vector,
 )
-from backend.src.modules.simulation.calc.physics.intersection import (
+from modules.simulation.calc.physics.intersection import (
     calculate_intersection_line_plane,
 )
 

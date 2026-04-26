@@ -1,7 +1,7 @@
 from typing import Optional
 
 from pydantic import Field
-from backend.src.custom_types.simulation_result import SimulationResult
+from custom_types.simulation_result import SimulationResult
 
 
 class SimulationQueueElement(SimulationResult):

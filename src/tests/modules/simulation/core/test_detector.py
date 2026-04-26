@@ -1,10 +1,10 @@
 import unittest
 import numpy as np
 
-from backend.src.modules.simulation.calc.physics.intersection import (
+from modules.simulation.calc.physics.intersection import (
     calculate_intersection_line_plane,
 )
-from backend.src.modules.simulation.core.detector import (
+from modules.simulation.core.detector import (
     calculate_detector_coordinates_2d,
     calculate_detector_coordinates_3d,
     calculate_detector_image,

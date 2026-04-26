@@ -1,8 +1,8 @@
 from typing import Optional
 from pydantic import BaseModel, Field
 
-from backend.src.custom_types.detector_calibration import WavelengthCalibration
-from backend.src.custom_types.vector import Vector
+from custom_types.detector_calibration import WavelengthCalibration
+from custom_types.vector import Vector
 
 
 class DetectorParameters(BaseModel):

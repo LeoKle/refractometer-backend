@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from backend.src.custom_types.sample import Sample
+from custom_types.sample import Sample
 
 
 class ISampleService(ABC):

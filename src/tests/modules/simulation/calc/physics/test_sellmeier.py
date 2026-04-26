@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
-from backend.src.tests.modules.simulation.calc.numba import njit, prange
-from backend.src.modules.simulation.calc.physics.sellmeier import sellmeier_equation
+from tests.modules.simulation.calc.numba import njit, prange
+from modules.simulation.calc.physics.sellmeier import sellmeier_equation
 
 
 class TestSellmeier(unittest.TestCase):

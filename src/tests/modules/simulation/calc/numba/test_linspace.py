@@ -2,7 +2,7 @@ import unittest
 from typing import List
 import numpy as np
 
-from backend.src.modules.simulation.calc.numba.linspace import linspace_numba
+from modules.simulation.calc.numba.linspace import linspace_numba
 
 
 class TestLinspace(unittest.TestCase):

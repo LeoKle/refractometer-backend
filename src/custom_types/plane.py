@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from backend.src.custom_types.vector import Vector
+from custom_types.vector import Vector
 
 
 class Plane(BaseModel):

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
-from backend.src.custom_types.spectrum import Spectrum
-from backend.src.instance import refractometer_app_instance as app
+from custom_types.spectrum import Spectrum
+from instance import refractometer_app_instance as app
 
 router = APIRouter()
 
@@ -25,7 +25,6 @@ def get_spectrum(spectrum_name: str):
 
 @router.post("/spectrum")
 def post_spectrum(spectrum_input: Spectrum):
-
     spectrum_name = spectrum_input.name
     wavelengths = spectrum_input.wavelengths
     intensities = spectrum_input.intensities

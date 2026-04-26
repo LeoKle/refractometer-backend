@@ -1,5 +1,5 @@
 import unittest
-from backend.src.modules.simulation.calc.physics.intersection import (
+from modules.simulation.calc.physics.intersection import (
     calculate_intersection_line_plane,
 )
 import numpy as np

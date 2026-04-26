@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
-from backend.src.custom_types.simulation_queue import SimulationQueueElement
-from backend.src.instance import refractometer_app_instance as app
+from custom_types.simulation_queue import SimulationQueueElement
+from instance import refractometer_app_instance as app
 
 router = APIRouter()
 

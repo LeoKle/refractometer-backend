@@ -1,8 +1,8 @@
 import unittest
 import numpy as np
-from backend.src.tests.modules.simulation.calc.numba import njit, prange
+from tests.modules.simulation.calc.numba import njit, prange
 
-from backend.src.modules.simulation.calc.numba.vector import length_vector
+from modules.simulation.calc.numba.vector import length_vector
 
 
 class TestNumbaLengthVector(unittest.TestCase):

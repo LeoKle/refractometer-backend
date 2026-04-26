@@ -4,8 +4,8 @@ from bson import ObjectId
 import numpy as np
 
 
-from backend.src.custom_types.detector_image import DetectorImage
-from backend.src.interfaces.database.services.image_service_interface import IImageService
+from custom_types.detector_image import DetectorImage
+from interfaces.database.services.image_service_interface import IImageService
 
 
 class ImageService(IImageService):
@@ -13,7 +13,6 @@ class ImageService(IImageService):
         self.fs: GridFS = GridFS(db)
 
     def save_image(self, detector_image: DetectorImage) -> ObjectId:
-
         matrix = np.array(detector_image.values).reshape(detector_image.shape)
 
         metadata = {"shape": matrix.shape, "dtype": str(matrix.dtype)}

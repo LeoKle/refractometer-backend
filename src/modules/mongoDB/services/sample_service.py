@@ -2,8 +2,8 @@ from typing import List
 from pymongo.database import Database
 from pymongo.collection import Collection
 from bson.objectid import ObjectId
-from backend.src.interfaces.database.services.sample_service_interface import ISampleService
-from backend.src.custom_types.sample import Sample
+from interfaces.database.services.sample_service_interface import ISampleService
+from custom_types.sample import Sample
 
 
 class SampleService(ISampleService):

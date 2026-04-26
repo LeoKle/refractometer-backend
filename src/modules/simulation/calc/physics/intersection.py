@@ -1,6 +1,6 @@
 from numba import njit
 
-from backend.src.modules.simulation.calc.numba.vector import dot_product_vectors
+from modules.simulation.calc.numba.vector import dot_product_vectors
 
 
 @njit

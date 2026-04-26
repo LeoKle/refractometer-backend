@@ -2,13 +2,13 @@ from typing import List
 import numpy as np
 from numba import njit, prange
 
-from backend.src.custom_types.lightsource_parameters import LightsourceParameters
-from backend.src.custom_types.plane import Plane
-from backend.src.custom_types.spectrum import Spectrum
-from backend.src.modules.simulation.calc.numba.vector import rotate_vector_3d
-from backend.src.modules.simulation.constants.units import DEGREES
-from backend.src.modules.simulation.core.alloc_lightrays import alloc_arrays
-from backend.src.modules.simulation.calc.numba.linspace import linspace_numba
+from custom_types.lightsource_parameters import LightsourceParameters
+from custom_types.plane import Plane
+from custom_types.spectrum import Spectrum
+from modules.simulation.calc.numba.vector import rotate_vector_3d
+from modules.simulation.constants.units import DEGREES
+from modules.simulation.core.alloc_lightrays import alloc_arrays
+from modules.simulation.calc.numba.linspace import linspace_numba
 
 
 def setup_lightrays(

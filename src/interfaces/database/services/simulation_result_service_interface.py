@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from backend.src.custom_types.simulation_result import SimulationResult
+from custom_types.simulation_result import SimulationResult
 
 
 class ISimulationResultService(ABC):

@@ -10,7 +10,6 @@ def visualise_structure(
     plane_normal_vectors,
     plane_support_vectors,
 ):
-
     fig = plt.figure()
     ax = fig.add_subplot(111, projection="3d")
 

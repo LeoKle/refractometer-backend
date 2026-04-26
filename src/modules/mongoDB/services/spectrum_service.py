@@ -2,8 +2,8 @@ from typing import List
 from pymongo.database import Database
 from pymongo.collection import Collection
 from pymongo.results import DeleteResult
-from backend.src.custom_types.spectrum import Spectrum
-from backend.src.interfaces.database.services.spectrum_service_interface import (
+from custom_types.spectrum import Spectrum
+from interfaces.database.services.spectrum_service_interface import (
     ISpectrumService,
 )
 

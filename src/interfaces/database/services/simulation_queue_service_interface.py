@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from backend.src.custom_types.simulation_queue import SimulationQueueElement
+from custom_types.simulation_queue import SimulationQueueElement
 
 
 class ISimulationQueueService(ABC):

@@ -1,7 +1,7 @@
-from backend.src.modules.app.simulation_handler import SimulationHandler
-from backend.src.modules.simulation.simulation import Simulation
-from backend.src.modules.app.refractometer_app import RefractometerApp
-from backend.src.modules.mongoDB.mongo_db import MongoDB
+from modules.app.simulation_handler import SimulationHandler
+from modules.simulation.simulation import Simulation
+from modules.app.refractometer_app import RefractometerApp
+from modules.mongoDB.mongo_db import MongoDB
 
 database = MongoDB()
 simulation = Simulation()

@@ -2,21 +2,21 @@ from typing import List
 import numpy as np
 import copy
 
-from backend.src.tests.visualisation.detector import plot_2d_points, plot_matrix_as_image
-from backend.src.modules.simulation.constants.units import DEGREES
-from backend.src.modules.simulation.calc.numba.vector import rotate_vector_3d
-from backend.src.custom_types.plane import Plane, PlaneGeometry
-from backend.src.custom_types.spectrum import Spectrum
-from backend.src.custom_types.vector import Vector
-from backend.src.custom_types.detector_calibration import WavelengthCalibration
-from backend.src.custom_types.simulation_parameters import SimulationParameters
-from backend.src.custom_types.detector_image import DetectorImage
-from backend.src.custom_types.simulation_state import SimulationState, SimulationStates
-from backend.src.interfaces.app.simulation_interface import ISimulation
-from backend.src.modules.simulation.calc.physics.sellmeier import sellmeier_equation
-from backend.src.modules.simulation.core.simulate_lightrays import simulate_lightrays
-from backend.src.modules.simulation.core.setup_lightrays import setup_lightrays
-from backend.src.modules.simulation.core.detector import (
+from tests.visualisation.detector import plot_2d_points, plot_matrix_as_image
+from modules.simulation.constants.units import DEGREES
+from modules.simulation.calc.numba.vector import rotate_vector_3d
+from custom_types.plane import Plane, PlaneGeometry
+from custom_types.spectrum import Spectrum
+from custom_types.vector import Vector
+from custom_types.detector_calibration import WavelengthCalibration
+from custom_types.simulation_parameters import SimulationParameters
+from custom_types.detector_image import DetectorImage
+from custom_types.simulation_state import SimulationState, SimulationStates
+from interfaces.app.simulation_interface import ISimulation
+from modules.simulation.calc.physics.sellmeier import sellmeier_equation
+from modules.simulation.core.simulate_lightrays import simulate_lightrays
+from modules.simulation.core.setup_lightrays import setup_lightrays
+from modules.simulation.core.detector import (
     calculate_detector_coordinates_2d,
     calculate_detector_coordinates_3d,
     calculate_detector_image,

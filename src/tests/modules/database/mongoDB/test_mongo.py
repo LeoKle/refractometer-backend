@@ -1,17 +1,17 @@
 import unittest
 
-from backend.src.interfaces.database.database_interface import IDatabase
-from backend.src.interfaces.database.services.sample_service_interface import ISampleService
-from backend.src.interfaces.database.services.spectrum_service_interface import ISpectrumService
-from backend.src.interfaces.database.services.simulation_result_service_interface import (
+from interfaces.database.database_interface import IDatabase
+from interfaces.database.services.sample_service_interface import ISampleService
+from interfaces.database.services.spectrum_service_interface import ISpectrumService
+from interfaces.database.services.simulation_result_service_interface import (
     ISimulationResultService,
 )
-from backend.src.interfaces.database.services.simulation_queue_service_interface import (
+from interfaces.database.services.simulation_queue_service_interface import (
     ISimulationQueueService,
 )
-from backend.src.interfaces.database.services.image_service_interface import IImageService
+from interfaces.database.services.image_service_interface import IImageService
 
-from backend.src.modules.mongoDB.mongo_db import MongoDB
+from modules.mongoDB.mongo_db import MongoDB
 
 
 class TestMongoDB(unittest.TestCase):

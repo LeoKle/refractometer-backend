@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from bson import ObjectId
 
-from backend.src.custom_types.detector_image import DetectorImage
+from custom_types.detector_image import DetectorImage
 
 
 class IImageService(ABC):

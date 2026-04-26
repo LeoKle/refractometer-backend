@@ -1,7 +1,7 @@
 from abc import ABC
 
-from backend.src.interfaces.app.simulation_handler import ISimulationHandler
-from backend.src.interfaces.database.database_interface import IDatabase
+from interfaces.app.simulation_handler import ISimulationHandler
+from interfaces.database.database_interface import IDatabase
 
 
 class IRefractometerApp(ABC):

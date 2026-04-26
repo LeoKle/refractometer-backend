@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-from backend.src.custom_types.simulation_parameters import SimulationParameters
-from backend.src.custom_types.detector_image import DetectorImage
-from backend.src.custom_types.simulation_state import SimulationState
+from custom_types.simulation_parameters import SimulationParameters
+from custom_types.detector_image import DetectorImage
+from custom_types.simulation_state import SimulationState
 
 
 class ISimulation(ABC):

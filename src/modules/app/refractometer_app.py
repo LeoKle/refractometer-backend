@@ -1,4 +1,4 @@
-from backend.src.interfaces.app.refractometer_app import IRefractometerApp
+from interfaces.app.refractometer_app import IRefractometerApp
 
 
 class RefractometerApp(IRefractometerApp):

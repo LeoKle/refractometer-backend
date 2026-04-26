@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from backend.src.interfaces.database.database_interface import IDatabase
-from backend.src.interfaces.app.simulation_interface import ISimulation
+from interfaces.database.database_interface import IDatabase
+from interfaces.app.simulation_interface import ISimulation
 
 
 class ISimulationHandler(ABC):

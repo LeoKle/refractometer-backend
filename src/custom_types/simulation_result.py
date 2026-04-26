@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 
-from backend.src.custom_types.simulation_parameters import SimulationParameters
+from custom_types.simulation_parameters import SimulationParameters
 
 
 class SimulationResult(BaseModel):

@@ -3,8 +3,8 @@ from pymongo.database import Database
 from pymongo.collection import Collection
 from bson.objectid import ObjectId
 
-from backend.src.custom_types.simulation_queue import SimulationQueueElement
-from backend.src.interfaces.database.services.simulation_queue_service_interface import (
+from custom_types.simulation_queue import SimulationQueueElement
+from interfaces.database.services.simulation_queue_service_interface import (
     ISimulationQueueService,
 )
 

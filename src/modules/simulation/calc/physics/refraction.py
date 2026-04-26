@@ -1,7 +1,7 @@
 import math
 from numba import njit
 
-from backend.src.modules.simulation.calc.numba.vector import dot_product_vectors, normalize_vector
+from modules.simulation.calc.numba.vector import dot_product_vectors, normalize_vector
 
 
 @njit

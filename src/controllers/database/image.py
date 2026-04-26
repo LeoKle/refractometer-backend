@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from backend.src.custom_types.detector_image import DetectorImage
-from backend.src.instance import refractometer_app_instance as app
+from custom_types.detector_image import DetectorImage
+from instance import refractometer_app_instance as app
 
 router = APIRouter()
 

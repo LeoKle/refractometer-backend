@@ -1,7 +1,7 @@
-from backend.src.controllers.database import image, sample, simulation_queue, simulation_results
+from controllers.database import image, sample, simulation_queue, simulation_results
 from fastapi import APIRouter
-from backend.src.controllers.app import meta
-from backend.src.controllers.database import (
+from controllers.app import meta
+from controllers.database import (
     spectrum,
 )
 

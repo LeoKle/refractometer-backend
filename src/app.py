@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
-from backend.src.config import config
-from backend.src.router import root_api_router
+from config import config
+from router import root_api_router
 
 app = FastAPI(title="Refractometer Backend", version=config.VERSION)
 

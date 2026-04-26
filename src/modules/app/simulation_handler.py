@@ -2,11 +2,11 @@ import threading
 import time
 import datetime
 
-from backend.src.interfaces.app.simulation_interface import ISimulation
-from backend.src.interfaces.database.database_interface import IDatabase
-from backend.src.interfaces.app.simulation_handler import ISimulationHandler
+from interfaces.app.simulation_interface import ISimulation
+from interfaces.database.database_interface import IDatabase
+from interfaces.app.simulation_handler import ISimulationHandler
 
-from backend.src.custom_types.simulation_result import SimulationResult
+from custom_types.simulation_result import SimulationResult
 
 
 class SimulationHandler(ISimulationHandler):

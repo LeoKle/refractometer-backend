@@ -1,9 +1,9 @@
 from numba import njit, prange
 
-from backend.src.modules.simulation.calc.physics.intersection import (
+from modules.simulation.calc.physics.intersection import (
     calculate_intersection_line_plane,
 )
-from backend.src.modules.simulation.calc.physics.refraction import refracted_direction_vector
+from modules.simulation.calc.physics.refraction import refracted_direction_vector
 
 
 @njit(parallel=True, nogil=True)

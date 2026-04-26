@@ -1,10 +1,10 @@
-""" Numba compiled Numpy vector functions """
+"""Numba compiled Numpy vector functions"""
 
 import numpy as np
 from numba import njit
 
-from backend.src.modules.simulation.calc.numba.matrix import dot_product_matrix_matrix
-from backend.src.modules.simulation.calc.numba.vector_matrix import dot_product_matrix_vector
+from modules.simulation.calc.numba.matrix import dot_product_matrix_matrix
+from modules.simulation.calc.numba.vector_matrix import dot_product_matrix_vector
 
 
 @njit

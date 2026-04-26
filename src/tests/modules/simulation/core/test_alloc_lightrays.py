@@ -1,12 +1,12 @@
 import unittest
 from typing import List
 
-from backend.src.custom_types.vector import Vector
-from backend.src.custom_types.plane import Plane
-from backend.src.custom_types.lightsource_parameters import LightsourceParameters
-from backend.src.custom_types.spectrum import Spectrum
-from backend.src.modules.simulation.constants.units import MILLI_METERS
-from backend.src.modules.simulation.core.alloc_lightrays import alloc_arrays
+from custom_types.vector import Vector
+from custom_types.plane import Plane
+from custom_types.lightsource_parameters import LightsourceParameters
+from custom_types.spectrum import Spectrum
+from modules.simulation.constants.units import MILLI_METERS
+from modules.simulation.core.alloc_lightrays import alloc_arrays
 
 
 class TestAllocLightrays(unittest.TestCase):

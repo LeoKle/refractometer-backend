@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from backend.src.interfaces.database.services.sample_service_interface import ISampleService
+from interfaces.database.services.sample_service_interface import ISampleService
 from .services.spectrum_service_interface import ISpectrumService
 from .services.simulation_result_service_interface import ISimulationResultService
 from .services.simulation_queue_service_interface import ISimulationQueueService

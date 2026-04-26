@@ -1,9 +1,9 @@
 import unittest
 import numpy as np
-from backend.src.tests.modules.simulation.calc.numba import njit, prange
+from tests.modules.simulation.calc.numba import njit, prange
 import math
 
-from backend.src.modules.simulation.calc.physics.refraction import refracted_direction_vector
+from modules.simulation.calc.physics.refraction import refracted_direction_vector
 
 
 class TestRefraction(unittest.TestCase):

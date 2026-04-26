@@ -1,8 +1,8 @@
 import unittest
 import numpy as np
-from backend.src.tests.modules.simulation.calc.numba import njit, prange
+from tests.modules.simulation.calc.numba import njit, prange
 
-from backend.src.modules.simulation.calc.numba.matrix import dot_product_matrix_matrix
+from modules.simulation.calc.numba.matrix import dot_product_matrix_matrix
 
 
 class TestNumbaDotProductMatrixVector(unittest.TestCase):

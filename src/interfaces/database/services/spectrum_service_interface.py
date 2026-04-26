@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from backend.src.custom_types.spectrum import Spectrum
+from custom_types.spectrum import Spectrum
 
 
 class ISpectrumService(ABC):

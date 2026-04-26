@@ -2,14 +2,14 @@ import unittest
 import numpy as np
 from typing import List
 
-from backend.src.custom_types.vector import Vector
-from backend.src.custom_types.plane import Plane
-from backend.src.custom_types.lightsource_parameters import LightsourceParameters
-from backend.src.custom_types.spectrum import Spectrum
-from backend.src.modules.simulation.constants.units import MILLI_METERS
-from backend.src.modules.simulation.core.setup_lightrays import setup_lightrays
-from backend.src.modules.simulation.core.simulate_lightrays import simulate_lightrays
-from backend.src.modules.simulation.calc.physics.sellmeier import sellmeier_equation
+from custom_types.vector import Vector
+from custom_types.plane import Plane
+from custom_types.lightsource_parameters import LightsourceParameters
+from custom_types.spectrum import Spectrum
+from modules.simulation.constants.units import MILLI_METERS
+from modules.simulation.core.setup_lightrays import setup_lightrays
+from modules.simulation.core.simulate_lightrays import simulate_lightrays
+from modules.simulation.calc.physics.sellmeier import sellmeier_equation
 
 
 class TestSimulateLightrays(unittest.TestCase):
