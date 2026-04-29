@@ -1,7 +1,7 @@
 from enum import Enum
 from pymongo import MongoClient
 
-from config import config
+from settings import config
 
 from interfaces.database.database_interface import IDatabase
 from interfaces.database.services.sample_service_interface import ISampleService
