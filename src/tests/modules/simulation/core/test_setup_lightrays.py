@@ -12,9 +12,7 @@ from modules.simulation.core.setup_lightrays import setup_lightrays
 
 class TestAllocLightrays(unittest.TestCase):
     def setUp(self):
-        self.spectrum = Spectrum(
-            name="Test", wavelengths=[450, 550], intensities=[0.01, 0.02]
-        )
+        self.spectrum = Spectrum(name="Test", wavelengths=[450, 550], intensities=[0.01, 0.02])
 
         self.lightsource = LightsourceParameters(
             direction_vector=Vector.from_list([1, 0, 0]),

@@ -33,9 +33,7 @@ def get_spectrum(
     if spectrum_data:
         return spectrum_data
     else:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Spectrum not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Spectrum not found")
 
 
 @router.post("/spectrum")
@@ -51,9 +49,7 @@ def post_spectrum(
     intensities = spectrum_input.intensities
 
     if not (spectrum_name and wavelengths and intensities):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid request data"
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid request data")
 
     spectrum_service.save_spectrum(spectrum_name, wavelengths, intensities)
 
@@ -73,9 +69,7 @@ def patch_spectrum(
     intensities = spectrum_input.intensities
 
     if not (spectrum_name and wavelengths and intensities):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid request data"
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid request data")
 
     spectrum_service.update_spectrum(spectrum_name, wavelengths, intensities)
     return {"message": "Spectrum updated successfully"}
@@ -92,6 +86,4 @@ def delete_spectrum(
     if spectrum_service.delete_spectrum(spectrum_name):
         return {"message": "Spectrum deleted successfully"}
     else:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Spectrum does not exist"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Spectrum does not exist")

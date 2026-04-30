@@ -19,17 +19,11 @@ def refracted_direction_vector(
     first_term = refractive_index_ratio * direction_vector_light
 
     second_term = normal_vector_plane * (
-        refractive_index_ratio
-        * (dot_product_vectors(normal_vector_plane, direction_vector_light))
+        refractive_index_ratio * (dot_product_vectors(normal_vector_plane, direction_vector_light))
         - math.sqrt(
             1
             - math.pow(refractive_index_ratio, 2)
-            * (
-                1
-                - math.pow(
-                    dot_product_vectors(normal_vector_plane, direction_vector_light), 2
-                )
-            )
+            * (1 - math.pow(dot_product_vectors(normal_vector_plane, direction_vector_light), 2))
         )
     )
 

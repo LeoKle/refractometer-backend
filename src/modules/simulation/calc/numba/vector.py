@@ -48,9 +48,7 @@ def cross_product(vector1, vector2):
 
 
 @njit
-def rotate_vector_3d(
-    vector, rotation_radians_x, rotation_radians_y, rotation_radians_z
-):
+def rotate_vector_3d(vector, rotation_radians_x, rotation_radians_y, rotation_radians_z):
     """Rotates a 3D vector by the given radians with radians > 0 resulting in a counterclockwise rotation"""
 
     x_sin = np.sin(rotation_radians_x)
@@ -69,24 +67,20 @@ def rotate_vector_3d(
     y_sin = np.sin(rotation_radians_y)
     y_cos = np.cos(rotation_radians_y)
 
-    y_rotation_matrix = np.array(
-        [
-            [y_cos, 0.0, y_sin],
-            [0.0, 1.0, 0.0],
-            [-y_sin, 0.0, y_cos],
-        ]
-    )
+    y_rotation_matrix = np.array([
+        [y_cos, 0.0, y_sin],
+        [0.0, 1.0, 0.0],
+        [-y_sin, 0.0, y_cos],
+    ])
 
     z_sin = np.sin(rotation_radians_z)
     z_cos = np.cos(rotation_radians_z)
 
-    z_rotation_matrix = np.array(
-        [
-            [z_cos, -z_sin, 0.0],
-            [z_sin, z_cos, 0.0],
-            [0.0, 0.0, 1.0],
-        ]
-    )
+    z_rotation_matrix = np.array([
+        [z_cos, -z_sin, 0.0],
+        [z_sin, z_cos, 0.0],
+        [0.0, 0.0, 1.0],
+    ])
 
     rotation_matrix = dot_product_matrix_matrix(x_rotation_matrix, y_rotation_matrix)
     rotation_matrix = dot_product_matrix_matrix(rotation_matrix, z_rotation_matrix)

@@ -35,12 +35,10 @@ class SampleService(ISampleService):
         return None
 
     def save_sample(self, sample: Sample):
-        self.collection.insert_one(
-            {
-                "name": sample.name,
-                "sellmeierCoefficients": sample.sellmeier_coefficients.model_dump(),
-            }
-        )
+        self.collection.insert_one({
+            "name": sample.name,
+            "sellmeierCoefficients": sample.sellmeier_coefficients.model_dump(),
+        })
 
     def update_sample(self, sample: Sample):
         if not sample.id:

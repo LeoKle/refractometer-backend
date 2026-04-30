@@ -56,9 +56,7 @@ def plot_planes(ax, plane_normal_vectors, plane_support_vectors):
 
         norm_span_vector = span_vector_xy / np.linalg.norm(span_vector_xy)
 
-        plot_vectors(
-            ax, [norm_span_vector * 0.05], [plane_support_vectors[plane_index]]
-        )
+        plot_vectors(ax, [norm_span_vector * 0.05], [plane_support_vectors[plane_index]])
 
 
 def plot_points(ax, points, color="red"):

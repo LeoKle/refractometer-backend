@@ -12,11 +12,7 @@ def get_version():
         data = toml.load(pyproject_toml_file)
         if "project" in data and "version" in data["project"]:
             version = data["project"]["version"]
-        elif (
-            "tool" in data
-            and "poetry" in data["tool"]
-            and "version" in data["tool"]["poetry"]
-        ):
+        elif "tool" in data and "poetry" in data["tool"] and "version" in data["tool"]["poetry"]:
             version = data["tool"]["poetry"]["version"]
 
     return version

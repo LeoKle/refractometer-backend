@@ -15,9 +15,7 @@ class ISpectrumService(ABC):
         pass
 
     @abstractmethod
-    def save_spectrum(
-        self, spectrum_name: str, wavelengths: List[float], intensities: List[float]
-    ):
+    def save_spectrum(self, spectrum_name: str, wavelengths: List[float], intensities: List[float]):
         pass
 
     @abstractmethod

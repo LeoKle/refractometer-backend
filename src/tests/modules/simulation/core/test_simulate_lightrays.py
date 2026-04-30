@@ -40,23 +40,18 @@ class TestSimulateLightrays(unittest.TestCase):
             ),
         ]
 
-        setup_direction_vectors, setup_support_vectors, wavelengths, intensities = (
-            setup_lightrays(spectrum=spectrum, lightsource=lightsource, planes=planes)
+        setup_direction_vectors, setup_support_vectors, wavelengths, intensities = setup_lightrays(
+            spectrum=spectrum, lightsource=lightsource, planes=planes
         )
 
-        plane_normal_vectors = np.array(
-            [plane.normal_vector.to_list() for plane in planes]
-        )
-        plane_support_vectors = np.array(
-            [plane.support_vector.to_list() for plane in planes]
-        )
+        plane_normal_vectors = np.array([plane.normal_vector.to_list() for plane in planes])
+        plane_support_vectors = np.array([plane.support_vector.to_list() for plane in planes])
 
         b = (1.03961212, 0.231792344, 1.01046945)
         c = (6.00069867 * 10**-9, 2.00179144 * 10**-8, 1.03560653 * 10**-4)
 
         refractive_indices = [
-            sellmeier_equation(b, c, wavelengths[i])
-            for i in range(wavelengths.shape[0])
+            sellmeier_equation(b, c, wavelengths[i]) for i in range(wavelengths.shape[0])
         ]
 
         (
@@ -76,9 +71,7 @@ class TestSimulateLightrays(unittest.TestCase):
 
     def test_simulate_lightrays_case1(self):
         """a full simulation case"""
-        spectrum = Spectrum(
-            name="Test", wavelengths=[450e-9, 550e-9], intensities=[0.01, 0.02]
-        )
+        spectrum = Spectrum(name="Test", wavelengths=[450e-9, 550e-9], intensities=[0.01, 0.02])
         lightsource = LightsourceParameters(
             direction_vector=Vector.from_list([1, 0, 0]),
             support_vector=Vector.from_list([0, 0, 0]),
@@ -105,31 +98,24 @@ class TestSimulateLightrays(unittest.TestCase):
             spectrum=spectrum, lightsource=lightsource, planes=planes
         )
 
-        plane_normal_vectors = np.array(
-            [plane.normal_vector.to_list() for plane in planes]
-        )
-        plane_support_vectors = np.array(
-            [plane.support_vector.to_list() for plane in planes]
-        )
+        plane_normal_vectors = np.array([plane.normal_vector.to_list() for plane in planes])
+        plane_support_vectors = np.array([plane.support_vector.to_list() for plane in planes])
 
         b = (1.03961212, 0.231792344, 1.01046945)
         c = (6.00069867 * 10**-9, 2.00179144 * 10**-8, 1.03560653 * 10**-4)
 
         refractive_indices = [
-            sellmeier_equation(b, c, wavelengths[i])
-            for i in range(wavelengths.shape[0])
+            sellmeier_equation(b, c, wavelengths[i]) for i in range(wavelengths.shape[0])
         ]
 
-        direction_vectors, support_vectors, wavelengths, intensities = (
-            simulate_lightrays(
-                direction_vectors,
-                support_vectors,
-                wavelengths,
-                intensities,
-                plane_normal_vectors,
-                plane_support_vectors,
-                refractive_indices,
-            )
+        direction_vectors, support_vectors, wavelengths, intensities = simulate_lightrays(
+            direction_vectors,
+            support_vectors,
+            wavelengths,
+            intensities,
+            plane_normal_vectors,
+            plane_support_vectors,
+            refractive_indices,
         )
 
         # if there is only one diverging ray:

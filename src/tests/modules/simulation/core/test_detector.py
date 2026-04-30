@@ -15,20 +15,16 @@ class TestDetector(unittest.TestCase):
     def test_3d_intersection_calculation(self):
         """Tests the 3D intersection calculation using a simplified setup"""
 
-    direction_vectors = np.array(
-        [
-            [1, 0, 0],
-            [1, 1, 0],
-            [1, 1, 1],
-        ]
-    )
-    support_vectors = np.array(
-        [
-            [0, 0, 0],
-            [5, 0, 0],
-            [6, 0, 0],
-        ]
-    )
+    direction_vectors = np.array([
+        [1, 0, 0],
+        [1, 1, 0],
+        [1, 1, 1],
+    ])
+    support_vectors = np.array([
+        [0, 0, 0],
+        [5, 0, 0],
+        [6, 0, 0],
+    ])
 
     detector_normal_vector = np.array([1, 0, 0])
     detector_support_vector = np.array([5, 0, 0])
@@ -52,30 +48,26 @@ class TestDetector(unittest.TestCase):
         )
 
     def test_2d_intersection_calculation(self):
-        detector_intersections_3d = np.array(
-            [
-                [1, 5, 5],
-                [1, 10, 10],
-                [1, -5, 5],
-                [1, -10, 10],
-                [0, -10, 10],  # offset points will also be projected onto the plane
-                [2, -5, 5],
-            ]
-        )
+        detector_intersections_3d = np.array([
+            [1, 5, 5],
+            [1, 10, 10],
+            [1, -5, 5],
+            [1, -10, 10],
+            [0, -10, 10],  # offset points will also be projected onto the plane
+            [2, -5, 5],
+        ])
 
         detector_normal_vector = np.array([1, 0, 0])
         detector_support_vector = np.array([1, 0, 0])
 
-        expected_results = np.array(
-            [
-                [5, 5],
-                [10, 10],
-                [-5, 5],
-                [-10, 10],
-                [-10, 10],
-                [-5, 5],
-            ]
-        )
+        expected_results = np.array([
+            [5, 5],
+            [10, 10],
+            [-5, 5],
+            [-10, 10],
+            [-10, 10],
+            [-5, 5],
+        ])
 
         detector_intersections_2d = calculate_detector_coordinates_2d(
             detector_intersections_3d, detector_normal_vector, detector_support_vector
@@ -97,20 +89,14 @@ class TestDetector(unittest.TestCase):
         intensity = 0.5
         expected_image = np.full((width_pixels, height_pixels), intensity)
 
-        detector_intersections_2d = np.zeros(
-            (height_pixels * width_pixels, 2), dtype=np.float64
-        )
+        detector_intersections_2d = np.zeros((height_pixels * width_pixels, 2), dtype=np.float64)
         counter = 0
         for width in range(width_pixels):
             for height in range(height_pixels):
-                detector_intersections_2d[counter] = detector_point + np.array(
-                    [
-                        pixel_size_meters_per_pixel / 2
-                        + width * pixel_size_meters_per_pixel,
-                        pixel_size_meters_per_pixel / 2
-                        + height * pixel_size_meters_per_pixel,
-                    ]
-                )
+                detector_intersections_2d[counter] = detector_point + np.array([
+                    pixel_size_meters_per_pixel / 2 + width * pixel_size_meters_per_pixel,
+                    pixel_size_meters_per_pixel / 2 + height * pixel_size_meters_per_pixel,
+                ])
 
                 counter += 1
 

@@ -39,13 +39,11 @@ class SpectrumService(ISpectrumService):
         )
 
     def save_spectrum(self, spectrum_name, wavelengths, intensities):
-        self.collection.insert_one(
-            {
-                "name": spectrum_name,
-                "wavelengths": wavelengths,
-                "intensities": intensities,
-            }
-        )
+        self.collection.insert_one({
+            "name": spectrum_name,
+            "wavelengths": wavelengths,
+            "intensities": intensities,
+        })
 
     def update_spectrum(self, spectrum_name, new_wavelengths, new_intensities):
         self.collection.update_one(

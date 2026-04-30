@@ -34,8 +34,6 @@ for spectrum in spectrums_collection.find():
         # Update the document in the database
         spectrums_collection.update_one(
             {"_id": spectrum["_id"]},  # Match the document by its _id
-            {
-                "$set": {"wavelengths": updated_wavelengths}
-            },  # Set the updated wavelengths array
+            {"$set": {"wavelengths": updated_wavelengths}},  # Set the updated wavelengths array
         )
         print(f"Updated document with _id: {spectrum['_id']}")

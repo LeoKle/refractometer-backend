@@ -17,9 +17,7 @@ class TestRefraction(unittest.TestCase):
         """Vector form of Snell's Law
         source: ISBN: 978-3-527-62501-7 p. 44"""
 
-        direction_vector_light = direction_vector_light / np.linalg.norm(
-            direction_vector_light
-        )
+        direction_vector_light = direction_vector_light / np.linalg.norm(direction_vector_light)
         normal_vector_plane = normal_vector_plane / np.linalg.norm(normal_vector_plane)
 
         index_ratio = refractive_index_1 / refractive_index_2

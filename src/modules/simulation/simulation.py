@@ -47,12 +47,12 @@ class Simulation(ISimulation):
         )
         self.sample = simulation_params.sample
 
-        self.plane_normal_vectors = np.array(
-            [plane.normal_vector.to_numpy_array() for plane in self.planes]
-        )
-        self.plane_support_vectors = np.array(
-            [plane.support_vector.to_numpy_array() for plane in self.planes]
-        )
+        self.plane_normal_vectors = np.array([
+            plane.normal_vector.to_numpy_array() for plane in self.planes
+        ])
+        self.plane_support_vectors = np.array([
+            plane.support_vector.to_numpy_array() for plane in self.planes
+        ])
         self.image = None
 
         self.setup_lightrays()
@@ -87,12 +87,8 @@ class Simulation(ISimulation):
             rotation_radians_z=plane_params.prism_angle * DEGREES,
         )
 
-        support_vector1 = (
-            plane_params.base_vector.to_numpy_array() * plane_params.distance1
-        )
-        support_vector2 = (
-            plane_params.base_vector.to_numpy_array() * plane_params.distance2
-        )
+        support_vector1 = plane_params.base_vector.to_numpy_array() * plane_params.distance1
+        support_vector2 = plane_params.base_vector.to_numpy_array() * plane_params.distance2
 
         planes = []
         planes.append(
@@ -119,9 +115,7 @@ class Simulation(ISimulation):
             self.planes = simulation_params.planes
 
         # check detector parameters
-        detector_nv, detector_sv = self.calibrate_detector(
-            copy.deepcopy(simulation_params)
-        )
+        detector_nv, detector_sv = self.calibrate_detector(copy.deepcopy(simulation_params))
 
         self.detector.normal_vector = Vector.from_list(detector_nv.tolist())
         self.detector.support_vector = Vector.from_list(detector_sv.tolist())
@@ -130,12 +124,12 @@ class Simulation(ISimulation):
         self.spectrum = simulation_params.spectrum
         self.sample = simulation_params.sample
 
-        self.plane_normal_vectors = np.array(
-            [plane.normal_vector.to_numpy_array() for plane in self.planes]
-        )
-        self.plane_support_vectors = np.array(
-            [plane.support_vector.to_numpy_array() for plane in self.planes]
-        )
+        self.plane_normal_vectors = np.array([
+            plane.normal_vector.to_numpy_array() for plane in self.planes
+        ])
+        self.plane_support_vectors = np.array([
+            plane.support_vector.to_numpy_array() for plane in self.planes
+        ])
         self.image = None
 
         self.setup_lightrays()
@@ -199,12 +193,8 @@ class Simulation(ISimulation):
         )
         print(detector_coordinates_2d)
 
-        br_x = (
-            self.detector.width_pixels * self.detector.pixel_size_meters_per_pixel / 2
-        )
-        br_y = (
-            self.detector.height_pixels * self.detector.pixel_size_meters_per_pixel / 2
-        )
+        br_x = self.detector.width_pixels * self.detector.pixel_size_meters_per_pixel / 2
+        br_y = self.detector.height_pixels * self.detector.pixel_size_meters_per_pixel / 2
         detector_point = np.array([br_x, -br_y])
         print("DP", detector_point)
 
@@ -225,9 +215,7 @@ class Simulation(ISimulation):
 
         plot_matrix_as_image(detector_image)
 
-        print(
-            f"{missed_points}/{len(detector_coordinates_2d)} lightrays did not hit the detector"
-        )
+        print(f"{missed_points}/{len(detector_coordinates_2d)} lightrays did not hit the detector")
 
         print("Transforming image")
         self.image = DetectorImage.fromNumpyArray(detector_image)

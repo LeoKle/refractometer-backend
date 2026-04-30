@@ -7,9 +7,7 @@ from modules.simulation.calc.numba.vector_matrix import dot_product_matrix_vecto
 
 class TestNumbaDotProductMatrixVector(unittest.TestCase):
     def case_dot_product_matrix_vector(self, matrix, vector):
-        np.testing.assert_equal(
-            dot_product_matrix_vector(matrix, vector), np.dot(matrix, vector)
-        )
+        np.testing.assert_equal(dot_product_matrix_vector(matrix, vector), np.dot(matrix, vector))
 
     def test_dot_product_matrix_vector_3d(self):
         self.case_dot_product_matrix_vector(
@@ -51,17 +49,15 @@ class TestNumbaDotProductMatrixVector(unittest.TestCase):
 
         matrix = np.array([[1, 1, 1], [1, 1, 1], [1, 1, 1]])
 
-        vectors = np.array(
-            [
-                [1, 1, 1],
-                [1, 0, 0],
-                [0, 1, 0],
-                [0, 0, 1],
-                [-5, -5, -5],
-                [0, 0, 1],
-                [0, 0, 1],
-            ]
-        )
+        vectors = np.array([
+            [1, 1, 1],
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+            [-5, -5, -5],
+            [0, 0, 1],
+            [0, 0, 1],
+        ])
 
         @njit
         def function_njit():

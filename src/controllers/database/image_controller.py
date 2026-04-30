@@ -14,9 +14,7 @@ router = APIRouter()
 @inject
 def get_result(
     image_id: str,
-    image_service: Annotated[
-        IImageService, Depends(Provide[DependencyContainer.image_service])
-    ],
+    image_service: Annotated[IImageService, Depends(Provide[DependencyContainer.image_service])],
 ) -> DetectorImage:
     result = image_service.retrieve_image(image_id)
 

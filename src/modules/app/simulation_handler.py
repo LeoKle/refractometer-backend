@@ -33,9 +33,7 @@ class SimulationHandler(ISimulationHandler):
 
             # set being_processed to true
             simulation.being_processed = True
-            self.database.simulation_queue_service().update_queued_simulation(
-                simulation
-            )
+            self.database.simulation_queue_service().update_queued_simulation(simulation)
 
             # setup planes, simulate, simulate detector
             self.simulation.set_parameters(simulation.parameters)
@@ -54,9 +52,7 @@ class SimulationHandler(ISimulationHandler):
 
             # delete element from queue DB, add to result DB
             self.database.simulation_result_service().save_result(result)
-            self.database.simulation_queue_service().delete_queued_simulation(
-                simulation.id
-            )
+            self.database.simulation_queue_service().delete_queued_simulation(simulation.id)
 
             if simulation.callback_url:
                 print("Callback to invoke found")

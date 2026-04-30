@@ -62,9 +62,7 @@ def patch_result(
     ],
 ):
     if not result.id:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Missing id"
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Missing id")
 
     sim_result_service.update_result(result)
 

@@ -23,9 +23,7 @@ def calculate_detector_coordinates_3d(
         raise ValueError("Direction vectors and support vectors do not match in count")
 
     # calculate detector intersections:
-    detector_intersections_3d = np.zeros(
-        (direction_vectors.shape[0], 3), dtype=np.float64
-    )
+    detector_intersections_3d = np.zeros((direction_vectors.shape[0], 3), dtype=np.float64)
 
     # pylint: disable=not-an-iterable
     for lightray in prange(direction_vectors.shape[0]):
@@ -54,9 +52,7 @@ def calculate_detector_coordinates_2d(
     y_unit_vector = normalize_vector(y_unit_vector)
 
     # alloc np array for transformed points
-    transformed_points = np.zeros(
-        (detector_intersections_3d.shape[0], 2), dtype=np.float64
-    )
+    transformed_points = np.zeros((detector_intersections_3d.shape[0], 2), dtype=np.float64)
 
     # project points onto the plane and transform to 2D coordinates
     # pylint: disable=not-an-iterable
@@ -80,9 +76,7 @@ def calculate_detector_image(
     pixel_size_meters_per_pixel=5e-6,
 ):
     if detector_intersections_2d.shape[0] != intensities.shape[0]:
-        raise ValueError(
-            "detector_intersections_2d and intensities do not match in shape"
-        )
+        raise ValueError("detector_intersections_2d and intensities do not match in shape")
 
     print(height_pixels, width_pixels, pixel_size_meters_per_pixel)
 
@@ -106,12 +100,7 @@ def calculate_detector_image(
         x_pixel = int(-x_delta // pixel_size_meters_per_pixel)
         y_pixel = int(y_delta // pixel_size_meters_per_pixel)
 
-        if (
-            x_pixel < 0
-            or y_pixel < 0
-            or x_pixel >= width_pixels
-            or y_pixel >= height_pixels
-        ):
+        if x_pixel < 0 or y_pixel < 0 or x_pixel >= width_pixels or y_pixel >= height_pixels:
             # print(
             #     delta_vector,
             #     x_delta,

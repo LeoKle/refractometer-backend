@@ -12,9 +12,7 @@ from modules.simulation.core.alloc_lightrays import alloc_arrays
 class TestAllocLightrays(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.spectrum = Spectrum(
-            name="Test", wavelengths=[450, 550], intensities=[0.01, 0.02]
-        )
+        cls.spectrum = Spectrum(name="Test", wavelengths=[450, 550], intensities=[0.01, 0.02])
 
         cls.lightsource = LightsourceParameters(
             direction_vector=Vector.from_list([1, 0, 0]),
@@ -47,8 +45,8 @@ class TestAllocLightrays(unittest.TestCase):
 
         cls.plane_count = len(cls.planes)
 
-        cls.direction_vectors, cls.support_vectors, cls.wavelengths, cls.intensities = (
-            alloc_arrays(cls.lightray_count, cls.plane_count)
+        cls.direction_vectors, cls.support_vectors, cls.wavelengths, cls.intensities = alloc_arrays(
+            cls.lightray_count, cls.plane_count
         )
 
     def test_alloc_arrays_count(self):

@@ -90,9 +90,7 @@ class TestSimulation(unittest.TestCase):
 
         # second refraction
 
-        normal_vector_2 = rotate_vector_3d(
-            normal_vector_1, 0, 0, self.planes.prism_angle * DEGREES
-        )
+        normal_vector_2 = rotate_vector_3d(normal_vector_1, 0, 0, self.planes.prism_angle * DEGREES)
 
         direction_vector_2 = refracted_direction_vector(
             refractive_index, refractive_index_air, direction_vector_1, normal_vector_2
@@ -121,9 +119,7 @@ class TestSimulation(unittest.TestCase):
         )
 
         # TODO: test calibration of detector
-        detector_nv, detector_sv = sim_instance.calibrate_detector(
-            self.simulation_parameters
-        )
+        detector_nv, detector_sv = sim_instance.calibrate_detector(self.simulation_parameters)
 
         print(detector_nv, detector_sv)
 

@@ -7,9 +7,7 @@ from modules.simulation.calc.numba.vector import normalize_vector
 
 class TestNumbaNormalizeVector(unittest.TestCase):
     def case_normalize_vector(self, vector):
-        np.testing.assert_equal(
-            normalize_vector(vector), vector / np.linalg.norm(vector)
-        )
+        np.testing.assert_equal(normalize_vector(vector), vector / np.linalg.norm(vector))
 
     def test_length_vector_3d(self):
         # unit vectors
@@ -43,17 +41,15 @@ class TestNumbaNormalizeVector(unittest.TestCase):
 
     def test_normalize_vector_njit(self):
         """Tests if the function is callable from numba njit compiled function"""
-        vectors = np.array(
-            [
-                [1, 1, 1],
-                [1, 0, 0],
-                [0, 1, 0],
-                [0, 0, 1],
-                [-5, -5, -5],
-                [0, 0, 1],
-                [0, 0, 1],
-            ]
-        )
+        vectors = np.array([
+            [1, 1, 1],
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+            [-5, -5, -5],
+            [0, 0, 1],
+            [0, 0, 1],
+        ])
 
         @njit
         def function_njit():

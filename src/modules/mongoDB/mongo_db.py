@@ -50,9 +50,7 @@ class MongoDB(IDatabase):
 
     def sample_service(self) -> ISampleService:
         if MongoDB._sample_service_instance is None:
-            MongoDB._sample_service_instance = SampleService(
-                self.db, Collections.SAMPLES.value
-            )
+            MongoDB._sample_service_instance = SampleService(self.db, Collections.SAMPLES.value)
         return MongoDB._sample_service_instance
 
     def simulation_result_service(self) -> ISimulationResultService:

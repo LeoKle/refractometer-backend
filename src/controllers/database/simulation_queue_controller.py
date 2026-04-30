@@ -54,9 +54,7 @@ def patch_result(
     ],
 ):
     if not queued_element.id:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Missing id"
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Missing id")
 
     queue_service.update_queued_simulation(queued_element)
 

@@ -11,9 +11,7 @@ from modules.simulation.core.alloc_lightrays import alloc_arrays
 from modules.simulation.calc.numba.linspace import linspace_numba
 
 
-def setup_lightrays(
-    spectrum: Spectrum, lightsource: LightsourceParameters, planes: List[Plane]
-):
+def setup_lightrays(spectrum: Spectrum, lightsource: LightsourceParameters, planes: List[Plane]):
     lightray_count = (
         len(spectrum.wavelengths)
         * lightsource.count_rays_height
@@ -62,18 +60,14 @@ def setup_lightrays(
     for angle in angles:
         for height_shift in shifts_height:
             for width_shift in shifts_width:
-                for wavelength, intensity in zip(
-                    spectrum.wavelengths, spectrum.intensities
-                ):
-                    combinations.append(
-                        (
-                            angle * DEGREES,
-                            height_shift,
-                            width_shift,
-                            wavelength,
-                            intensity,
-                        )
-                    )
+                for wavelength, intensity in zip(spectrum.wavelengths, spectrum.intensities):
+                    combinations.append((
+                        angle * DEGREES,
+                        height_shift,
+                        width_shift,
+                        wavelength,
+                        intensity,
+                    ))
 
     return test(
         np.array(lightsource.direction_vector.to_list()),
@@ -102,9 +96,11 @@ def test(
         )
 
         # apply the height and width shift
-        support_vectors[i, 0] = lightsource_support_vector + np.array(
-            [0, combinations[i][2], combinations[i][1]]
-        )
+        support_vectors[i, 0] = lightsource_support_vector + np.array([
+            0,
+            combinations[i][2],
+            combinations[i][1],
+        ])
 
         wavelengths[i] = combinations[i][3]
         intensities[i, 0] = combinations[i][4]

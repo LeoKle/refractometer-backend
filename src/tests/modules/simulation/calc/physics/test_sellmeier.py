@@ -9,21 +9,13 @@ class TestSellmeier(unittest.TestCase):
         b = (1.03961212, 0.231792344, 1.01046945)
         c = (0.00600069867, 0.0200179144, 103.560653)
 
-        np.testing.assert_allclose(
-            sellmeier_equation(b, c, 632.8e-9), 1.515, rtol=1e-6, atol=1e-3
-        )
+        np.testing.assert_allclose(sellmeier_equation(b, c, 632.8e-9), 1.515, rtol=1e-6, atol=1e-3)
 
-        np.testing.assert_allclose(
-            sellmeier_equation(b, c, 450), 1.811737011, rtol=1e-6, atol=1e-3
-        )
+        np.testing.assert_allclose(sellmeier_equation(b, c, 450), 1.811737011, rtol=1e-6, atol=1e-3)
 
-        np.testing.assert_allclose(
-            sellmeier_equation(b, c, 550), 1.8116892, rtol=1e-6, atol=1e-3
-        )
+        np.testing.assert_allclose(sellmeier_equation(b, c, 550), 1.8116892, rtol=1e-6, atol=1e-3)
 
-        np.testing.assert_allclose(
-            sellmeier_equation(b, c, 650), 1.81166268, rtol=1e-6, atol=1e-3
-        )
+        np.testing.assert_allclose(sellmeier_equation(b, c, 650), 1.81166268, rtol=1e-6, atol=1e-3)
 
     def test_fused_silica(self):
         b = (1.5039759, 0.55069141, 6.5927379)
