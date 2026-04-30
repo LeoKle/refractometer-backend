@@ -91,7 +91,7 @@ def calculate_detector_image(
     br_y = height_pixels * pixel_size_meters_per_pixel / 2
     detector_point = np.array([br_x, -br_y])
 
-    image = np.zeros((height_pixels, width_pixels), dtype=np.float64)
+    image = np.zeros((width_pixels, height_pixels), dtype=np.float64)
 
     out_of_bounds_count = 0
 
@@ -124,6 +124,6 @@ def calculate_detector_image(
             out_of_bounds_count += 1
             continue
 
-        image[y_pixel, x_pixel] += intensities[intersection]
+        image[x_pixel, y_pixel] += intensities[intersection]
 
     return image, out_of_bounds_count

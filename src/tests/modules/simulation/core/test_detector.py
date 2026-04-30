@@ -85,7 +85,7 @@ class TestDetector(unittest.TestCase):
 
         br_x = width_pixels * pixel_size_meters_per_pixel / 2
         br_y = height_pixels * pixel_size_meters_per_pixel / 2
-        detector_point = np.array([br_x, br_y])
+        detector_point = np.array([br_x, -br_y])
 
         intensity = 0.5
         expected_image = np.full((width_pixels, height_pixels), intensity)
@@ -94,11 +94,11 @@ class TestDetector(unittest.TestCase):
         counter = 0
         for width in range(width_pixels):
             for height in range(height_pixels):
+                # Walk left (negative x) and up (positive y) from detector_point
                 detector_intersections_2d[counter] = detector_point + np.array([
-                    pixel_size_meters_per_pixel / 2 + width * pixel_size_meters_per_pixel,
-                    pixel_size_meters_per_pixel / 2 + height * pixel_size_meters_per_pixel,
+                    -(pixel_size_meters_per_pixel / 2 + width * pixel_size_meters_per_pixel),
+                    (pixel_size_meters_per_pixel / 2 + height * pixel_size_meters_per_pixel),
                 ])
-
                 counter += 1
 
         intensities = np.full(width_pixels * height_pixels, intensity)
