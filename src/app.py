@@ -9,7 +9,7 @@ from controllers.database import (
     sample_controller,
     simulation_queue_controller,
     simulation_results_controller,
-    spectrum,
+    spectrum_controller,
 )
 
 app = FastAPI(title="Refractometer Backend", version=config.VERSION)
@@ -29,6 +29,6 @@ container.wire(
         sample_controller,
         simulation_queue_controller,
         simulation_results_controller,
-        spectrum,
+        spectrum_controller,
     ]
 )
