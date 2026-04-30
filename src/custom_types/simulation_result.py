@@ -1,14 +1,14 @@
-from pydantic import BaseModel, Field
-from typing import Optional
 from datetime import datetime
+
+from pydantic import BaseModel, Field
 
 from custom_types.simulation_parameters import SimulationParameters
 
 
 class SimulationResult(BaseModel):
-    id: Optional[str] = Field(default=None)
-    name: Optional[str] = Field(default=None)
+    id: str | None = Field(default=None)
+    name: str | None = Field(default=None)
     parameters: SimulationParameters
     image_id: str = Field(default=None)
     issued_at: datetime
-    completed_at: Optional[datetime] = Field(default=None)
+    completed_at: datetime | None = Field(default=None)

@@ -1,26 +1,26 @@
 from enum import Enum
+
 from pymongo import MongoClient
 
-from settings import config
-
 from interfaces.database.database_interface import IDatabase
+from interfaces.database.services.image_service_interface import IImageService
 from interfaces.database.services.sample_service_interface import ISampleService
-from interfaces.database.services.spectrum_service_interface import (
-    ISpectrumService,
+from interfaces.database.services.simulation_queue_service_interface import (
+    ISimulationQueueService,
 )
 from interfaces.database.services.simulation_result_service_interface import (
     ISimulationResultService,
 )
-from interfaces.database.services.simulation_queue_service_interface import (
-    ISimulationQueueService,
+from interfaces.database.services.spectrum_service_interface import (
+    ISpectrumService,
 )
-from interfaces.database.services.image_service_interface import IImageService
+from settings import config
 
-from .services.spectrum_service import SpectrumService
-from .services.sample_service import SampleService
-from .services.simulation_result_service import SimulationResultService
-from .services.simulation_queue_service import SimulationQueueService
 from .services.image_service import ImageService
+from .services.sample_service import SampleService
+from .services.simulation_queue_service import SimulationQueueService
+from .services.simulation_result_service import SimulationResultService
+from .services.spectrum_service import SpectrumService
 
 
 class Collections(Enum):

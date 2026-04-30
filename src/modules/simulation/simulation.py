@@ -1,26 +1,25 @@
-from typing import List
-import numpy as np
 import copy
 
-from tests.visualisation.detector import plot_2d_points, plot_matrix_as_image
-from modules.simulation.constants.units import DEGREES
-from modules.simulation.calc.numba.vector import rotate_vector_3d
+import numpy as np
+
+from custom_types.detector_image import DetectorImage
 from custom_types.plane import Plane, PlaneGeometry
+from custom_types.simulation_parameters import SimulationParameters
+from custom_types.simulation_state import SimulationState, SimulationStates
 from custom_types.spectrum import Spectrum
 from custom_types.vector import Vector
-from custom_types.detector_calibration import WavelengthCalibration
-from custom_types.simulation_parameters import SimulationParameters
-from custom_types.detector_image import DetectorImage
-from custom_types.simulation_state import SimulationState, SimulationStates
 from interfaces.app.simulation_interface import ISimulation
+from modules.simulation.calc.numba.vector import rotate_vector_3d
 from modules.simulation.calc.physics.sellmeier import sellmeier_equation
-from modules.simulation.core.simulate_lightrays import simulate_lightrays
-from modules.simulation.core.setup_lightrays import setup_lightrays
+from modules.simulation.constants.units import DEGREES
 from modules.simulation.core.detector import (
     calculate_detector_coordinates_2d,
     calculate_detector_coordinates_3d,
     calculate_detector_image,
 )
+from modules.simulation.core.setup_lightrays import setup_lightrays
+from modules.simulation.core.simulate_lightrays import simulate_lightrays
+from tests.visualisation.detector import plot_2d_points, plot_matrix_as_image
 
 
 class Simulation(ISimulation):
@@ -71,7 +70,7 @@ class Simulation(ISimulation):
 
         return normal_vector, detector_support_vector
 
-    def setup_planes(self, plane_params=PlaneGeometry) -> List[Plane]:
+    def setup_planes(self, plane_params=PlaneGeometry) -> list[Plane]:
         # create the first normal vector by rotation
         normal_vector1 = rotate_vector_3d(
             plane_params.base_vector.to_numpy_array(),
@@ -91,18 +90,16 @@ class Simulation(ISimulation):
         support_vector2 = plane_params.base_vector.to_numpy_array() * plane_params.distance2
 
         planes = []
-        planes.append(
+        planes.extend((
             Plane(
                 normal_vector=Vector.from_list(normal_vector1),
                 support_vector=Vector.from_list(support_vector1),
-            )
-        )
-        planes.append(
+            ),
             Plane(
                 normal_vector=Vector.from_list(normal_vector2),
                 support_vector=Vector.from_list(support_vector2),
-            )
-        )
+            ),
+        ))
 
         self.planes = planes
 

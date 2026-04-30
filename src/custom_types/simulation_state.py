@@ -1,10 +1,11 @@
 from enum import Enum
-from typing import Literal, Optional
+from typing import Literal
+
 from pydantic import BaseModel
 
 
 class SimulationState(BaseModel):
-    severity: Optional[Literal["danger", "success", "warning", "secondary", "info", "help"]] = None
+    severity: Literal["danger", "success", "warning", "secondary", "info", "help"] | None = None
     text: str
 
 

@@ -1,19 +1,22 @@
-from typing import List
-from pymongo.database import Database
-from pymongo.collection import Collection
+from typing import TYPE_CHECKING
+
 from bson.objectid import ObjectId
+from pymongo.database import Database
 
 from custom_types.simulation_queue import SimulationQueueElement
 from interfaces.database.services.simulation_queue_service_interface import (
     ISimulationQueueService,
 )
 
+if TYPE_CHECKING:
+    from pymongo.collection import Collection
+
 
 class SimulationQueueService(ISimulationQueueService):
     def __init__(self, db: Database, collection_name: str):
         self.collection: Collection = db[collection_name]
 
-    def get_queued_simulations(self) -> List[SimulationQueueElement]:
+    def get_queued_simulations(self) -> list[SimulationQueueElement]:
         results = self.collection.find({})
 
         simulation_results = [

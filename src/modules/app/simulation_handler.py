@@ -1,12 +1,11 @@
+import datetime
 import threading
 import time
-import datetime
-
-from interfaces.app.simulation_interface import ISimulation
-from interfaces.database.database_interface import IDatabase
-from interfaces.app.simulation_handler import ISimulationHandler
 
 from custom_types.simulation_result import SimulationResult
+from interfaces.app.simulation_handler import ISimulationHandler
+from interfaces.app.simulation_interface import ISimulation
+from interfaces.database.database_interface import IDatabase
 
 
 class SimulationHandler(ISimulationHandler):
@@ -47,7 +46,7 @@ class SimulationHandler(ISimulationHandler):
                 parameters=simulation.parameters,
                 image_id=str(image_id),
                 issued_at=simulation.issued_at,
-                completed_at=datetime.datetime.now(),
+                completed_at=datetime.datetime.now(tz=datetime.UTC),
             )
 
             # delete element from queue DB, add to result DB

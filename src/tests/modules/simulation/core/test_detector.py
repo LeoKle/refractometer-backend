@@ -1,4 +1,5 @@
 import unittest
+
 import numpy as np
 
 from modules.simulation.calc.physics.intersection import (
@@ -73,7 +74,7 @@ class TestDetector(unittest.TestCase):
             detector_intersections_3d, detector_normal_vector, detector_support_vector
         )
 
-        for expected, actual in zip(expected_results, detector_intersections_2d):
+        for expected, actual in zip(expected_results, detector_intersections_2d, strict=True):
             np.testing.assert_array_equal(expected, actual)
 
     def test_image_calculation(self):

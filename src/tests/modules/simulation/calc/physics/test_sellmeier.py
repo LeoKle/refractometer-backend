@@ -1,6 +1,8 @@
 import unittest
+
 import numpy as np
 from numba import njit, prange
+
 from modules.simulation.calc.physics.sellmeier import sellmeier_equation
 
 
@@ -34,7 +36,7 @@ class TestSellmeier(unittest.TestCase):
         )
 
     def test_sellmeier_equation_njit(self):
-        """Tests that the sellmeier_equation function can also be called by other njit compiled functions"""
+        """Tests that the sellmeier_equation function can also be called by other njit compiled functions"""  # noqa: E501
         b = (1.03961212, 0.231792344, 1.01046945)
         c = (6.00069867 * 10**-9, 2.00179144 * 10**-8, 1.03560653 * 10**-4)
 

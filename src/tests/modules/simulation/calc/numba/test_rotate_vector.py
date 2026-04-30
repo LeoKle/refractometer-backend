@@ -1,7 +1,8 @@
+import math
 import unittest
+
 import numpy as np
 from numba import njit, prange
-import math
 
 from modules.simulation.calc.numba.vector import rotate_vector_3d
 
@@ -148,12 +149,12 @@ class TestVectorRotation(unittest.TestCase):
 
         @njit
         def function_njit():
-            result = rotate_vector_3d(vector, radians_x, radians_y, radians_z)
+            result = rotate_vector_3d(vector, radians_x, radians_y, radians_z)  # noqa: F841
 
         @njit(parallel=True)
         def function_njit_parallel():
             for _ in prange(10):  # pylint: disable=not-an-iterable
-                result = rotate_vector_3d(vector, radians_x, radians_y, radians_z)
+                result = rotate_vector_3d(vector, radians_x, radians_y, radians_z)  # noqa: F841
 
         function_njit()
         function_njit_parallel()

@@ -5,7 +5,8 @@ from numba import njit
 @njit
 def dot_product_matrix_vector(matrix, vector):
     if matrix.shape[1] != vector.shape[0]:
-        raise ValueError("Matrix and vector dimensions do not match.")
+        msg = "Matrix and vector dimensions do not match."
+        raise ValueError(msg)
 
     result = np.zeros(matrix.shape[0])
 

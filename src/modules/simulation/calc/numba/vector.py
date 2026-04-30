@@ -26,7 +26,8 @@ def length_vector(vector):
 @njit
 def dot_product_vectors(vector1, vector2):
     if vector1.size != vector2.size:
-        raise ValueError("Vector sizes do not match")
+        msg = "Vector sizes do not match"
+        raise ValueError(msg)
 
     result = 0
     for i in range(vector1.size):
@@ -49,7 +50,7 @@ def cross_product(vector1, vector2):
 
 @njit
 def rotate_vector_3d(vector, rotation_radians_x, rotation_radians_y, rotation_radians_z):
-    """Rotates a 3D vector by the given radians with radians > 0 resulting in a counterclockwise rotation"""
+    """Rotates a 3D vector by the given radians with radians > 0 resulting in a counterclockwise rotation"""  # noqa: E501
 
     x_sin = np.sin(rotation_radians_x)
     x_cos = np.cos(rotation_radians_x)

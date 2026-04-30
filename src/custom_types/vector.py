@@ -1,5 +1,4 @@
 import numpy as np
-from typing import List
 from pydantic import BaseModel
 
 
@@ -9,12 +8,13 @@ class Vector(BaseModel):
     z: float
 
     @classmethod
-    def from_list(cls, values: List[float]):
+    def from_list(cls, values: list[float]):
         if len(values) != 3:
-            raise ValueError("List must contain exactly three elements")
+            msg = "List must contain exactly three elements"
+            raise ValueError(msg)
         return cls(x=values[0], y=values[1], z=values[2])
 
-    def to_list(self) -> List[float]:
+    def to_list(self) -> list[float]:
         return [self.x, self.y, self.z]
 
     def to_numpy_array(self) -> np.ndarray:

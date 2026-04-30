@@ -1,12 +1,11 @@
 from abc import ABC, abstractmethod
-from typing import List
 
 from custom_types.sample import Sample
 
 
 class ISampleService(ABC):
     @abstractmethod
-    def get_samples(self) -> List[Sample]:
+    def get_samples(self) -> list[Sample]:
         """Returns all samples"""
 
     @abstractmethod

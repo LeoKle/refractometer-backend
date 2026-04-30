@@ -1,15 +1,15 @@
 import unittest
-import numpy as np
-from typing import List
 
-from custom_types.vector import Vector
-from custom_types.plane import Plane
+import numpy as np
+
 from custom_types.lightsource_parameters import LightsourceParameters
+from custom_types.plane import Plane
 from custom_types.spectrum import Spectrum
+from custom_types.vector import Vector
+from modules.simulation.calc.physics.sellmeier import sellmeier_equation
 from modules.simulation.constants.units import MILLI_METERS
 from modules.simulation.core.setup_lightrays import setup_lightrays
 from modules.simulation.core.simulate_lightrays import simulate_lightrays
-from modules.simulation.calc.physics.sellmeier import sellmeier_equation
 
 
 class TestSimulateLightrays(unittest.TestCase):
@@ -29,7 +29,7 @@ class TestSimulateLightrays(unittest.TestCase):
             count_diverging_rays=10,
         )
 
-        planes: List[Plane] = [
+        planes: list[Plane] = [
             Plane(
                 normal_vector=Vector.from_list([0.5, -1, 0.0]),
                 support_vector=Vector.from_list([0.30, 0, 0.0]),
@@ -55,8 +55,8 @@ class TestSimulateLightrays(unittest.TestCase):
         ]
 
         (
-            simulated_direction_vectors,
-            simulated_support_vectors,
+            simulated_direction_vectors,  # noqa: RUF059
+            simulated_support_vectors,  # noqa: RUF059
             wavelengths,
             intensities,
         ) = simulate_lightrays(
@@ -83,7 +83,7 @@ class TestSimulateLightrays(unittest.TestCase):
             count_diverging_rays=10,
         )
 
-        planes: List[Plane] = [
+        planes: list[Plane] = [
             Plane(
                 normal_vector=Vector.from_list([0.96592583, 0.0, -0.25881905]),
                 support_vector=Vector.from_list([5.0, 0.0, 6.0]),

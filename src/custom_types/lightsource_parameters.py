@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from custom_types.vector import Vector
 
 

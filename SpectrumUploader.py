@@ -1,6 +1,8 @@
 import os
+
 from dotenv import load_dotenv
 from pymongo import MongoClient
+from pymongo.errors import PyMongoError
 
 
 def connect_to_mongodb():
@@ -13,9 +15,10 @@ def connect_to_mongodb():
         print("Connected successfully to MongoDB!")
         print("Databases:", client.list_database_names())
 
-        return client
-    except Exception as e:
+    except PyMongoError as e:
         print("Could not connect to MongoDB:", e)
+    else:
+        return client
 
 
 client = connect_to_mongodb()

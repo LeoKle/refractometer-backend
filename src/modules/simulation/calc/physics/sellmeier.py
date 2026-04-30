@@ -1,10 +1,11 @@
 import math
+
 from numba import njit
 
 
 @njit
 def sellmeier_equation(b, c, wavelength_meters):
-    # convert wavelength in meters to wavelength in µm
+    # convert wavelength in meters to wavelength in micrometers
     wavelength_squared = (wavelength_meters * 1e6) ** 2
 
     term_sum = 0.0

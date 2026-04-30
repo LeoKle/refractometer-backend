@@ -65,7 +65,7 @@ def plot_points(ax, points, color="red"):
 
 
 def plot_line(ax, start_points, end_points, color="green"):
-    for start_point, end_point in zip(start_points, end_points):
+    for start_point, end_point in zip(start_points, end_points, strict=True):
         ax.plot(
             [
                 start_point[0],
@@ -87,7 +87,7 @@ def plot_vectors(ax, direction_vectors, support_vectors, color="black"):
     """Plots the vectors by plotting a line from the support vector to the point,
     which is the sum of the support_vector + direction_vector"""
 
-    for start_point, direction in zip(support_vectors, direction_vectors):
+    for start_point, direction in zip(support_vectors, direction_vectors, strict=True):
         ax.plot(
             [
                 start_point[0],

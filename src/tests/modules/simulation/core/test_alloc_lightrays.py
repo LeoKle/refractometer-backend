@@ -1,10 +1,9 @@
 import unittest
-from typing import List
 
-from custom_types.vector import Vector
-from custom_types.plane import Plane
 from custom_types.lightsource_parameters import LightsourceParameters
+from custom_types.plane import Plane
 from custom_types.spectrum import Spectrum
+from custom_types.vector import Vector
 from modules.simulation.constants.units import MILLI_METERS
 from modules.simulation.core.alloc_lightrays import alloc_arrays
 
@@ -25,7 +24,7 @@ class TestAllocLightrays(unittest.TestCase):
             count_diverging_rays=10,
         )
 
-        cls.planes: List[Plane] = [
+        cls.planes: list[Plane] = [
             Plane(
                 normal_vector=Vector.from_list([0.5, -0.5, 0.0]),
                 support_vector=Vector.from_list([1.0, 1.0, 0.0]),

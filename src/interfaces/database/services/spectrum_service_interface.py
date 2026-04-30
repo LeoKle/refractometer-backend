@@ -1,12 +1,11 @@
 from abc import ABC, abstractmethod
-from typing import List
 
 from custom_types.spectrum import Spectrum
 
 
 class ISpectrumService(ABC):
     @abstractmethod
-    def get_spectrums(self) -> List[Spectrum]:
+    def get_spectrums(self) -> list[Spectrum]:
         """Returns all available spectrum"""
         pass
 
@@ -15,15 +14,15 @@ class ISpectrumService(ABC):
         pass
 
     @abstractmethod
-    def save_spectrum(self, spectrum_name: str, wavelengths: List[float], intensities: List[float]):
+    def save_spectrum(self, spectrum_name: str, wavelengths: list[float], intensities: list[float]):
         pass
 
     @abstractmethod
     def update_spectrum(
         self,
         spectrum_name: str,
-        new_wavelengths: List[float],
-        new_intensities: List[float],
+        new_wavelengths: list[float],
+        new_intensities: list[float],
     ):
         pass
 

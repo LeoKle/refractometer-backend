@@ -1,6 +1,6 @@
-import unittest
-import os
+import pathlib
 import sys
+import unittest
 
 
 def run_tests():
@@ -9,10 +9,10 @@ def run_tests():
     """
 
     # Get the absolute path of the directory containing this script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    script_dir = pathlib.Path(pathlib.Path(__file__).resolve()).parent
 
     # Construct the path to the tests/ directory next to this script
-    tests_dir = os.path.join(script_dir, "tests")
+    tests_dir = script_dir / "tests"
 
     # Discover and run tests in the tests/ directory and its subdirectories
     test_loader = unittest.TestLoader()

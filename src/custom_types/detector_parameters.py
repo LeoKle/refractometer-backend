@@ -1,4 +1,3 @@
-from typing import Optional
 from pydantic import BaseModel, Field
 
 from custom_types.detector_calibration import WavelengthCalibration
@@ -6,7 +5,7 @@ from custom_types.vector import Vector
 
 
 class DetectorParameters(BaseModel):
-    support_vector: Optional[Vector] = Field(default=None)
+    support_vector: Vector | None = Field(default=None)
     distance3: float
     normal_vector: Vector | WavelengthCalibration
     height_pixels: int

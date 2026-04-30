@@ -1,16 +1,20 @@
-from typing import List
-from pymongo.database import Database
-from pymongo.collection import Collection
+from typing import TYPE_CHECKING
+
 from bson.objectid import ObjectId
-from interfaces.database.services.sample_service_interface import ISampleService
+from pymongo.database import Database
+
 from custom_types.sample import Sample
+from interfaces.database.services.sample_service_interface import ISampleService
+
+if TYPE_CHECKING:
+    from pymongo.collection import Collection
 
 
 class SampleService(ISampleService):
     def __init__(self, db: Database, collection_name: str):
         self.collection: Collection = db[collection_name]
 
-    def get_samples(self) -> List[Sample] | None:
+    def get_samples(self) -> list[Sample] | None:
         sample_data = self.collection.find({})
 
         samples = [
@@ -22,7 +26,7 @@ class SampleService(ISampleService):
             for sample in sample_data
         ]
 
-        return samples if samples else None
+        return samples or None
 
     def load_sample(self, sample_id: str) -> Sample | None:
         sample_data = self.collection.find_one({"_id": ObjectId(sample_id)})

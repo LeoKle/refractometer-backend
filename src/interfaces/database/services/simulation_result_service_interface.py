@@ -1,12 +1,11 @@
 from abc import ABC, abstractmethod
-from typing import List
 
 from custom_types.simulation_result import SimulationResult
 
 
 class ISimulationResultService(ABC):
     @abstractmethod
-    def get_results(self) -> List[SimulationResult]:
+    def get_results(self) -> list[SimulationResult]:
         """Returns all results"""
         pass
 

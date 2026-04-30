@@ -16,7 +16,8 @@ def calculate_intersection_line_plane(
     denomintor = dot_product_vectors(plane_normal_vector, line_direction_vector)
 
     if denomintor == 0:
-        raise ValueError("The line is parallel to the plane or within the plane")
+        msg = "The line is parallel to the plane or within the plane"
+        raise ValueError(msg)
 
     t = nominator / denomintor
 

@@ -20,7 +20,8 @@ def calculate_detector_coordinates_3d(
 ):
     """Calculates all intersection with the detector plane and returns them"""
     if direction_vectors.shape[0] != support_vectors.shape[0]:
-        raise ValueError("Direction vectors and support vectors do not match in count")
+        msg = "Direction vectors and support vectors do not match in count"
+        raise ValueError(msg)
 
     # calculate detector intersections:
     detector_intersections_3d = np.zeros((direction_vectors.shape[0], 3), dtype=np.float64)
@@ -43,8 +44,11 @@ def calculate_detector_coordinates_2d(
     detector_intersections_3d,
     detector_normal_vector,
     detector_support_vector,  # the detector middle point
-    y_unit_vector_2d=np.array([0, 0, 1]),
+    y_unit_vector_2d=None,
 ):
+    if not y_unit_vector_2d:
+        y_unit_vector_2d = np.array([0, 0, 1])
+
     x_unit_vector = cross_product(y_unit_vector_2d, detector_normal_vector)
     y_unit_vector = cross_product(detector_normal_vector, x_unit_vector)
 
@@ -76,7 +80,8 @@ def calculate_detector_image(
     pixel_size_meters_per_pixel=5e-6,
 ):
     if detector_intersections_2d.shape[0] != intensities.shape[0]:
-        raise ValueError("detector_intersections_2d and intensities do not match in shape")
+        msg = "detector_intersections_2d and intensities do not match in shape"
+        raise ValueError(msg)
 
     print(height_pixels, width_pixels, pixel_size_meters_per_pixel)
 

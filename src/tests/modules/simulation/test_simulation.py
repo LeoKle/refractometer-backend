@@ -1,20 +1,20 @@
-from typing import List
 import unittest
+
 import numpy as np
 
 from custom_types.detector_calibration import WavelengthCalibration
 from custom_types.detector_parameters import DetectorParameters
-from custom_types.plane import Plane, PlaneGeometry
 from custom_types.lightsource_parameters import LightsourceParameters
+from custom_types.plane import Plane, PlaneGeometry
 from custom_types.sample import Sample
+from custom_types.simulation_parameters import SimulationParameters
 from custom_types.spectrum import Spectrum
 from custom_types.vector import Vector
-from custom_types.simulation_parameters import SimulationParameters
-from modules.simulation.simulation import Simulation
+from modules.simulation.calc.numba.vector import rotate_vector_3d
 from modules.simulation.calc.physics.refraction import refracted_direction_vector
 from modules.simulation.calc.physics.sellmeier import sellmeier_equation
 from modules.simulation.constants.units import DEGREES, NANO_METERS
-from modules.simulation.calc.numba.vector import rotate_vector_3d
+from modules.simulation.simulation import Simulation
 
 ENTRY_ANGLE = 40
 ANGLE_PRISM = 60
@@ -107,7 +107,7 @@ class TestSimulation(unittest.TestCase):
 
         # test plane setup
 
-        planes: List[Plane] = sim_instance.setup_planes(self.planes)
+        planes: list[Plane] = sim_instance.setup_planes(self.planes)
         print(planes)
 
         # test plane normal vectors
@@ -157,6 +157,6 @@ class TestSimulation(unittest.TestCase):
         sim_instance.set_parameters(sim_parameters)
         sim_instance.simulate()
 
-        image = sim_instance.get_detector_image()
+        image = sim_instance.get_detector_image()  # noqa: F841
 
         # print(image)

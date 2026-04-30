@@ -1,5 +1,5 @@
 import unittest
-from typing import List
+
 import numpy as np
 
 from modules.simulation.calc.numba.linspace import linspace_numba

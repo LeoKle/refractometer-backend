@@ -1,19 +1,22 @@
-from typing import List
-from pymongo.database import Database
-from pymongo.collection import Collection
+from typing import TYPE_CHECKING
+
 from bson.objectid import ObjectId
+from pymongo.database import Database
 
 from custom_types.simulation_result import SimulationResult
 from interfaces.database.services.simulation_result_service_interface import (
     ISimulationResultService,
 )
 
+if TYPE_CHECKING:
+    from pymongo.collection import Collection
+
 
 class SimulationResultService(ISimulationResultService):
     def __init__(self, db: Database, collection_name: str):
         self.collection: Collection = db[collection_name]
 
-    def get_results(self) -> List[SimulationResult]:
+    def get_results(self) -> list[SimulationResult]:
         results = self.collection.find({})
 
         simulation_results = [

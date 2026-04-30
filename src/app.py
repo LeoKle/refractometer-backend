@@ -2,8 +2,6 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
 from containers.container import DependencyContainer
-from settings import config
-from router import root_api_router
 from controllers.database import (
     image_controller,
     sample_controller,
@@ -11,6 +9,8 @@ from controllers.database import (
     simulation_results_controller,
     spectrum_controller,
 )
+from router import root_api_router
+from settings import config
 
 app = FastAPI(title="Refractometer Backend", version=config.VERSION)
 

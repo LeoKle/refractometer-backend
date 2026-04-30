@@ -1,8 +1,10 @@
 import unittest
+
+import numpy as np
+
 from modules.simulation.calc.physics.intersection import (
     calculate_intersection_line_plane,
 )
-import numpy as np
 
 
 class TestIntersection(unittest.TestCase):

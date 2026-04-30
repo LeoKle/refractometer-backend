@@ -1,17 +1,16 @@
-from typing import List
 import numpy as np
 from numba import njit, prange
 
 from custom_types.lightsource_parameters import LightsourceParameters
 from custom_types.plane import Plane
 from custom_types.spectrum import Spectrum
+from modules.simulation.calc.numba.linspace import linspace_numba
 from modules.simulation.calc.numba.vector import rotate_vector_3d
 from modules.simulation.constants.units import DEGREES
 from modules.simulation.core.alloc_lightrays import alloc_arrays
-from modules.simulation.calc.numba.linspace import linspace_numba
 
 
-def setup_lightrays(spectrum: Spectrum, lightsource: LightsourceParameters, planes: List[Plane]):
+def setup_lightrays(spectrum: Spectrum, lightsource: LightsourceParameters, planes: list[Plane]):
     lightray_count = (
         len(spectrum.wavelengths)
         * lightsource.count_rays_height
@@ -60,7 +59,9 @@ def setup_lightrays(spectrum: Spectrum, lightsource: LightsourceParameters, plan
     for angle in angles:
         for height_shift in shifts_height:
             for width_shift in shifts_width:
-                for wavelength, intensity in zip(spectrum.wavelengths, spectrum.intensities):
+                for wavelength, intensity in zip(
+                    spectrum.wavelengths, spectrum.intensities, strict=True
+                ):
                     combinations.append((
                         angle * DEGREES,
                         height_shift,

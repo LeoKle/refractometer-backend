@@ -1,4 +1,5 @@
 import math
+
 from numba import njit
 
 from modules.simulation.calc.numba.vector import dot_product_vectors, normalize_vector
@@ -12,7 +13,8 @@ def refracted_direction_vector(
     normal_vector_plane = normalize_vector(normal_vector_plane)
 
     if refractive_index_1 <= 0 or refractive_index_2 <= 0:
-        raise ValueError("refractive indices must be > 0")
+        msg = "refractive indices must be > 0"
+        raise ValueError(msg)
 
     refractive_index_ratio = refractive_index_1 / refractive_index_2
 

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from custom_types.simulation_parameters import SimulationParameters
 from custom_types.detector_image import DetectorImage
+from custom_types.simulation_parameters import SimulationParameters
 from custom_types.simulation_state import SimulationState
 
 
@@ -10,7 +10,7 @@ class ISimulation(ABC):
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
-            cls._instance = super(ISimulation, cls).__new__(cls)
+            cls._instance = super().__new__(cls)
         return cls._instance
 
     @abstractmethod

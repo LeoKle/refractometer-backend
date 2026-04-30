@@ -1,12 +1,11 @@
 from abc import ABC, abstractmethod
-from typing import List
 
 from custom_types.simulation_queue import SimulationQueueElement
 
 
 class ISimulationQueueService(ABC):
     @abstractmethod
-    def get_queued_simulations(self) -> List[SimulationQueueElement]:
+    def get_queued_simulations(self) -> list[SimulationQueueElement]:
         """Returns all queued simulations"""
         pass
 

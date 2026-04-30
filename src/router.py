@@ -1,12 +1,11 @@
+from fastapi import APIRouter
+
+from controllers.app import meta
 from controllers.database import (
     image_controller,
     sample_controller,
     simulation_queue_controller,
     simulation_results_controller,
-)
-from fastapi import APIRouter
-from controllers.app import meta
-from controllers.database import (
     spectrum_controller,
 )
 

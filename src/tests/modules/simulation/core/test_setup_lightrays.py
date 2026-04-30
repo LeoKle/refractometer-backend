@@ -1,11 +1,11 @@
 import unittest
-from typing import List
+
 import numpy as np
 
-from custom_types.vector import Vector
-from custom_types.plane import Plane
 from custom_types.lightsource_parameters import LightsourceParameters
+from custom_types.plane import Plane
 from custom_types.spectrum import Spectrum
+from custom_types.vector import Vector
 from modules.simulation.constants.units import MILLI_METERS
 from modules.simulation.core.setup_lightrays import setup_lightrays
 
@@ -25,7 +25,7 @@ class TestAllocLightrays(unittest.TestCase):
             count_diverging_rays=10,
         )
 
-        self.planes: List[Plane] = [
+        self.planes: list[Plane] = [
             Plane(
                 normal_vector=Vector.from_list([0.5, -0.5, 0.0]),
                 support_vector=Vector.from_list([1.0, 1.0, 0.0]),
@@ -80,7 +80,7 @@ class TestAllocLightrays(unittest.TestCase):
             count_diverging_rays=10,
         )
 
-        planes: List[Plane] = [
+        planes: list[Plane] = [
             Plane(
                 normal_vector=Vector.from_list([0.5, -0.5, 0.0]),
                 support_vector=Vector.from_list([1.0, 1.0, 0.0]),
@@ -127,7 +127,7 @@ class TestAllocLightrays(unittest.TestCase):
             count_diverging_rays=10,
         )
 
-        planes: List[Plane] = [
+        planes: list[Plane] = [
             Plane(
                 normal_vector=Vector.from_list([0.5, -0.5, 0.0]),
                 support_vector=Vector.from_list([1.0, 1.0, 0.0]),

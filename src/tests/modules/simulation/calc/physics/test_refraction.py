@@ -1,7 +1,8 @@
+import math
 import unittest
+
 import numpy as np
 from numba import njit, prange
-import math
 
 from modules.simulation.calc.physics.refraction import refracted_direction_vector
 

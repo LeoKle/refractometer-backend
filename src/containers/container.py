@@ -5,9 +5,8 @@ from modules.mongoDB.services.image_service import ImageService
 from modules.mongoDB.services.sample_service import SampleService
 from modules.mongoDB.services.simulation_queue_service import SimulationQueueService
 from modules.mongoDB.services.simulation_result_service import SimulationResultService
-from settings import Settings
-
 from modules.mongoDB.services.spectrum_service import SpectrumService
+from settings import Settings
 
 
 class DependencyContainer(containers.DeclarativeContainer):

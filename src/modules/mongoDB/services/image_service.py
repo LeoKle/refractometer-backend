@@ -1,8 +1,7 @@
-from pymongo.database import Database
-from gridfs import GridFS
-from bson import ObjectId
 import numpy as np
-
+from bson import ObjectId
+from gridfs import GridFS
+from pymongo.database import Database
 
 from custom_types.detector_image import DetectorImage
 from interfaces.database.services.image_service_interface import IImageService

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from interfaces.database.database_interface import IDatabase
 from interfaces.app.simulation_interface import ISimulation
+from interfaces.database.database_interface import IDatabase
 
 
 class ISimulationHandler(ABC):
@@ -9,7 +9,7 @@ class ISimulationHandler(ABC):
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
-            cls._instance = super(ISimulationHandler, cls).__new__(cls)
+            cls._instance = super().__new__(cls)
         return cls._instance
 
     def __init__(self, simulation: ISimulation, database: IDatabase):

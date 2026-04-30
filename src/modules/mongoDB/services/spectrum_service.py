@@ -1,18 +1,22 @@
-from typing import List
+from typing import TYPE_CHECKING
+
 from pymongo.database import Database
-from pymongo.collection import Collection
-from pymongo.results import DeleteResult
+
 from custom_types.spectrum import Spectrum
 from interfaces.database.services.spectrum_service_interface import (
     ISpectrumService,
 )
+
+if TYPE_CHECKING:
+    from pymongo.collection import Collection
+    from pymongo.results import DeleteResult
 
 
 class SpectrumService(ISpectrumService):
     def __init__(self, db: Database, collection_name: str):
         self.collection: Collection = db[collection_name]
 
-    def get_spectrums(self) -> List[Spectrum]:
+    def get_spectrums(self) -> list[Spectrum]:
         spectra_data = self.collection.find({})
 
         spectra = []
@@ -54,7 +58,5 @@ class SpectrumService(ISpectrumService):
 
     def delete_spectrum(self, spectrum_name) -> bool:
         result: DeleteResult = self.collection.delete_one({"name": spectrum_name})
-        if result.deleted_count > 0:
-            return True  # Spectrum was deleted
-        else:
-            return False  # Spectrum was not found or not deleted
+
+        return result.deleted_count > 0
