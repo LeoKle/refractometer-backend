@@ -8,7 +8,7 @@ from controllers.database import (
     image_controller,
     sample_controller,
     simulation_queue_controller,
-    simulation_results,
+    simulation_results_controller,
     spectrum,
 )
 
@@ -28,7 +28,7 @@ container.wire(
         image_controller,
         sample_controller,
         simulation_queue_controller,
-        simulation_results,
+        simulation_results_controller,
         spectrum,
     ]
 )
