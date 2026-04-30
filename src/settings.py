@@ -8,7 +8,6 @@ import toml
 def get_version():
     version = None
     pyproject_toml_file = Path(__file__).parent.parent / "pyproject.toml"
-    print(pyproject_toml_file)
     if pyproject_toml_file.exists() and pyproject_toml_file.is_file():
         data = toml.load(pyproject_toml_file)
         if "project" in data and "version" in data["project"]:
