@@ -1,6 +1,6 @@
 from controllers.database import (
     image_controller,
-    sample,
+    sample_controller,
     simulation_queue_controller,
     simulation_results,
 )
@@ -14,7 +14,7 @@ root_api_router = APIRouter(prefix="/api")
 
 root_api_router.include_router(meta.router, tags=["meta"])
 root_api_router.include_router(spectrum.router, tags=["spectrum"])
-root_api_router.include_router(sample.router, tags=["sample"])
+root_api_router.include_router(sample_controller.router, tags=["sample"])
 root_api_router.include_router(simulation_results.router, tags=["simulation_results"])
 root_api_router.include_router(
     simulation_queue_controller.router, tags=["simulation_queue"]

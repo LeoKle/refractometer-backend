@@ -6,7 +6,7 @@ from settings import config
 from router import root_api_router
 from controllers.database import (
     image_controller,
-    sample,
+    sample_controller,
     simulation_queue_controller,
     simulation_results,
     spectrum,
@@ -26,7 +26,7 @@ container = DependencyContainer()
 container.wire(
     modules=[
         image_controller,
-        sample,
+        sample_controller,
         simulation_queue_controller,
         simulation_results,
         spectrum,
