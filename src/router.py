@@ -1,5 +1,5 @@
 from controllers.database import (
-    image,
+    image_controller,
     sample,
     simulation_queue_controller,
     simulation_results,
@@ -19,4 +19,4 @@ root_api_router.include_router(simulation_results.router, tags=["simulation_resu
 root_api_router.include_router(
     simulation_queue_controller.router, tags=["simulation_queue"]
 )
-root_api_router.include_router(image.router, tags=["image"])
+root_api_router.include_router(image_controller.router, tags=["image"])

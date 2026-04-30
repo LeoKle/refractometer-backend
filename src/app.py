@@ -5,7 +5,7 @@ from containers.container import DependencyContainer
 from settings import config
 from router import root_api_router
 from controllers.database import (
-    image,
+    image_controller,
     sample,
     simulation_queue_controller,
     simulation_results,
@@ -24,5 +24,11 @@ async def redirect_api_docs():
 
 container = DependencyContainer()
 container.wire(
-    modules=[image, sample, simulation_queue_controller, simulation_results, spectrum]
+    modules=[
+        image_controller,
+        sample,
+        simulation_queue_controller,
+        simulation_results,
+        spectrum,
+    ]
 )
