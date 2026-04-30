@@ -26,7 +26,6 @@ def calculate_detector_coordinates_3d(
     # calculate detector intersections:
     detector_intersections_3d = np.zeros((direction_vectors.shape[0], 3), dtype=np.float64)
 
-    # pylint: disable=not-an-iterable
     for lightray in prange(direction_vectors.shape[0]):
         intersection = calculate_intersection_line_plane(
             detector_normal_vector,
@@ -59,7 +58,6 @@ def calculate_detector_coordinates_2d(
     transformed_points = np.zeros((detector_intersections_3d.shape[0], 2), dtype=np.float64)
 
     # project points onto the plane and transform to 2D coordinates
-    # pylint: disable=not-an-iterable
     for intersection in prange(detector_intersections_3d.shape[0]):
         point = detector_intersections_3d[intersection] - detector_support_vector
 
@@ -95,7 +93,6 @@ def calculate_detector_image(
 
     out_of_bounds_count = 0
 
-    # pylint: disable=not-an-iterable
     for intersection in prange(detector_intersections_2d.shape[0]):
         delta_vector = detector_intersections_2d[intersection] - detector_point
 

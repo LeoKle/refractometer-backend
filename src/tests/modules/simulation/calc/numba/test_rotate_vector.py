@@ -153,7 +153,7 @@ class TestVectorRotation(unittest.TestCase):
 
         @njit(parallel=True)
         def function_njit_parallel():
-            for _ in prange(10):  # pylint: disable=not-an-iterable
+            for _ in prange(10):
                 result = rotate_vector_3d(vector, radians_x, radians_y, radians_z)  # noqa: F841
 
         function_njit()

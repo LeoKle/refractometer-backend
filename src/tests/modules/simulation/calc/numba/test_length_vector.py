@@ -59,7 +59,7 @@ class TestNumbaLengthVector(unittest.TestCase):
 
         @njit(parallel=True)
         def function_njit_parallel():
-            for i in prange(vectors.shape[0]):  # pylint: disable=not-an-iterable
+            for i in prange(vectors.shape[0]):
                 length_vector(vectors[i])
 
         function_njit()

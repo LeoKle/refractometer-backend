@@ -46,7 +46,7 @@ class TestNumbaCrossProduct(unittest.TestCase):
 
         @njit(parallel=True)
         def function_njit_parallel():
-            for i in prange(vectors.shape[0]):  # pylint: disable=not-an-iterable
+            for i in prange(vectors.shape[0]):
                 cross_product(vectors[i], vectors[i])
 
         function_njit()

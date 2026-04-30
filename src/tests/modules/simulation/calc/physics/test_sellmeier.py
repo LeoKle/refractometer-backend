@@ -49,7 +49,7 @@ class TestSellmeier(unittest.TestCase):
 
         @njit(parallel=True)
         def function_njit_parallel():
-            for _ in prange(10):  # pylint: disable=not-an-iterable
+            for _ in prange(10):
                 sellmeier_equation(b, c, wavelength)
 
         function_njit()

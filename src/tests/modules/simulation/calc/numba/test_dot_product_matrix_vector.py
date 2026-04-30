@@ -67,7 +67,7 @@ class TestNumbaDotProductMatrixVector(unittest.TestCase):
 
         @njit(parallel=True)
         def function_njit_parallel():
-            for i in prange(vectors.shape[0]):  # pylint: disable=not-an-iterable
+            for i in prange(vectors.shape[0]):
                 dot_product_matrix_vector(matrix, vectors[i])
 
         function_njit()

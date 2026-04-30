@@ -18,7 +18,6 @@ def simulate_lightrays(
 ):
     refractive_index_air = 1.000293
 
-    # pylint: disable=not-an-iterable
     for lightray in prange(direction_vectors.shape[0]):
         refractive_index = refractive_indices[lightray]
 
