@@ -37,6 +37,7 @@ def get_result(
 
 
 @router.post("/queue")
+@inject
 def post_result(
     element_to_queue: SimulationQueueElement,
     queue_service: Annotated[
@@ -47,6 +48,7 @@ def post_result(
 
 
 @router.patch("/queue")
+@inject
 def patch_result(
     queued_element: SimulationQueueElement,
     queue_service: Annotated[
@@ -60,6 +62,7 @@ def patch_result(
 
 
 @router.delete("/queue/{queued_element_id}")
+@inject
 def delete_result(
     queued_element_id: str,
     queue_service: Annotated[
