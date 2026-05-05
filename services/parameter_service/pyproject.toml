@@ -4,7 +4,11 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13,<3.14"
-dependencies = []
+dependencies = [
+    "fastapi>=0.136.1",
+    "pydantic-settings>=2.14.0",
+    "toml>=0.10.2",
+]
 
 [dependency-groups]
 dev = ["pytest>=9.0.1", "pytest-cov>=7.0.0", "ruff>=0.14.7"]
