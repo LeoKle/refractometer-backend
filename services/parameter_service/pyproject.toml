@@ -8,6 +8,7 @@ dependencies = [
     "dependency-injector>=4.49.0",
     "fastapi>=0.136.1",
     "pydantic-settings>=2.14.0",
+    "pymongo>=4.17.0",
     "toml>=0.10.2",
     "uvicorn[standard]>=0.46.0",
 ]
