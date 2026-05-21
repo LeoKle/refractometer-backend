@@ -1,0 +1,59 @@
+services:
+  traefik:
+    image: traefik:v3.7
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  monolith:
+    build: ./services/monolith
+    ports: 
+      - "8000:8000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DATABASE: refractometer-monolith
+    depends_on:
+      - mongo
+    labels:
+      - "traefik.http.routers.monolith.rule=PathPrefix(`/api`)"
+      - "traefik.http.routers.monolith.priority=5"
+
+  parameter-service:
+    build: ./services/parameter_service
+    ports: 
+      - "8001:8000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DB_NAME: refractometer-parameter-service
+    depends_on:
+      - mongo
+    labels:
+      - "traefik.http.routers.parameter.rule=PathPrefix(`/api/sample`) || PathPrefix(`/api/spectrum`)"
+      - "traefik.http.routers.parameter.priority=10"
+
+  frontend:
+    # image: ghcr.io/leokle/refractometer-frontend
+    image: refractometer-frontend:local
+    ports:
+      - "5173:80"
+    labels:
+      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.frontend.priority=1"
+    depends_on:
+      - monolith
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
