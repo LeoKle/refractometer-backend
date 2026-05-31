@@ -2,6 +2,7 @@ from dependency_injector import containers, providers
 from pymongo import MongoClient
 
 from repositories.sample_repository import SampleRepository
+from repositories.spectrum_repository import SpectrumRepository
 
 
 class MongoContainer(containers.DeclarativeContainer):
@@ -24,3 +25,10 @@ class MongoContainer(containers.DeclarativeContainer):
     )
 
     sample_repository = providers.Factory(SampleRepository, collection=sample_collection)
+
+    spectrum_collection = providers.Singleton(
+        lambda db: db["spectrums"],
+        mongo_database,
+    )
+
+    spectrum_repository = providers.Factory(SpectrumRepository, collection=spectrum_collection)
