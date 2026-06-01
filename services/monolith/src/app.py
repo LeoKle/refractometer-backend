@@ -6,10 +6,8 @@ from fastapi.responses import RedirectResponse
 from containers.container import DependencyContainer
 from controllers.database import (
     image_controller,
-    sample_controller,
     simulation_queue_controller,
     simulation_results_controller,
-    spectrum_controller,
 )
 from router import root_api_router
 from settings import config
@@ -23,10 +21,8 @@ async def lifespan(app: FastAPI):
     container.wire(
         modules=[
             image_controller,
-            sample_controller,
             simulation_queue_controller,
             simulation_results_controller,
-            spectrum_controller,
         ]
     )
 
