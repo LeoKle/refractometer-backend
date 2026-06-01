@@ -38,8 +38,8 @@ services:
       - "traefik.http.routers.parameter.priority=10"
 
   frontend:
-    # image: ghcr.io/leokle/refractometer-frontend
-    image: refractometer-frontend:local
+    image: ghcr.io/leokle/refractometer-frontend
+    # image: refractometer-frontend:local
     ports:
       - "5173:80"
     labels:
@@ -51,7 +51,7 @@ services:
   mongo:
     image: mongo:latest
     ports:
-      - "27018:27017"
+      - "27017:27017"
     volumes:
       - mongo_data:/data/db
 
