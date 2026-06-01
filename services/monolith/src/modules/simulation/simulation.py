@@ -19,7 +19,8 @@ from modules.simulation.core.detector import (
 )
 from modules.simulation.core.setup_lightrays import setup_lightrays
 from modules.simulation.core.simulate_lightrays import simulate_lightrays
-from tests.visualisation.detector import plot_2d_points, plot_matrix_as_image
+
+# from tests.visualisation.detector import plot_2d_points, plot_matrix_as_image
 
 
 class Simulation(ISimulation):
@@ -195,7 +196,7 @@ class Simulation(ISimulation):
         detector_point = np.array([br_x, -br_y])
         print("DP", detector_point)
 
-        plot_2d_points(detector_coordinates_2d, detector_point)
+        # plot_2d_points(detector_coordinates_2d, detector_point)
 
         print("Calculating image")
         detector_image, missed_points = calculate_detector_image(
@@ -210,7 +211,7 @@ class Simulation(ISimulation):
         max_val = np.max(detector_image)
         detector_image = (detector_image - min_val) / (max_val - min_val)
 
-        plot_matrix_as_image(detector_image)
+        # plot_matrix_as_image(detector_image)
 
         print(f"{missed_points}/{len(detector_coordinates_2d)} lightrays did not hit the detector")
 
