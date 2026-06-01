@@ -7,6 +7,7 @@ from modules.mongoDB.services.sample_service import SampleService
 from modules.mongoDB.services.simulation_queue_service import SimulationQueueService
 from modules.mongoDB.services.simulation_result_service import SimulationResultService
 from modules.mongoDB.services.spectrum_service import SpectrumService
+from modules.simulation.mock_simulation import MockSimulation
 from modules.simulation.simulation import Simulation
 from settings import Settings
 
@@ -42,7 +43,15 @@ class DependencyContainer(containers.DeclarativeContainer):
         db=mongo_container.mongo_database,
     )
 
-    simulation = providers.Factory(Simulation)
+    simulation = providers.Selector(
+        providers.Callable(
+            lambda use_mock: "mock" if use_mock else "real",
+            config.USE_MOCK_SIMULATION,
+        ),
+        mock=providers.Factory(MockSimulation),
+        real=providers.Factory(Simulation),
+    )
+
     simulation_handler = providers.Singleton(
         SimulationHandler,
         simulation=simulation,

@@ -23,6 +23,8 @@ class Settings(BaseSettings):
 
     VERSION: str = get_version()
 
+    USE_MOCK_SIMULATION: bool = False
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",
