@@ -10,7 +10,7 @@ from interfaces.services.spectrum_service_interface import SpectrumServiceInterf
 router = APIRouter()
 
 
-@router.get("/spectrums")
+@router.get("/spectrums", response_model=list[SpectrumDTO])
 @inject
 def get_all_spectrums(
     spectrum_service: Annotated[
@@ -21,7 +21,7 @@ def get_all_spectrums(
     return spectrums
 
 
-@router.get("/spectrum/{spectrum_name}")
+@router.get("/spectrum/{spectrum_name}", response_model=SpectrumDTO)
 @inject
 def get_spectrum(
     spectrum_name: str,
