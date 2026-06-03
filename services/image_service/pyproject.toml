@@ -14,10 +14,11 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "httpx2>=2.3.0",
     "mongomock>=4.3.0",
- "pytest>=9.0.1",
- "pytest-cov>=7.0.0",
- "ruff>=0.14.7",
+    "pytest>=9.0.1",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.14.7",
 ]
 
 [tool.ruff]
