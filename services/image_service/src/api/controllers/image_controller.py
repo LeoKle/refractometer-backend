@@ -9,7 +9,7 @@ from containers.container import DependencyContainer
 from interfaces.image_repository_interface import ImageRepositoryInterface
 from models.detector_image import DetectorImage
 
-router = APIRouter()
+router = APIRouter(prefix="/api")
 
 
 @router.get("/image/{image_id}", response_model=DetectorImageDTO)
