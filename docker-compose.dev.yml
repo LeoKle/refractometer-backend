@@ -39,6 +39,9 @@ services:
     build: ./services/image_service
     ports: 
       - "8002:8000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DB_NAME: refractometer-image-service
     labels:
       - "traefik.http.routers.image.rule=PathPrefix(`/api/image`)"
       - "traefik.http.routers.image.priority=10"
