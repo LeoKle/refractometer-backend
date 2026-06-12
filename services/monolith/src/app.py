@@ -5,7 +5,6 @@ from fastapi.responses import RedirectResponse
 
 from containers.container import DependencyContainer
 from controllers.database import (
-    image_controller,
     simulation_queue_controller,
     simulation_results_controller,
 )
@@ -20,7 +19,6 @@ async def lifespan(app: FastAPI):
     container.init_resources()
     container.wire(
         modules=[
-            image_controller,
             simulation_queue_controller,
             simulation_results_controller,
         ]

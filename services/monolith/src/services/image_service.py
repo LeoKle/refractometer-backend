@@ -19,13 +19,3 @@ class ImageService(IImageService):
         response = httpx.post(self.base_url + "/api/image", json=detector_image.model_dump())
 
         return response.json()["id"]
-
-    def retrieve_image(self, image_id: str) -> DetectorImage | None:
-        response = httpx.get(self.base_url + "/api/image/" + image_id)
-
-        try:
-            response.raise_for_status()
-        except httpx.RequestError:
-            return None
-
-        return DetectorImage(**response.json())
