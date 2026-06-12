@@ -15,7 +15,6 @@ class ImageService(IImageService):
         id: str
 
     def save_image(self, detector_image: DetectorImage) -> str:
-        print(detector_image.model_dump())
         response = httpx.post(self.base_url + "/api/image", json=detector_image.model_dump())
 
         return response.json()["id"]
