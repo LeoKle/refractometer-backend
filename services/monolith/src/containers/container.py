@@ -2,11 +2,11 @@ from dependency_injector import containers, providers
 
 from containers.mongo_container import MongoContainer
 from modules.app.simulation_handler import SimulationHandler
-from modules.mongoDB.services.image_service import ImageService
 from modules.mongoDB.services.simulation_queue_service import SimulationQueueService
 from modules.mongoDB.services.simulation_result_service import SimulationResultService
 from modules.simulation.mock_simulation import MockSimulation
 from modules.simulation.simulation import Simulation
+from services.image_service import ImageService
 from settings import Settings
 
 
@@ -30,7 +30,7 @@ class DependencyContainer(containers.DeclarativeContainer):
 
     image_service = providers.Factory(
         ImageService,
-        db=mongo_container.mongo_database,
+        base_url=config.IMAGE_SERVICE_URL,
     )
 
     simulation = providers.Selector(

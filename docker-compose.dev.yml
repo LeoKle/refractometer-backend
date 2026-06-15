@@ -35,6 +35,17 @@ services:
       - "traefik.http.routers.parameter.rule=PathPrefix(`/api/sample`) || PathPrefix(`/api/spectrum`)"
       - "traefik.http.routers.parameter.priority=10"
 
+  image-service:
+    build: ./services/image_service
+    ports: 
+      - "8002:8000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DB_NAME: refractometer-image-service
+    labels:
+      - "traefik.http.routers.image.rule=PathPrefix(`/api/image`)"
+      - "traefik.http.routers.image.priority=10"
+
   frontend:
     image: ghcr.io/leokle/refractometer-frontend
     # image: refractometer-frontend:local

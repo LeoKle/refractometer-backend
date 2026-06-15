@@ -1,0 +1,56 @@
+{
+    "consumer": {
+        "name": "monolith"
+    },
+    "provider": {
+        "name": "image-service"
+    },
+    "interactions": [
+        {
+            "description": "a request to create a new image",
+            "providerState": "no special state required",
+            "request": {
+                "method": "POST",
+                "path": "/api/image",
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": {
+                    "values": [
+                        [
+                            0.1,
+                            0.2
+                        ],
+                        [
+                            0.3,
+                            0.4
+                        ]
+                    ],
+                    "shape": [
+                        2,
+                        2
+                    ]
+                }
+            },
+            "response": {
+                "status": 201,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": {
+                    "id": "123e4567-e89b-12d3-a456-426614174000"
+                },
+                "matchingRules": {
+                    "$.body.id": {
+                        "match": "type"
+                    }
+                }
+            }
+        }
+    ],
+    "metadata": {
+        "pactSpecification": {
+            "version": "2.0.0"
+        }
+    }
+}
