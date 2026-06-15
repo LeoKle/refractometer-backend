@@ -91,6 +91,8 @@ jobs:
         with:
           directory: ${{ env.DIRECTORY }}
           test_type: pact
+        env:
+          ENABLE_PACT_STATES: true
 
       - name: Teardown contract tests
         if: always()
