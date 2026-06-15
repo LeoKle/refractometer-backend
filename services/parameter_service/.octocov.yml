@@ -1,3 +1,4 @@
+repository: ${GITHUB_REPOSITORY}/parameter_service
 coverage:
   if: true
   paths:

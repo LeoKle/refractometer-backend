@@ -1,3 +1,4 @@
+repository: ${GITHUB_REPOSITORY}/image-service
 coverage:
   if: true
   paths:
@@ -7,7 +8,7 @@ testExecutionTime:
 diff:
   if: is_pull_request
   datastores:
-    - artifact://${GITHUB_REPOSITORY}/services/image_service
+    - artifact://${GITHUB_REPOSITORY}-services-image_service
 body:
   if: is_pull_request
   hideFooterLink: true
@@ -17,4 +18,4 @@ summary:
 report:
   if: is_default_branch
   datastores:
-    - artifact://${GITHUB_REPOSITORY}/services/image_service
+    - artifact://${GITHUB_REPOSITORY}-services-image_service
