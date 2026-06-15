@@ -5,12 +5,12 @@ on:
     branches: [main]
     paths:
       - 'services/image_service/**'
-      - '.github/workflows/parameter-service-ci.yml'
+      - '.github/workflows/image-service-ci.yml'
       - '.github/actions/python/**'
   pull_request:
     paths:
       - 'services/image_service/**'
-      - '.github/workflows/parameter-service-ci.yml'
+      - '.github/workflows/image-service-ci.yml'
       - '.github/actions/python/**'
 
 permissions:
