@@ -7,7 +7,7 @@ import pytest
 from pact import Verifier
 
 PACT_DIR = Path(__file__).parent / "pacts"
-PROVIDER_URL = "http://localhost:8000"
+PROVIDER_URL = "http://localhost:8002"
 
 
 pytestmark = pytest.mark.pact
@@ -41,7 +41,7 @@ def test_provider_against_pacts(provider_server):
     verifier = (
         Verifier("image-service")
         .add_source(PACT_DIR)
-        .add_transport(url="http://localhost:8002")
+        .add_transport(url=PROVIDER_URL)
         .state_handler(f"{PROVIDER_URL}/_pact/provider_states", body=True)
     )
 
