@@ -7,7 +7,7 @@ testExecutionTime:
 diff:
   if: is_pull_request
   datastores:
-    - artifact://${GITHUB_REPOSITORY}/services/parameter_service
+    - artifact://${GITHUB_REPOSITORY}-services-parameter_service
 body:
   if: is_pull_request
   hideFooterLink: true
@@ -17,4 +17,4 @@ summary:
 report:
   if: is_default_branch
   datastores:
-    - artifact://${GITHUB_REPOSITORY}/services/parameter_service
+    - artifact://${GITHUB_REPOSITORY}-services-parameter_service
