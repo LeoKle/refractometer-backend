@@ -16,6 +16,7 @@ dependencies = [
 dev = [
     "httpx2>=2.3.0",
     "mongomock>=4.3.0",
+    "pact-python>=3.4.0",
     "pytest>=9.0.1",
     "pytest-cov>=7.0.0",
     "ruff>=0.14.7",

@@ -1,0 +1,96 @@
+{
+    "consumer": {
+        "name": "refractometer-frontend"
+    },
+    "provider": {
+        "name": "image-service"
+    },
+    "interactions": [
+        {
+            "description": "a request for an existing image",
+            "providerState": "an image with ID 123e4567-e89b-12d3-a456-426614174000 exists",
+            "request": {
+                "method": "GET",
+                "path": "/api/image/123e4567-e89b-12d3-a456-426614174000"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": {
+                    "values": [
+                        [
+                            0.1,
+                            0.2
+                        ],
+                        [
+                            0.3,
+                            0.4
+                        ]
+                    ],
+                    "shape": [
+                        2560,
+                        2440
+                    ]
+                },
+                "matchingRules": {
+                    "$.body.values": {
+                        "match": "type"
+                    },
+                    "$.body.values[*][*]": {
+                        "match": "type"
+                    },
+                    "$.body.shape": {
+                        "match": "type"
+                    },
+                    "$.body.shape[0]": {
+                        "match": "type"
+                    },
+                    "$.body.shape[1]": {
+                        "match": "type"
+                    }
+                }
+            }
+        },
+        {
+            "description": "a request for an image with an invalid UUID",
+            "providerState": "no special state required",
+            "request": {
+                "method": "GET",
+                "path": "/api/image/not-a-uuid"
+            },
+            "response": {
+                "status": 400,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": {
+                    "detail": "Invalid UUID: not-a-uuid"
+                }
+            }
+        },
+        {
+            "description": "a request for a non-existent image",
+            "providerState": "no image exists with ID 00000000-0000-0000-0000-000000000000",
+            "request": {
+                "method": "GET",
+                "path": "/api/image/00000000-0000-0000-0000-000000000000"
+            },
+            "response": {
+                "status": 404,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": {
+                    "detail": "Image 00000000-0000-0000-0000-000000000000 not found"
+                }
+            }
+        }
+    ],
+    "metadata": {
+        "pactSpecification": {
+            "version": "2.0.0"
+        }
+    }
+}
