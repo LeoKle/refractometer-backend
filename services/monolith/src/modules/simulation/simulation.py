@@ -68,7 +68,7 @@ class Simulation(ISimulation):
             normal_vector * simulation_params.detector.distance3
             + self.planes[1].support_vector.to_numpy_array()
         )
-
+        print("Detector NV, SV ", normal_vector, detector_support_vector)
         return normal_vector, detector_support_vector
 
     def setup_planes(self, plane_params=PlaneGeometry) -> list[Plane]:
