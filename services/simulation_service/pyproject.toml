@@ -47,7 +47,7 @@ select = [
 ignore = ["COM812"]
 
 [tool.pytest.ini_options]
-testpaths = ["src/tests"]
+testpaths = ["tests"]
 addopts = ["--cov-report=term", "--cov=src"]
 pythonpath = ["src", "."]
 markers = ["unit: unit tests", "integration: integration tests"]
