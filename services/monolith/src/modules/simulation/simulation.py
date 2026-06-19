@@ -1,7 +1,7 @@
 import copy
 
-from loguru import logger
 import numpy as np
+from loguru import logger
 
 from custom_types.detector_image import DetectorImage
 from custom_types.plane import Plane, PlaneGeometry

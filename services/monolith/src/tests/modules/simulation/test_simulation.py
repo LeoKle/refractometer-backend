@@ -92,7 +92,7 @@ class TestSimulation(unittest.TestCase):
 
         normal_vector_2 = rotate_vector_3d(normal_vector_1, 0, 0, self.planes.prism_angle * DEGREES)
 
-        direction_vector_2 = refracted_direction_vector(
+        _ = refracted_direction_vector(
             refractive_index, refractive_index_air, direction_vector_1, normal_vector_2
         )
 
