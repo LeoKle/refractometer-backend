@@ -3,6 +3,7 @@ from typing import Annotated
 
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, HTTPException, status
+from loguru import logger
 
 from api.models.detector_image_dto import DetectorImageDTO, DetectorPostResult
 from containers.container import DependencyContainer
@@ -49,5 +50,7 @@ def post_image(
     image = DetectorImage(**body.model_dump())
 
     image_repo.save_image(image)
+
+    logger.info("Saved image {image_id}", image_id=image.id)
 
     return DetectorPostResult(id=str(image.id))
