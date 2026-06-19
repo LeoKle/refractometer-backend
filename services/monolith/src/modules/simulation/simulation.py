@@ -1,5 +1,6 @@
 import copy
 
+from loguru import logger
 import numpy as np
 
 from custom_types.detector_image import DetectorImage
@@ -137,7 +138,7 @@ class Simulation(ISimulation):
 
     def setup_lightrays(self):
         self._state = SimulationStates.SETTING_UP.value
-        print("Starting setup")
+        logger.info("Starting setup")
 
         (
             self.setup_direction_vectors,
@@ -146,7 +147,7 @@ class Simulation(ISimulation):
             self.setup_intensities,
         ) = setup_lightrays(self.spectrum, self.lightsource, self.planes)
 
-        print("Finished setup")
+        logger.info("Finished setup")
         self._state = SimulationStates.SET_UP.value
 
     def simulate(self):
@@ -175,7 +176,7 @@ class Simulation(ISimulation):
         )
 
     def construct_detector_image(self):
-        print("Calculating intersections 3d")
+        logger.info("Calculating intersections 3d")
         detector_intersections_3d = calculate_detector_coordinates_3d(
             self.simulated_direction_vectors[:, -1],
             self.simulated_support_vectors[:, -1],
@@ -183,22 +184,22 @@ class Simulation(ISimulation):
             detector_support_vector=self.detector.support_vector.to_numpy_array(),
         )
 
-        print("Calculating intersections 2d")
+        logger.info("Calculating intersections 2d")
         detector_coordinates_2d = calculate_detector_coordinates_2d(
             detector_intersections_3d,
             self.detector.normal_vector.to_numpy_array(),
             self.detector.support_vector.to_numpy_array(),
         )
-        print(detector_coordinates_2d)
+        logger.info(detector_coordinates_2d)
 
         br_x = self.detector.width_pixels * self.detector.pixel_size_meters_per_pixel / 2
         br_y = self.detector.height_pixels * self.detector.pixel_size_meters_per_pixel / 2
         detector_point = np.array([br_x, -br_y])
-        print("DP", detector_point)
+        logger.info("DP", detector_point)
 
         # plot_2d_points(detector_coordinates_2d, detector_point)
 
-        print("Calculating image")
+        logger.info("Calculating image")
         detector_image, missed_points = calculate_detector_image(
             detector_coordinates_2d,
             self.simulated_intensities[:, -1],
@@ -213,9 +214,11 @@ class Simulation(ISimulation):
 
         # plot_matrix_as_image(detector_image)
 
-        print(f"{missed_points}/{len(detector_coordinates_2d)} lightrays did not hit the detector")
+        logger.info(
+            f"{missed_points}/{len(detector_coordinates_2d)} lightrays did not hit the detector"
+        )
 
-        print("Transforming image")
+        logger.info("Transforming image")
         self.image = DetectorImage.fromNumpyArray(detector_image)
 
     def get_detector_image(self) -> DetectorImage:
@@ -223,6 +226,6 @@ class Simulation(ISimulation):
         self._state = SimulationStates.DETECTOR_SIMULATION.value
         self.construct_detector_image()
         self._state = SimulationStates.SIMULATION_DONE.value
-        print("Done")
+        logger.info("Done")
 
         return self.image
