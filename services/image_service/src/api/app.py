@@ -1,10 +1,14 @@
 from fastapi import FastAPI
 
 from api.controllers import image_controller
+from api.middleware.correlation_middleware import CorrelationIdMiddleware
 from containers.container import DependencyContainer
+from log import setup_logging
 from settings import Settings
 
+setup_logging()
 app = FastAPI(title="Refractometer Image Service")
+app.add_middleware(CorrelationIdMiddleware)
 app.include_router(image_controller.router)
 
 container = DependencyContainer()
