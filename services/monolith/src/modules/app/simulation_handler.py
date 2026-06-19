@@ -2,6 +2,8 @@ import datetime
 import threading
 import time
 
+from loguru import logger
+
 from custom_types.simulation_result import SimulationResult
 from interfaces.app.simulation_handler import ISimulationHandler
 from interfaces.app.simulation_interface import ISimulation
@@ -43,7 +45,7 @@ class SimulationHandler(ISimulationHandler):
 
     def process_queue(self):
         while self.is_running:
-            print("Running queue")
+            logger.info("Running queue")
             # get element from db
             simulation = self.simulation_queue_service.find_next_simulation()
 
@@ -76,7 +78,7 @@ class SimulationHandler(ISimulationHandler):
             self.simulation_queue_service.delete_queued_simulation(simulation.id)
 
             if simulation.callback_url:
-                print("Callback to invoke found")
+                logger.info("Callback to invoke found")
 
     def get_state(self):
         pass

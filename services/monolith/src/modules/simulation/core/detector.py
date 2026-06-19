@@ -81,7 +81,7 @@ def calculate_detector_image(
         msg = "detector_intersections_2d and intensities do not match in shape"
         raise ValueError(msg)
 
-    print(height_pixels, width_pixels, pixel_size_meters_per_pixel)
+    # print(height_pixels, width_pixels, pixel_size_meters_per_pixel)
 
     # the detector point is in the bottom right corner
     # we create/move it by assuming the point (0,0) as detector middle point

@@ -92,7 +92,7 @@ class TestSimulation(unittest.TestCase):
 
         normal_vector_2 = rotate_vector_3d(normal_vector_1, 0, 0, self.planes.prism_angle * DEGREES)
 
-        direction_vector_2 = refracted_direction_vector(
+        _ = refracted_direction_vector(
             refractive_index, refractive_index_air, direction_vector_1, normal_vector_2
         )
 
@@ -100,15 +100,15 @@ class TestSimulation(unittest.TestCase):
 
         sim_instance = Simulation()
 
-        print("NV1", normal_vector_1)
-        print("NV2", normal_vector_2)
-        print("DV1", direction_vector_1)
-        print("DV2", direction_vector_2)
+        # print("NV1", normal_vector_1)
+        # print("NV2", normal_vector_2)
+        # print("DV1", direction_vector_1)
+        # print("DV2", direction_vector_2)
 
         # test plane setup
 
         planes: list[Plane] = sim_instance.setup_planes(self.planes)
-        print(planes)
+        # print(planes)
 
         # test plane normal vectors
         np.testing.assert_array_almost_equal(
@@ -118,10 +118,9 @@ class TestSimulation(unittest.TestCase):
             normal_vector_2, planes[1].normal_vector.to_numpy_array()
         )
 
-        # TODO: test calibration of detector
-        detector_nv, detector_sv = sim_instance.calibrate_detector(self.simulation_parameters)
+        # detector_nv, detector_sv = sim_instance.calibrate_detector(self.simulation_parameters)
 
-        print(detector_nv, detector_sv)
+        # print(detector_nv, detector_sv)
 
         # test,
 
