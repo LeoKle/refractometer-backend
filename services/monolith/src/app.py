@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
+from api.middleware.correlation_middleware import CorrelationIdMiddleware
 from containers.container import DependencyContainer
 from controllers.database import (
     simulation_queue_controller,
@@ -35,6 +36,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Refractometer Backend", version=config.VERSION, lifespan=lifespan)
+app.add_middleware(CorrelationIdMiddleware)
 
 app.include_router(root_api_router)
 
