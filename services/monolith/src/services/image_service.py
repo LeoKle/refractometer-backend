@@ -1,6 +1,7 @@
 import httpx
 from pydantic import BaseModel
 
+from api.correlation import get_or_create_correlation_id
 from custom_types.detector_image import DetectorImage
 from interfaces.database.services.image_service_interface import IImageService
 
@@ -15,6 +16,10 @@ class ImageService(IImageService):
         id: str
 
     def save_image(self, detector_image: DetectorImage) -> str:
-        response = httpx.post(self.base_url + "/api/image", json=detector_image.model_dump())
+        response = httpx.post(
+            self.base_url + "/api/image",
+            json=detector_image.model_dump(),
+            headers={"X-Correlation-ID": get_or_create_correlation_id()},
+        )
 
         return response.json()["id"]
