@@ -6,6 +6,8 @@ import pytest
 from models.spectrum import Spectrum
 from repositories.spectrum_repository import SpectrumRepository
 
+pytestmark = pytest.mark.unit
+
 SPECTRUM_ID = uuid.UUID("12345678-1234-5678-1234-567812345678")
 
 SAMPLE_DOC = {

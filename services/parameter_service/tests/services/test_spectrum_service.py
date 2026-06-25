@@ -6,6 +6,7 @@ import pytest
 from models.spectrum import Spectrum
 from services.spectrum_service import SpectrumService
 
+pytestmark = pytest.mark.unit
 
 @pytest.fixture
 def mock_repo():

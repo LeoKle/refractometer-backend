@@ -9,6 +9,8 @@ from api.models.spectrum_dto import SpectrumDTO
 from interfaces.services.spectrum_service_interface import SpectrumServiceInterface
 from models.spectrum import Spectrum
 
+pytestmark = pytest.mark.unit
+
 SPECTRUM_ID = uuid.uuid4()
 
 SAMPLE_SPECTRUM = Spectrum(
