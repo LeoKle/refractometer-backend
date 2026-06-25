@@ -23,6 +23,8 @@ class Settings(BaseSettings):
 
     VERSION: str = get_version()
 
+    ENABLE_PACT_STATES: bool = False
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",
