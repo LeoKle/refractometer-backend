@@ -1,3 +1,5 @@
+import uuid
+
 from pydantic import BaseModel, Field
 
 
@@ -8,5 +10,5 @@ class SellmeierCoefficients(BaseModel):
 
 class Sample(BaseModel):
     name: str
-    id: str | None = Field(default=None)
+    id: uuid.UUID = Field(default_factory=uuid.uuid4)
     sellmeier_coefficients: SellmeierCoefficients
