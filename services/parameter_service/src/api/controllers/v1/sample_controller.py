@@ -26,6 +26,10 @@ def get_sample(
     sample_service: Annotated[ISampleService, Depends(Provide[DependencyContainer.sample_service])],
 ):
     sample = sample_service.load_sample(sample_id)
+
+    if not sample:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
     return sample
 
 
