@@ -1,3 +1,5 @@
+import uuid
+
 from pymongo.collection import Collection
 
 from interfaces.repositories.sample_repository_interface import ISampleRepository
@@ -28,7 +30,7 @@ class SampleRepository(ISampleRepository):
 
         return Sample(
             name=sample_data.get("name"),
-            id=str(sample_data.get("id")),
+            id=uuid.UUID(sample_data.get("id")),
             sellmeier_coefficients=sample_data.get("sellmeierCoefficients"),
         )
 

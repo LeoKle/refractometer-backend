@@ -16,7 +16,7 @@
                         "Content-Type": "application/json"
                     },
                     "body": {
-                        "name": "Test Sample",
+                        "name": "Test Sample PACT POST",
                         "sellmeier_coefficients": {
                             "B": [
                                 1.0,
@@ -46,25 +46,7 @@
                     "status": 200,
                     "headers": {
                         "Content-Type": "application/json"
-                    },
-                    "body": [
-                        {
-                            "id": "93162ee4-5716-4059-a8a8-fc02e125543f",
-                            "name": "Test Sample",
-                            "sellmeier_coefficients": {
-                                "B": [
-                                    1.0,
-                                    2.0,
-                                    3.0
-                                ],
-                                "C": [
-                                    1.0,
-                                    2.0,
-                                    3.0
-                                ]
-                            }
-                        }
-                    ]
+                    }
                 }
             },
             {
@@ -81,7 +63,7 @@
                     },
                     "body": {
                         "id": "93162ee4-5716-4059-a8a8-fc02e125543f",
-                        "name": "Test Sample",
+                        "name": "Test Sample PACT",
                         "sellmeier_coefficients": {
                             "B": [
                                 1.0,
@@ -99,7 +81,7 @@
             },
             {
                 "description": "get sample by id when not found",
-                "providerState": "sample does not exist",
+                "providerState": "no samples exist",
                 "request": {
                     "method": "GET",
                     "path": "/api/sample/missing-id"
@@ -140,7 +122,7 @@
             },
             {
                 "description": "update sample without id fails",
-                "providerState": "sample exists",
+                "providerState": "sample exists with id 93162ee4-5716-4059-a8a8-fc02e125543f",
                 "request": {
                     "method": "PATCH",
                     "path": "/api/sample",
