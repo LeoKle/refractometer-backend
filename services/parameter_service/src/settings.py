@@ -19,7 +19,7 @@ def get_version():
 
 class Settings(BaseSettings):
     MONGO_URI: str = "mongodb://localhost:27017/"
-    MONGO_DB_NAME: str = "refractometer"
+    MONGO_DB_NAME: str = "refractometer-parameter-service"
 
     VERSION: str = get_version()
 
