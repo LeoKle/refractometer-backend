@@ -1,0 +1,187 @@
+    {
+        "consumer": {
+            "name": "refractometer-frontend"
+        },
+        "provider": {
+            "name": "parameter-service"
+        },
+        "interactions": [
+            {
+                "description": "create a sample successfully",
+                "providerState": "sample can be created",
+                "request": {
+                    "method": "POST",
+                    "path": "/api/sample",
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "body": {
+                        "name": "Test Sample",
+                        "sellmeier_coefficients": {
+                            "B": [
+                                1.0,
+                                2.0,
+                                3.0
+                            ],
+                            "C": [
+                                1.0,
+                                2.0,
+                                3.0
+                            ]
+                        }
+                    }
+                },
+                "response": {
+                    "status": 200
+                }
+            },
+            {
+                "description": "get all samples",
+                "providerState": "samples exist",
+                "request": {
+                    "method": "GET",
+                    "path": "/api/samples"
+                },
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "body": [
+                        {
+                            "id": "93162ee4-5716-4059-a8a8-fc02e125543f",
+                            "name": "Test Sample",
+                            "sellmeier_coefficients": {
+                                "B": [
+                                    1.0,
+                                    2.0,
+                                    3.0
+                                ],
+                                "C": [
+                                    1.0,
+                                    2.0,
+                                    3.0
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "description": "get sample by id",
+                "providerState": "sample exists with id 93162ee4-5716-4059-a8a8-fc02e125543f",
+                "request": {
+                    "method": "GET",
+                    "path": "/api/sample/93162ee4-5716-4059-a8a8-fc02e125543f"
+                },
+                "response": {
+                    "status": 200,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "body": {
+                        "id": "93162ee4-5716-4059-a8a8-fc02e125543f",
+                        "name": "Test Sample",
+                        "sellmeier_coefficients": {
+                            "B": [
+                                1.0,
+                                2.0,
+                                3.0
+                            ],
+                            "C": [
+                                1.0,
+                                2.0,
+                                3.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "description": "get sample by id when not found",
+                "providerState": "sample does not exist",
+                "request": {
+                    "method": "GET",
+                    "path": "/api/sample/missing-id"
+                },
+                "response": {
+                    "status": 404
+                }
+            },
+            {
+                "description": "update a sample successfully",
+                "providerState": "sample exists with id 93162ee4-5716-4059-a8a8-fc02e125543f",
+                "request": {
+                    "method": "PATCH",
+                    "path": "/api/sample",
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "body": {
+                        "id": "93162ee4-5716-4059-a8a8-fc02e125543f",
+                        "name": "Updated Sample",
+                        "sellmeier_coefficients": {
+                            "B": [
+                                2.0,
+                                3.0,
+                                4.0
+                            ],
+                            "C": [
+                                1.0,
+                                2.0,
+                                3.0
+                            ]
+                        }
+                    }
+                },
+                "response": {
+                    "status": 200
+                }
+            },
+            {
+                "description": "update sample without id fails",
+                "providerState": "sample exists",
+                "request": {
+                    "method": "PATCH",
+                    "path": "/api/sample",
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "body": {
+                        "name": "Broken Sample",
+                        "sellmeier_coefficients": {
+                            "B": [
+                                1.0,
+                                2.0,
+                                3.0
+                            ],
+                            "C": [
+                                1.0,
+                                2.0,
+                                3.0
+                            ]
+                        }
+                    }
+                },
+                "response": {
+                    "status": 400
+                }
+            },
+            {
+                "description": "delete sample by id",
+                "providerState": "sample exists with id 93162ee4-5716-4059-a8a8-fc02e125543f",
+                "request": {
+                    "method": "DELETE",
+                    "path": "/api/sample/93162ee4-5716-4059-a8a8-fc02e125543f"
+                },
+                "response": {
+                    "status": 200
+                }
+            }
+        ],
+        "metadata": {
+            "pactSpecification": {
+                "version": "2.0.0"
+            }
+        }
+    }
