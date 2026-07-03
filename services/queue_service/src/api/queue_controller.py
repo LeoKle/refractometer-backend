@@ -33,7 +33,7 @@ def to_response(element: QueueElement) -> SimulationQueueResponse:
 def claim_element(
     queue_service: Annotated[
         QueueServiceInterface,
-        Depends(Provide[DependencyContainer.sim_queue_service]),
+        Depends(Provide[DependencyContainer.queue_service]),
     ],
 ):
     element = queue_service.claim_next_simulation()
@@ -52,7 +52,7 @@ def claim_element(
 def get_results(
     queue_service: Annotated[
         QueueServiceInterface,
-        Depends(Provide[DependencyContainer.sim_queue_service]),
+        Depends(Provide[DependencyContainer.queue_service]),
     ],
 ):
     results = queue_service.get_queued_simulations()
@@ -65,7 +65,7 @@ def get_result(
     queued_element_id: str,
     queue_service: Annotated[
         QueueServiceInterface,
-        Depends(Provide[DependencyContainer.sim_queue_service]),
+        Depends(Provide[DependencyContainer.queue_service]),
     ],
 ):
     result = queue_service.load_queued_simulation(queued_element_id)
@@ -85,7 +85,7 @@ def post_result(
     element_to_queue: SimulationQueueRequest,
     queue_service: Annotated[
         QueueServiceInterface,
-        Depends(Provide[DependencyContainer.sim_queue_service]),
+        Depends(Provide[DependencyContainer.queue_service]),
     ],
 ):
     queue_element = QueueElement(
@@ -108,7 +108,7 @@ def patch_result(
     queued_element: SimulationQueueRequest,
     queue_service: Annotated[
         QueueServiceInterface,
-        Depends(Provide[DependencyContainer.sim_queue_service]),
+        Depends(Provide[DependencyContainer.queue_service]),
     ],
 ):
     existing = queue_service.load_queued_simulation(queued_element_id)
@@ -135,7 +135,7 @@ def delete_result(
     queued_element_id: str,
     queue_service: Annotated[
         QueueServiceInterface,
-        Depends(Provide[DependencyContainer.sim_queue_service]),
+        Depends(Provide[DependencyContainer.queue_service]),
     ],
 ):
     existing = queue_service.load_queued_simulation(queued_element_id)
