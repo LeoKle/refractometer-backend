@@ -13,6 +13,6 @@ class SimulationQueueResponse(BaseModel):
     callback_url: str | None = Field(default=None)
     id: str | None = Field(default=None)
     name: str | None = Field(default=None)
-    image_id: str = Field(default=None)
+    image_id: str | None = Field(default=None)
     issued_at: datetime
     completed_at: datetime | None = Field(default=None)
