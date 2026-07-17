@@ -2,11 +2,11 @@ from dependency_injector import containers, providers
 
 from containers.mongo_container import MongoContainer
 from modules.app.simulation_handler import SimulationHandler
-from modules.mongoDB.services.simulation_queue_service import SimulationQueueService
 from modules.mongoDB.services.simulation_result_service import SimulationResultService
 from modules.simulation.mock_simulation import MockSimulation
 from modules.simulation.simulation import Simulation
 from services.image_service import ImageService
+from services.queue_service import QueueService
 from settings import Settings
 
 
@@ -22,11 +22,7 @@ class DependencyContainer(containers.DeclarativeContainer):
         collection_name="simulation-results",
     )
 
-    sim_queue_service = providers.Factory(
-        SimulationQueueService,
-        db=mongo_container.mongo_database,
-        collection_name="simulation-queue",
-    )
+    sim_queue_service = providers.Factory(QueueService, base_url=config.QUEUE_SERVICE_URL)
 
     image_service = providers.Factory(
         ImageService,
@@ -45,7 +41,7 @@ class DependencyContainer(containers.DeclarativeContainer):
     simulation_handler = providers.Singleton(
         SimulationHandler,
         simulation=simulation,
-        simulation_queue_service=sim_queue_service,
+        queue_service=sim_queue_service,
         image_service=image_service,
         simulation_result_service=sim_results_service,
     )

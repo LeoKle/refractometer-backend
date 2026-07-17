@@ -10,6 +10,7 @@ class DetectorImage(BaseModel):
 
     @classmethod
     def fromNumpyArray(cls, array: np.ndarray) -> "DetectorImage":
+        array = np.nan_to_num(array, nan=0.0)
         values = array.tolist()
         shape = array.shape
         return cls(values=values, shape=shape)

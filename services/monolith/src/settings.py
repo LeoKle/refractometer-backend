@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     USE_MOCK_SIMULATION: bool = False
 
     IMAGE_SERVICE_URL: str = "http://localhost:8002"
+    QUEUE_SERVICE_URL: str = "http://localhost:8003"
 
     model_config = SettingsConfigDict(
         env_file=".env",
