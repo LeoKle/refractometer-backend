@@ -18,6 +18,7 @@ services:
     env_file: ".env"
     depends_on:
       - mongo
+      - queue-service
     labels:
       - "traefik.http.routers.monolith.rule=PathPrefix(`/api`)"
       - "traefik.http.routers.monolith.priority=5"
@@ -67,6 +68,9 @@ services:
       - "traefik.http.routers.frontend.priority=1"
     depends_on:
       - monolith
+      - queue-service
+      - parameter-service
+      - image-service
 
   mongo:
     image: mongo:latest
