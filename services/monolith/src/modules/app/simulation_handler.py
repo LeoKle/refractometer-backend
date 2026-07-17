@@ -8,22 +8,22 @@ from custom_types.simulation_result import SimulationResult
 from interfaces.app.simulation_handler import ISimulationHandler
 from interfaces.app.simulation_interface import ISimulation
 from interfaces.database.services.image_service_interface import IImageService
-from interfaces.database.services.simulation_queue_service_interface import ISimulationQueueService
 from interfaces.database.services.simulation_result_service_interface import (
     ISimulationResultService,
 )
+from interfaces.queue_service_interface import QueueServiceInterface
 
 
 class SimulationHandler(ISimulationHandler):
     def __init__(
         self,
         simulation: ISimulation,
-        simulation_queue_service: ISimulationQueueService,
+        queue_service: QueueServiceInterface,
         image_service: IImageService,
         simulation_result_service: ISimulationResultService,
     ):
         self.simulation = simulation
-        self.simulation_queue_service = simulation_queue_service
+        self.queue_service = queue_service
         self.image_service = image_service
         self.simulation_result_service = simulation_result_service
 
@@ -46,17 +46,13 @@ class SimulationHandler(ISimulationHandler):
     def process_queue(self):
         while self.is_running:
             logger.info("Running queue")
-            # get element from db
-            simulation = self.simulation_queue_service.find_next_simulation()
+
+            simulation = self.queue_service.claim_element()
 
             # no simulation queued
             if not simulation:
                 time.sleep(5)
                 continue
-
-            # set being_processed to true
-            simulation.being_processed = True
-            self.simulation_queue_service.update_queued_simulation(simulation)
 
             # setup planes, simulate, simulate detector
             self.simulation.set_parameters(simulation.parameters)
@@ -75,7 +71,12 @@ class SimulationHandler(ISimulationHandler):
 
             # delete element from queue DB, add to result DB
             self.simulation_result_service.save_result(result)
-            self.simulation_queue_service.delete_queued_simulation(simulation.id)
+            deleted = self.queue_service.delete_queued_element(simulation.id)
+
+            if deleted:
+                logger.info("Deleted queued element")
+            else:
+                logger.info("Couldn't delete queued element")
 
             if simulation.callback_url:
                 logger.info("Callback to invoke found")
