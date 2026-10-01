@@ -15,6 +15,7 @@ dependencies = [
     "pydantic>=2.13.5",
     "pydantic-settings>=2.14.0",
     "pymongo==4.7.3",
+    "refractometer-common-layer",
     "scikit-learn==1.8.0",
     "scipy==1.17.1",
     "toml>=0.10.2",
@@ -64,3 +65,6 @@ markers = ["unit: unit tests", "integration: integration tests"]
 
 [tool.coverage.run]
 omit = ["*/dependency_injector/*", "src/tests/*"]
+
+[tool.uv.sources]
+refractometer-common-layer = { git = "https://github.com/LeoKle/refractometer-common-layer.git", rev = "f169ca3381e772048d2ad2c49369de0c94e563bc" }
