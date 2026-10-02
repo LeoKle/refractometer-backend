@@ -15,8 +15,8 @@ dependencies = [
 dev = [
     "mongomock>=4.3.0",
     "pytest>=9.1.1",
- "pytest-cov>=7.1.0",
- "ruff>=0.15.22",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.22",
 ]
 
 [tool.ruff]
@@ -51,3 +51,12 @@ select = [
     "FAST",  # fastapi
 ]
 ignore = ["COM812"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--cov-report=term", "--cov=src"]
+pythonpath = ["src", "."]
+markers = ["unit: unit tests", "integration: integration tests"]
+
+[tool.coverage.run]
+omit = ["*/dependency_injector/*"]
