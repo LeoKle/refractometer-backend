@@ -21,7 +21,7 @@ class DependencyContainer(containers.DeclarativeContainer):
     )
 
     sim_result_collection = providers.Singleton(
-        lambda db: db["samples"],
+        lambda db: db["results"],
         mongo_database,
     )
 
