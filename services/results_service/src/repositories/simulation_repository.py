@@ -1,3 +1,4 @@
+from pymongo import ReturnDocument
 from pymongo.collection import Collection
 
 from interfaces.simulation_repository_interface import SimulationResultRepositoryInterface
@@ -6,7 +7,7 @@ from models.simulation_result import SimulationResult
 
 class SimulationResultRepository(SimulationResultRepositoryInterface):
     def __init__(self, collection: Collection):
-        self.collection = collection
+        self.collection: Collection = collection
 
     @staticmethod
     def _to_domain(document: dict) -> SimulationResult:
@@ -21,7 +22,7 @@ class SimulationResultRepository(SimulationResultRepositoryInterface):
         return [self._to_domain(result) for result in results]
 
     def load_result(self, result_id: str) -> SimulationResult | None:
-        result = self.collection.find_one({"id": result_id})
+        result = self.collection.find_one({"id": str(result_id)})
 
         if result:
             return self._to_domain(result)
@@ -31,10 +32,19 @@ class SimulationResultRepository(SimulationResultRepositoryInterface):
     def save_result(self, result: SimulationResult) -> SimulationResult:
         self.collection.insert_one(self._to_collection(result))
 
-    def update_result(self, result: SimulationResult) -> SimulationResult:
-        self.collection.find_one_and_update(
-            {"id": str(result.id)}, {"$set": self._to_collection(result)}
+        return result
+
+    def update_result(self, result: SimulationResult) -> SimulationResult | None:
+        doc = self.collection.find_one_and_update(
+            {"id": str(result.id)},
+            {"$set": self._to_collection(result)},
+            return_document=ReturnDocument.AFTER,
         )
+
+        if not doc:
+            return None
+
+        return self._to_domain(doc)
 
     def delete_result(self, result_id: str) -> bool:
         self.collection.delete_one({"id": result_id})
