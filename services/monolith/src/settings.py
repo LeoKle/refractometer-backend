@@ -27,6 +27,7 @@ class Settings(BaseSettings):
 
     IMAGE_SERVICE_URL: str = "http://localhost:8002"
     QUEUE_SERVICE_URL: str = "http://localhost:8003"
+    SIM_RESULT_SERVICE_URL: str = "http://localhost:8004"
 
     model_config = SettingsConfigDict(
         env_file=".env",

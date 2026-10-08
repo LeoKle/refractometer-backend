@@ -1,9 +1,9 @@
 from dependency_injector import containers, providers
 from refractometer_common.queue import QueueClient
+from refractometer_common.result import SimulationResultClient
 
 from containers.mongo_container import MongoContainer
 from modules.app.simulation_handler import SimulationHandler
-from modules.mongoDB.services.simulation_result_service import SimulationResultService
 from modules.simulation.mock_simulation import MockSimulation
 from modules.simulation.simulation import Simulation
 from services.image_service import ImageService
@@ -16,10 +16,9 @@ class DependencyContainer(containers.DeclarativeContainer):
 
     mongo_container = providers.Container(MongoContainer, config=config)
 
-    sim_results_service = providers.Factory(
-        SimulationResultService,
-        db=mongo_container.mongo_database,
-        collection_name="simulation-results",
+    sim_result_client = providers.Factory(
+        SimulationResultClient,
+        base_url=config.SIM_RESULT_SERVICE_URL,
     )
 
     queue_client = providers.Factory(QueueClient, base_url=config.QUEUE_SERVICE_URL)
@@ -43,5 +42,5 @@ class DependencyContainer(containers.DeclarativeContainer):
         simulation=simulation,
         queue_client=queue_client,
         image_service=image_service,
-        simulation_result_service=sim_results_service,
+        simulation_result_client=sim_result_client,
     )
