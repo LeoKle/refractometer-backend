@@ -6,9 +6,6 @@ from fastapi.responses import RedirectResponse
 
 from api.middleware.correlation_middleware import CorrelationIdMiddleware
 from containers.container import DependencyContainer
-from controllers.database import (
-    simulation_results_controller,
-)
 from log import setup_logging
 from router import root_api_router
 from settings import config
@@ -23,11 +20,7 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     logger.info("Starting FastAPI app")
     container.init_resources()
-    container.wire(
-        modules=[
-            simulation_results_controller,
-        ]
-    )
+    container.wire(modules=[])
 
     handler = container.simulation_handler()
     handler.start()
