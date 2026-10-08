@@ -51,7 +51,7 @@ select = [
     "FURB",  # refurb
     "FAST",  # fastapi
 ]
-ignore = ["COM812"]
+ignore = ["missing-trailing-comma"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
