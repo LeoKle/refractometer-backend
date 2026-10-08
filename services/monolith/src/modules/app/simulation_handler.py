@@ -1,6 +1,6 @@
-import datetime
 import threading
 import time
+from datetime import UTC, datetime
 
 from loguru import logger
 from refractometer_common.queue import (
@@ -9,14 +9,11 @@ from refractometer_common.queue import (
     QueueClientException,
     SimulationQueueElement,
 )
+from refractometer_common.result import SimulationResultClient
 
-from custom_types.simulation_result import SimulationResult
 from interfaces.app.simulation_handler import ISimulationHandler
 from interfaces.app.simulation_interface import ISimulation
 from interfaces.database.services.image_service_interface import IImageService
-from interfaces.database.services.simulation_result_service_interface import (
-    ISimulationResultService,
-)
 
 
 class SimulationHandler(ISimulationHandler):
@@ -25,12 +22,12 @@ class SimulationHandler(ISimulationHandler):
         simulation: ISimulation,
         queue_client: QueueClient,
         image_service: IImageService,
-        simulation_result_service: ISimulationResultService,
+        simulation_result_client: SimulationResultClient,
     ):
         self.simulation = simulation
         self.queue_client = queue_client
         self.image_service = image_service
-        self.simulation_result_service = simulation_result_service
+        self.simulation_result_client = simulation_result_client
 
         self.is_running = False
         self.thread = None
@@ -76,16 +73,13 @@ class SimulationHandler(ISimulationHandler):
 
             image_id = self.image_service.save_image(image)
 
-            result = SimulationResult(
-                name=queued_element.name,
-                parameters=queued_element.parameters,
-                image_id=str(image_id),
-                issued_at=queued_element.issued_at,
-                completed_at=datetime.datetime.now(tz=datetime.UTC),
-            )
-
             # delete element from queue DB, add to result DB
-            self.simulation_result_service.save_result(result)
+            self.simulation_result_client.create_result(
+                queued_element.parameters,
+                image_id,
+                queued_element.issued_at,
+                completed_at=datetime.now(UTC),
+            )
             deleted = self.queue_client.delete_queued_element(queued_element.id)
 
             if deleted:

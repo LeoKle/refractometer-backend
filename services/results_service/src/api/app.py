@@ -1,0 +1,14 @@
+from fastapi import FastAPI
+
+from api.controllers.v1 import simulation_controller
+from api.router import root_api_router
+from containers.container import DependencyContainer
+
+app = FastAPI(title="Refractometer Results Service")
+
+
+container = DependencyContainer()
+
+container.wire(modules=[simulation_controller])
+
+app.include_router(root_api_router)

@@ -58,6 +58,17 @@ services:
       - "traefik.http.routers.queue.rule=PathPrefix(`/api/queue`)"
       - "traefik.http.routers.queue.priority=10"   
 
+  results-service:
+    build: ./services/results_service
+    ports: 
+      - "8004:8000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DB_NAME: refractometer-results-service
+    labels:
+      - "traefik.http.routers.results.rule=PathPrefix(`/api/result`)"
+      - "traefik.http.routers.results.priority=10"   
+
   frontend:
     image: ghcr.io/leokle/refractometer-frontend
     # image: refractometer-frontend:local

@@ -1,34 +1,29 @@
 [project]
-name = "backend"
+name = "results-service"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13,<3.14"
+requires-python = ">=3.13"
 dependencies = [
-    "dependency-injector>=4.49.0",
-    "fastapi==0.111.0",
-    "loguru>=0.7.3",
-    "matplotlib==3.10.9",
-    "numba==0.65.1",
-    "numpy>=1.23",
-    "openpyxl==3.1.4",
-    "pydantic>=2.13.5",
-    "pydantic-settings>=2.14.0",
-    "pymongo==4.7.3",
-    "refractometer-common-layer",
-    "scikit-learn==1.8.0",
-    "scipy==1.17.1",
-    "toml>=0.10.2",
+    "dependency-injector>=4.49.1",
+    "fastapi>=0.139.2",
+    "pydantic-settings>=2.15.0",
+    "pymongo>=4.17.0",
+    "uvicorn[standard]>=0.51.0",
 ]
 
 [dependency-groups]
-dev = ["pytest>=9.0.1", "pytest-cov>=7.0.0", "ruff>=0.14.7"]
+dev = [
+    "mongomock>=4.3.0",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.22",
+]
 
 [tool.ruff]
 line-length = 100
 target-version = "py312"
 preview = true
-extend-exclude = ["migrations"]
 
 [tool.ruff.lint]
 select = [
@@ -54,17 +49,15 @@ select = [
     "RUF",   # ruff-specific
     "TRY",   # tryceratops
     "FURB",  # refurb
+    "FAST",  # fastapi
 ]
-ignore = ["COM812"]
+ignore = ["missing-trailing-comma"]
 
 [tool.pytest.ini_options]
-testpaths = ["src/tests"]
+testpaths = ["tests"]
 addopts = ["--cov-report=term", "--cov=src"]
 pythonpath = ["src", "."]
 markers = ["unit: unit tests", "integration: integration tests"]
 
 [tool.coverage.run]
-omit = ["*/dependency_injector/*", "src/tests/*"]
-
-[tool.uv.sources]
-refractometer-common-layer = { git = "https://github.com/LeoKle/refractometer-common-layer.git", rev = "v0.2.0" }
+omit = ["*/dependency_injector/*"]
