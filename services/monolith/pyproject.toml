@@ -67,4 +67,4 @@ markers = ["unit: unit tests", "integration: integration tests"]
 omit = ["*/dependency_injector/*", "src/tests/*"]
 
 [tool.uv.sources]
-refractometer-common-layer = { git = "https://github.com/LeoKle/refractometer-common-layer.git", rev = "f169ca3381e772048d2ad2c49369de0c94e563bc" }
+refractometer-common-layer = { git = "https://github.com/LeoKle/refractometer-common-layer.git", rev = "v0.2.0" }
