@@ -18,9 +18,6 @@ def get_version():
 
 
 class Settings(BaseSettings):
-    MONGO_URI: str = "mongodb://localhost:27017/"
-    MONGO_DB_NAME: str = "refractometer"
-
     VERSION: str = get_version()
 
     USE_MOCK_SIMULATION: bool = False
