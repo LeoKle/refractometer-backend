@@ -2,7 +2,6 @@ from dependency_injector import containers, providers
 from refractometer_common.queue import QueueClient
 from refractometer_common.result import SimulationResultClient
 
-from containers.mongo_container import MongoContainer
 from modules.app.simulation_handler import SimulationHandler
 from modules.simulation.mock_simulation import MockSimulation
 from modules.simulation.simulation import Simulation
@@ -13,8 +12,6 @@ from settings import Settings
 class DependencyContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
     config.from_pydantic(Settings())
-
-    mongo_container = providers.Container(MongoContainer, config=config)
 
     sim_result_client = providers.Factory(
         SimulationResultClient,
