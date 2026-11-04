@@ -3,6 +3,11 @@ import time
 from datetime import UTC, datetime
 
 from loguru import logger
+from refractometer_common.image import (
+    CreateImageRequest,
+    ImageClientException,
+    ImageClientInterface,
+)
 from refractometer_common.queue import (
     QueueClient,
     QueueClientElementNotFoundException,
@@ -13,7 +18,6 @@ from refractometer_common.result import SimulationResultClient
 
 from interfaces.app.simulation_handler import ISimulationHandler
 from interfaces.app.simulation_interface import ISimulation
-from interfaces.database.services.image_service_interface import IImageService
 
 
 class SimulationHandler(ISimulationHandler):
@@ -21,7 +25,7 @@ class SimulationHandler(ISimulationHandler):
         self,
         simulation: ISimulation,
         queue_client: QueueClient,
-        image_service: IImageService,
+        image_service: ImageClientInterface,
         simulation_result_client: SimulationResultClient,
     ):
         self.simulation = simulation
@@ -56,8 +60,8 @@ class SimulationHandler(ISimulationHandler):
                 logger.info("No simulation queued, sleeping...")
                 time.sleep(5)
                 continue
-            except QueueClientException as err:
-                logger.error(f"{err.with_traceback()}")
+            except QueueClientException:
+                logger.exception("Failed to retrieve queue element")
                 time.sleep(5)
                 continue
 
@@ -69,9 +73,17 @@ class SimulationHandler(ISimulationHandler):
             # setup planes, simulate, simulate detector
             self.simulation.set_parameters(queued_element.parameters)
             self.simulation.simulate()
-            image = self.simulation.get_detector_image()
+            detector_image = self.simulation.get_detector_image()
 
-            image_id = self.image_service.save_image(image)
+            try:
+                request = CreateImageRequest(
+                    values=detector_image.values, shape=detector_image.shape
+                )
+
+                image_id = self.image_service.post_image(request)
+            except ImageClientException as err:
+                logger.error(f"{err.with_traceback()}")
+                continue
 
             # delete element from queue DB, add to result DB
             self.simulation_result_client.create_result(

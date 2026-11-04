@@ -1,11 +1,11 @@
 from dependency_injector import containers, providers
+from refractometer_common.image import ImageClient
 from refractometer_common.queue import QueueClient
 from refractometer_common.result import SimulationResultClient
 
 from modules.app.simulation_handler import SimulationHandler
 from modules.simulation.mock_simulation import MockSimulation
 from modules.simulation.simulation import Simulation
-from services.image_service import ImageService
 from settings import Settings
 
 
@@ -20,8 +20,8 @@ class DependencyContainer(containers.DeclarativeContainer):
 
     queue_client = providers.Factory(QueueClient, base_url=config.QUEUE_SERVICE_URL)
 
-    image_service = providers.Factory(
-        ImageService,
+    image_client = providers.Factory(
+        ImageClient,
         base_url=config.IMAGE_SERVICE_URL,
     )
 
@@ -38,6 +38,6 @@ class DependencyContainer(containers.DeclarativeContainer):
         SimulationHandler,
         simulation=simulation,
         queue_client=queue_client,
-        image_service=image_service,
+        image_service=image_client,
         simulation_result_client=sim_result_client,
     )
