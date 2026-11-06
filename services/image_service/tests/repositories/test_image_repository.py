@@ -244,3 +244,75 @@ class TestBackwardCompatibility:
         result = repo.get_image(image_id)
         assert result.shape == (2, 3)
         np.testing.assert_array_equal(np.array(result.values), arr)
+
+
+class TestIdempotency:
+    def test_save_returns_image_id(self, repo, image):
+        assert repo.save_image(image) == image.id
+
+    def test_replay_returns_first_id(self, repo, image):
+        first = repo.save_image(image, idempotency_key="sim-1:upload_image")
+        retry = DetectorImage(values=image.values, shape=IMAGE_SHAPE)  # new uuid
+        second = repo.save_image(retry, idempotency_key="sim-1:upload_image")
+        assert second == first == image.id
+
+    def test_replay_does_not_store_second_file(self, repo, db, image):
+        repo.save_image(image, idempotency_key="k")
+        repo.save_image(DetectorImage(values=image.values, shape=IMAGE_SHAPE), idempotency_key="k")
+        assert db["fs.files"].count_documents({"metadata.idempotency_key": "k"}) == 1
+        assert db["fs.files"].count_documents({}) == 1
+
+    def test_replay_with_different_payload_keeps_first(self, repo, image):
+        first = repo.save_image(image, idempotency_key="k")
+        other = DetectorImage(values=[[0.0] * 4 for _ in range(4)], shape=IMAGE_SHAPE)
+        assert repo.save_image(other, idempotency_key="k") == first
+        np.testing.assert_array_equal(
+            np.array(repo.get_image(first).values), np.array(image.values)
+        )
+
+    def test_different_keys_store_separately(self, repo, db, image):
+        a = repo.save_image(image, idempotency_key="a")
+        b = repo.save_image(
+            DetectorImage(values=image.values, shape=IMAGE_SHAPE), idempotency_key="b"
+        )
+        assert a != b
+        assert db["fs.files"].count_documents({}) == 2
+
+    def test_saves_without_key_are_not_deduplicated(self, repo, db, image):
+        repo.save_image(image)
+        repo.save_image(DetectorImage(values=image.values, shape=IMAGE_SHAPE))
+        assert db["fs.files"].count_documents({}) == 2
+
+    def test_key_stored_in_metadata(self, repo, fs):
+        image_id = uuid.uuid4()
+        repo.save_raw(image_id, np.zeros(4, dtype=np.uint8).tobytes(), (2, 2), "uint8", "k")
+        assert fs.find_one({"metadata.uuid": str(image_id)}).metadata["idempotency_key"] == "k"
+
+    def test_validation_still_applies_on_replay(self, repo):
+        repo.save_raw(uuid.uuid4(), b"\x00" * 4, (2, 2), "uint8", "k")
+        with pytest.raises(ValueError):
+            repo.save_raw(uuid.uuid4(), b"\x00", (2, 2), "uint8", "k")
+
+    def test_lost_race_returns_winner_and_cleans_chunks(self, repo, db, fs, monkeypatch):
+        winner = uuid.uuid4()
+        repo.save_raw(winner, b"\x01" * 4, (2, 2), "uint8", "k")
+        chunks_before = db["fs.chunks"].count_documents({})
+
+        # Simulate a concurrent writer: the fast-path lookup misses once,
+        # so the insert hits the unique index instead.
+        real_find = repo._find_by_idempotency_key
+        calls = {"n": 0}
+
+        def miss_first(key):
+            calls["n"] += 1
+            return None if calls["n"] == 1 else real_find(key)
+
+        monkeypatch.setattr(repo, "_find_by_idempotency_key", miss_first)
+
+        assert repo.save_raw(uuid.uuid4(), b"\x02" * 4, (2, 2), "uint8", "k") == winner
+        assert db["fs.chunks"].count_documents({}) == chunks_before
+        assert db["fs.files"].count_documents({}) == 1
+
+    def test_index_creation_is_repeatable(self, db):
+        ImageRepository(db)
+        ImageRepository(db)  # must not raise
