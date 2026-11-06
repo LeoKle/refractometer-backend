@@ -71,7 +71,7 @@ requires-dist = [
     { name = "pydantic", specifier = ">=2.13.5" },
     { name = "pydantic-settings", specifier = ">=2.14.0" },
     { name = "pymongo", specifier = "==4.7.3" },
-    { name = "refractometer-common-layer", git = "https://github.com/LeoKle/refractometer-common-layer?tag=v0.4.1" },
+    { name = "refractometer-common-layer", git = "https://github.com/LeoKle/refractometer-common-layer?tag=v0.6.0" },
     { name = "scikit-learn", specifier = "==1.8.0" },
     { name = "scipy", specifier = "==1.17.1" },
     { name = "toml", specifier = ">=0.10.2" },
@@ -862,10 +862,9 @@ wheels = [
 
 [[package]]
 name = "refractometer-common-layer"
-version = "0.4.0"
-source = { git = "https://github.com/LeoKle/refractometer-common-layer?tag=v0.4.1#983d812677e4087e217b217799f98081997ae231" }
+version = "0.6.0"
+source = { git = "https://github.com/LeoKle/refractometer-common-layer?tag=v0.6.0#ca16ee120429effc5e5fdf371ec72e41d174cf13" }
 dependencies = [
-    { name = "httpx" },
     { name = "httpx2" },
     { name = "pydantic" },
 ]
