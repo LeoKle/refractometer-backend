@@ -2,7 +2,7 @@ import uuid
 from typing import Annotated
 
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, Header, HTTPException, status
 from loguru import logger
 
 from api.models.detector_image_dto import DetectorImageDTO, DetectorPostResult
@@ -45,12 +45,17 @@ def post_image(
     image_repo: Annotated[
         ImageRepositoryInterface, Depends(Provide[DependencyContainer.image_repo])
     ],
+    idempotency_key: Annotated[str | None, Header()] = None,
 ) -> DetectorPostResult:
 
     image = DetectorImage(**body.model_dump())
 
-    image_repo.save_image(image)
+    image = image_repo.save_image(image, idempotency_key=idempotency_key)
 
-    logger.info("Saved image {image_id}", image_id=image.id)
+    logger.info(
+        "Saved image {image_id} (idempotency_key={idempotency_key})",
+        image_id=image.id,
+        idempotency_key=idempotency_key,
+    )
 
     return DetectorPostResult(id=str(image.id))

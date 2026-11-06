@@ -87,8 +87,39 @@ class TestGetImage:
 
 
 class TestPostImage:
+    @pytest.fixture(autouse=True)
+    def _save_returns_image(self, mock_repo):
+        """The controller uses the image returned by save_image, so the mock
+        must return a real DetectorImage (default: echo the input back)."""
+        mock_repo.save_image.side_effect = lambda image, idempotency_key=None: image
+
     def _payload(self):
         return {"values": VALUES, "shape": list(SHAPE)}
+
+    def test_idempotency_key_defaults_to_none(self, client, mock_repo):
+        client.post(f"{BASE_URL}/image", json=self._payload())
+        assert mock_repo.save_image.call_args.kwargs["idempotency_key"] is None
+
+    def test_idempotency_key_passed_from_header(self, client, mock_repo):
+        client.post(
+            f"{BASE_URL}/image",
+            json=self._payload(),
+            headers={"Idempotency-Key": "abc-123"},
+        )
+        assert mock_repo.save_image.call_args.kwargs["idempotency_key"] == "abc-123"
+
+    def test_returns_id_of_existing_image_for_repeated_key(self, client, mock_repo):
+        existing = make_detector_image()
+        mock_repo.save_image.side_effect = None
+        mock_repo.save_image.return_value = existing
+
+        response = client.post(
+            f"{BASE_URL}/image",
+            json=self._payload(),
+            headers={"Idempotency-Key": "abc-123"},
+        )
+
+        assert response.json()["id"] == str(FIXED_ID)
 
     def test_returns_201_on_success(self, client, mock_repo):
         response = client.post(f"{BASE_URL}/image", json=self._payload())
