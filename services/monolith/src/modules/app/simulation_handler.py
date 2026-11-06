@@ -16,11 +16,11 @@ from refractometer_common.queue import (
 )
 from refractometer_common.result import SimulationResultClient
 
-from interfaces.app.simulation_handler import ISimulationHandler
+from interfaces.app.simulation_handler import SimulationHandlerInterface
 from interfaces.app.simulation_interface import ISimulation
 
 
-class SimulationHandler(ISimulationHandler):
+class SimulationHandler(SimulationHandlerInterface):
     def __init__(
         self,
         simulation: ISimulation,

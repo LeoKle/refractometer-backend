@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class ISimulationHandler(ABC):
+class SimulationHandlerInterface(ABC):
     @abstractmethod
     def process_queue(self):
         pass
