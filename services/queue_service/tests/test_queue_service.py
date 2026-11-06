@@ -32,7 +32,7 @@ def make_element(**overrides) -> QueueElement:
 
 class TestSaveAndLoad:
     def test_save_then_load_round_trips_fields(self, service):
-        element = make_element(name="sim-1", image_id="img-1")
+        element = make_element(name="sim-1")
 
         service.save_queued_simulation(element)
         loaded = service.load_queued_simulation(str(element.id))
@@ -44,20 +44,17 @@ class TestSaveAndLoad:
         assert loaded.issuer == element.issuer
         assert loaded.callback_url == element.callback_url
         assert loaded.name == "sim-1"
-        assert loaded.image_id == "img-1"
         assert loaded.being_processed is False
-        assert loaded.completed_at is None
 
     def test_load_missing_returns_none(self, service):
         assert service.load_queued_simulation("does-not-exist") is None
 
     def test_load_tolerates_missing_optional_fields(self, service, collection):
-        # Simulate an older document written without name/image_id.
+        # Simulate an older document written without name.
         legacy_id = str(uuid.uuid4())
         collection.insert_one({
             "id": legacy_id,
             "issued_at": datetime(2024, 1, 1, tzinfo=UTC),
-            "completed_at": None,
             "parameters": {},
             "issuer": None,
             "being_processed": False,
@@ -68,7 +65,6 @@ class TestSaveAndLoad:
 
         assert loaded is not None
         assert loaded.name is None
-        assert loaded.image_id is None
 
     def test_index_is_not_persisted(self, service, collection):
         element = make_element(index=999)
@@ -99,12 +95,10 @@ class TestUpdateDeleteComplete:
         service.save_queued_simulation(element)
 
         element.being_processed = True
-        element.completed_at = datetime(2024, 1, 2, tzinfo=UTC)
         service.update_queued_simulation(element)
 
         loaded = service.load_queued_simulation(str(element.id))
         assert loaded.being_processed is True
-        assert loaded.completed_at == datetime(2024, 1, 2, tzinfo=UTC)
 
     def test_update_nonexistent_is_a_noop(self, service):
         element = make_element()

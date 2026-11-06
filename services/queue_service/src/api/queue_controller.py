@@ -22,9 +22,7 @@ def to_response(element: QueueElement) -> SimulationQueueResponse:
         callback_url=element.callback_url,
         id=str(element.id),
         name=element.name,
-        image_id=element.image_id,
         issued_at=element.issued_at,
-        completed_at=element.completed_at,
     )
 
 

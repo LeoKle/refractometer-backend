@@ -14,13 +14,11 @@ class QueueService(QueueServiceInterface):
         return QueueElement(
             id=document["id"],
             issued_at=document["issued_at"],
-            completed_at=document["completed_at"],
             parameters=document["parameters"],
             issuer=document["issuer"],
             being_processed=document["being_processed"],
             callback_url=document["callback_url"],
             name=document.get("name"),
-            image_id=document.get("image_id"),
         )
 
     @staticmethod
