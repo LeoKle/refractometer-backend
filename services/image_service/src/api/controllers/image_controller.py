@@ -50,12 +50,12 @@ def post_image(
 
     image = DetectorImage(**body.model_dump())
 
-    image = image_repo.save_image(image, idempotency_key=idempotency_key)
+    image_id = image_repo.save_image(image, idempotency_key=idempotency_key)
 
     logger.info(
         "Saved image {image_id} (idempotency_key={idempotency_key})",
-        image_id=image.id,
+        image_id=image_id,
         idempotency_key=idempotency_key,
     )
 
-    return DetectorPostResult(id=str(image.id))
+    return DetectorPostResult(id=str(image_id))

@@ -88,10 +88,10 @@ class TestGetImage:
 
 class TestPostImage:
     @pytest.fixture(autouse=True)
-    def _save_returns_image(self, mock_repo):
-        """The controller uses the image returned by save_image, so the mock
-        must return a real DetectorImage (default: echo the input back)."""
-        mock_repo.save_image.side_effect = lambda image, idempotency_key=None: image
+    def _save_returns_id(self, mock_repo):
+        """save_image returns the id the image is stored under. By default
+        that is the id of the image passed in (no idempotent replay)."""
+        mock_repo.save_image.side_effect = lambda image, idempotency_key=None: image.id
 
     def _payload(self):
         return {"values": VALUES, "shape": list(SHAPE)}
@@ -109,9 +109,10 @@ class TestPostImage:
         assert mock_repo.save_image.call_args.kwargs["idempotency_key"] == "abc-123"
 
     def test_returns_id_of_existing_image_for_repeated_key(self, client, mock_repo):
-        existing = make_detector_image()
+        # Replay: the repository hands back the id of the image stored first,
+        # not the freshly generated id of the incoming image.
         mock_repo.save_image.side_effect = None
-        mock_repo.save_image.return_value = existing
+        mock_repo.save_image.return_value = FIXED_ID
 
         response = client.post(
             f"{BASE_URL}/image",
@@ -119,6 +120,8 @@ class TestPostImage:
             headers={"Idempotency-Key": "abc-123"},
         )
 
+        saved_image: DetectorImage = mock_repo.save_image.call_args[0][0]
+        assert saved_image.id != FIXED_ID
         assert response.json()["id"] == str(FIXED_ID)
 
     def test_returns_201_on_success(self, client, mock_repo):
