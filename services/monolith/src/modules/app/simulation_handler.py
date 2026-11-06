@@ -101,6 +101,3 @@ class SimulationHandler(SimulationHandlerInterface):
 
             if queued_element.callback_url:
                 logger.info("Callback to invoke found")
-
-    def get_state(self):
-        pass
