@@ -46,6 +46,13 @@ class TestSaveAndLoad:
         assert loaded.name == "sim-1"
         assert loaded.being_processed is False
 
+    def test_save_returns_saved_element(self, service):
+        element = make_element(name="sim-1")
+
+        result = service.save_queued_simulation(element)
+
+        assert result == element
+
     def test_load_missing_returns_none(self, service):
         assert service.load_queued_simulation("does-not-exist") is None
 

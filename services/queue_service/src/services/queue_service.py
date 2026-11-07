@@ -37,8 +37,9 @@ class QueueService(QueueServiceInterface):
 
         return None
 
-    def save_queued_simulation(self, queued_element: QueueElement):
+    def save_queued_simulation(self, queued_element: QueueElement) -> QueueElement:
         self.collection.insert_one(self._to_collection(queued_element))
+        return queued_element
 
     def update_queued_simulation(self, queued_element: QueueElement):
         self.collection.find_one_and_update(
