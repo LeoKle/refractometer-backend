@@ -77,7 +77,7 @@ def get_result(
     return to_response(result)
 
 
-@router.post("/queue", status_code=status.HTTP_201_CREATED)
+@router.post("/queue", status_code=status.HTTP_201_CREATED, response_model=SimulationQueueResponse)
 @inject
 def post_result(
     element_to_queue: SimulationQueueRequest,
@@ -94,9 +94,9 @@ def post_result(
         issued_at=datetime.now(UTC),
     )
 
-    queue_service.save_queued_simulation(queue_element)
+    saved = queue_service.save_queued_simulation(queue_element)
 
-    return {"id": str(queue_element.id)}
+    return to_response(saved)
 
 
 @router.patch("/queue/{queued_element_id}", response_model=SimulationQueueResponse)
