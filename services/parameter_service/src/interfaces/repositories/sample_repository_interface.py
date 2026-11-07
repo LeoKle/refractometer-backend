@@ -13,11 +13,11 @@ class ISampleRepository(ABC):
         pass
 
     @abstractmethod
-    def insert(self, sample: Sample):
+    def insert(self, sample: Sample) -> Sample:
         pass
 
     @abstractmethod
-    def update(self, sample: Sample):
+    def update(self, sample: Sample) -> Sample:
         pass
 
     @abstractmethod

@@ -13,11 +13,11 @@ class ISampleService(ABC):
         pass
 
     @abstractmethod
-    def save_sample(self, sample: Sample):
+    def save_sample(self, sample: Sample) -> Sample:
         pass
 
     @abstractmethod
-    def update_sample(self, sample: Sample):
+    def update_sample(self, sample: Sample) -> Sample:
         pass
 
     @abstractmethod

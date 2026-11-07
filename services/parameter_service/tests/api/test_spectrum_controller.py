@@ -109,14 +109,16 @@ class TestGetSpectrum:
 
 class TestPostSpectrum:
     def test_creates_spectrum_successfully(self, client, mock_service):
+        mock_service.save_spectrum.return_value = SAMPLE_SPECTRUM
         payload = SAMPLE_DTO.model_dump(mode="json")
 
         response = client.post("/spectrum", json=payload)
 
         assert response.status_code == 201
-        assert response.json()["message"] == "Spectrum created successfully"
+        assert response.json() == SAMPLE_DTO.model_dump(mode="json")
 
     def test_calls_save_spectrum(self, client, mock_service):
+        mock_service.save_spectrum.return_value = SAMPLE_SPECTRUM
         payload = SAMPLE_DTO.model_dump(mode="json")
         client.post("/spectrum", json=payload)
         mock_service.save_spectrum.assert_called_once()
@@ -134,7 +136,7 @@ class TestPatchSpectrum:
         response = client.patch("/spectrum", json=payload)
 
         assert response.status_code == 200
-        assert response.json()["id"] == str(SPECTRUM_ID)
+        assert response.json() == SAMPLE_DTO.model_dump(mode="json")
 
     def test_returns_400_when_id_missing(self, client, mock_service):
         payload = {

@@ -13,11 +13,11 @@ class SampleService(ISampleService):
     def load_sample(self, sample_id: str) -> Sample | None:
         return self.repository.find_by_id(sample_id)
 
-    def save_sample(self, sample: Sample):
-        self.repository.insert(sample)
+    def save_sample(self, sample: Sample) -> Sample:
+        return self.repository.insert(sample)
 
-    def update_sample(self, sample: Sample):
-        self.repository.update(sample)
+    def update_sample(self, sample: Sample) -> Sample:
+        return self.repository.update(sample)
 
     def delete_sample(self, sample_id: str):
         self.repository.delete(sample_id)

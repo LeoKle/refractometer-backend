@@ -37,7 +37,7 @@ def get_spectrum(
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Spectrum not found")
 
 
-@router.post("/spectrum", status_code=status.HTTP_201_CREATED)
+@router.post("/spectrum", status_code=status.HTTP_201_CREATED, response_model=SpectrumDTO)
 @inject
 def post_spectrum(
     spectrum_input: SpectrumDTO,
@@ -46,8 +46,8 @@ def post_spectrum(
     ],
 ):
     spectrum = Spectrum(**spectrum_input.model_dump())
-    spectrum_service.save_spectrum(spectrum)
-    return {"message": "Spectrum created successfully"}
+    created = spectrum_service.save_spectrum(spectrum)
+    return SpectrumDTO(**created.model_dump())
 
 
 @router.patch("/spectrum", response_model=SpectrumDTO)

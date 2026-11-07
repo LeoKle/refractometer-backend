@@ -4,7 +4,7 @@ from typing import Annotated
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.models.sample_dto import SampleDTO
+from api.models.sample_dto import SampleDTO, SellmeierCoefficientsDTO
 from containers.container import DependencyContainer
 from interfaces.services.sample_service_interface import ISampleService
 from models.sample import Sample, SellmeierCoefficients
@@ -19,6 +19,17 @@ def _dto_to_domain(sample_input: SampleDTO) -> Sample:
         sellmeier_coefficients=SellmeierCoefficients(
             B=sample_input.sellmeier_coefficients.B,
             C=sample_input.sellmeier_coefficients.C,
+        ),
+    )
+
+
+def _domain_to_dto(sample: Sample) -> SampleDTO:
+    return SampleDTO(
+        id=str(sample.id),
+        name=sample.name,
+        sellmeier_coefficients=SellmeierCoefficientsDTO(
+            B=sample.sellmeier_coefficients.B,
+            C=sample.sellmeier_coefficients.C,
         ),
     )
 
@@ -43,16 +54,17 @@ def get_sample(
     return sample
 
 
-@router.post("/sample", status_code=status.HTTP_200_OK)
+@router.post("/sample", status_code=status.HTTP_200_OK, response_model=SampleDTO)
 @inject
 def post_sample(
     sample_input: SampleDTO,
     sample_service: Annotated[ISampleService, Depends(Provide[DependencyContainer.sample_service])],
 ):
-    sample_service.save_sample(_dto_to_domain(sample_input))
+    created = sample_service.save_sample(_dto_to_domain(sample_input))
+    return _domain_to_dto(created)
 
 
-@router.patch("/sample", status_code=status.HTTP_200_OK)
+@router.patch("/sample", status_code=status.HTTP_200_OK, response_model=SampleDTO)
 @inject
 def patch_sample(
     sample_input: SampleDTO,
@@ -60,7 +72,8 @@ def patch_sample(
 ):
     if not sample_input.id:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Missing id")
-    sample_service.update_sample(_dto_to_domain(sample_input))
+    updated = sample_service.update_sample(_dto_to_domain(sample_input))
+    return _domain_to_dto(updated)
 
 
 @router.delete("/sample/{sample_id}", status_code=status.HTTP_200_OK)

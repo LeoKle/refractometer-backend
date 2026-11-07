@@ -34,14 +34,15 @@ class SampleRepository(ISampleRepository):
             sellmeier_coefficients=sample_data.get("sellmeierCoefficients"),
         )
 
-    def insert(self, sample: Sample):
+    def insert(self, sample: Sample) -> Sample:
         self.collection.insert_one({
             "id": str(sample.id),
             "name": sample.name,
             "sellmeierCoefficients": sample.sellmeier_coefficients.model_dump(),
         })
+        return sample
 
-    def update(self, sample: Sample):
+    def update(self, sample: Sample) -> Sample:
         result = self.collection.update_one(
             {"id": str(sample.id)},
             {
@@ -54,6 +55,7 @@ class SampleRepository(ISampleRepository):
         if result.matched_count == 0:
             msg = f"Sample with id {sample.id} not found"
             raise KeyError(msg)
+        return sample
 
     def delete(self, sample_id: str):
         self.collection.delete_one({"id": sample_id})

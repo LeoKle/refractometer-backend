@@ -319,3 +319,22 @@ def test_delete_is_idempotent_or_raises_on_second_call(repository):
 
     # Repository must still be usable
     assert repo.find_all() == []
+
+
+def test_insert_returns_inserted_sample(repository):
+    sample = make_sample()
+
+    result = repository.insert(sample)
+
+    assert result == sample
+
+
+def test_update_returns_updated_sample(repository):
+    sample = make_sample("BK7")
+    repository.insert(sample)
+    updated = Sample(id=sample.id, name="BK7 updated", sellmeier_coefficients=make_coefficients())
+
+    result = repository.update(updated)
+
+    assert result == updated
+    assert repository.find_by_id(str(sample.id)) == updated

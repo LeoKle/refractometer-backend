@@ -37,12 +37,12 @@ class SpectrumRepository(SpectrumRepositoryInterface):
             return None
         return self._doc_to_domain(doc)
 
-    def insert(self, spectrum: Spectrum):
+    def insert(self, spectrum: Spectrum) -> Spectrum:
         doc = self._domain_to_doc(spectrum)
         self.collection.insert_one(doc)
         return spectrum
 
-    def update(self, spectrum: Spectrum):
+    def update(self, spectrum: Spectrum) -> Spectrum:
         self.collection.update_one(
             {"id": str(spectrum.id)},
             {"$set": self._domain_to_doc(spectrum)},
