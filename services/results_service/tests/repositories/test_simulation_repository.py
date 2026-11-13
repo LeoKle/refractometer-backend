@@ -9,6 +9,8 @@ from repositories.simulation_repository import SimulationResultRepository
 
 RESULT_ID = uuid.UUID("c2789555-1d27-4fa4-a042-699b5f21fcd0")
 
+pytestmark = pytest.mark.pact
+
 
 @pytest.fixture
 def collection():
