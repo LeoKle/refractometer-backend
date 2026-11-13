@@ -8,6 +8,8 @@ import pytest
 from models.queue_element import QueueElement
 from services.queue_service import QueueService
 
+pytestmark = pytest.mark.unit
+
 
 @pytest.fixture
 def collection():
