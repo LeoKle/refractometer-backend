@@ -8,7 +8,7 @@ testExecutionTime:
 diff:
   if: is_pull_request
   datastores:
-    - artifact://${GITHUB_REPOSITORY}-services-resultsservice
+    - artifact://${GITHUB_REPOSITORY}-services-results_service
 body:
   if: is_pull_request
   hideFooterLink: true
