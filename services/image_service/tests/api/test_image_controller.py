@@ -14,6 +14,8 @@ SHAPE = (2, 2)
 VALUES = [[1.0, 2.0], [3.0, 4.0]]
 FIXED_ID = uuid.uuid4()
 
+pytestmark = pytest.mark.unit
+
 
 def make_detector_image(id: uuid.UUID = FIXED_ID) -> DetectorImage:
     return DetectorImage(id=id, values=VALUES, shape=SHAPE)

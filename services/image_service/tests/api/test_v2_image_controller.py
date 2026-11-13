@@ -14,6 +14,8 @@ from models.raw_image import RawImage
 
 CONTROLLER_MODULE = "api.controllers.v2.image_controller"
 
+pytestmark = pytest.mark.unit
+
 
 class FakeImageRepository(ImageRepositoryInterface):
     def __init__(self):

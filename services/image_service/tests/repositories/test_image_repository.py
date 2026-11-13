@@ -14,6 +14,8 @@ enable_gridfs_integration()
 
 IMAGE_SHAPE = (4, 4)
 
+pytestmark = pytest.mark.unit
+
 
 @pytest.fixture
 def db():
