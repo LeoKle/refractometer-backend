@@ -14,4 +14,6 @@ build
 .mypy_cache
 .ipynb_checkpoints
 
-tests/
+.pytest_cache
+.ruff_cache
+tests
