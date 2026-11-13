@@ -1,8 +1,11 @@
 import unittest
 
 import numpy as np
+import pytest
 
 from modules.simulation.calc.numba.linspace import linspace_numba
+
+pytestmark = pytest.mark.unit
 
 
 class TestLinspace(unittest.TestCase):

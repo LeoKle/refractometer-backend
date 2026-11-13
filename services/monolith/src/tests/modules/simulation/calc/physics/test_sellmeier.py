@@ -1,9 +1,12 @@
 import unittest
 
 import numpy as np
+import pytest
 from numba import njit, prange
 
 from modules.simulation.calc.physics.sellmeier import sellmeier_equation
+
+pytestmark = pytest.mark.unit
 
 
 class TestSellmeier(unittest.TestCase):

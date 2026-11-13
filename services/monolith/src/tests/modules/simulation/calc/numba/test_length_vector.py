@@ -1,9 +1,12 @@
 import unittest
 
 import numpy as np
+import pytest
 from numba import njit, prange
 
 from modules.simulation.calc.numba.vector import length_vector
+
+pytestmark = pytest.mark.unit
 
 
 class TestNumbaLengthVector(unittest.TestCase):
