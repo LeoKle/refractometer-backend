@@ -1,6 +1,7 @@
 import unittest
 
 import numpy as np
+import pytest
 
 from modules.simulation.calc.physics.intersection import (
     calculate_intersection_line_plane,
@@ -10,6 +11,8 @@ from modules.simulation.core.detector import (
     calculate_detector_coordinates_3d,
     calculate_detector_image,
 )
+
+pytestmark = pytest.mark.unit
 
 
 class TestDetector(unittest.TestCase):

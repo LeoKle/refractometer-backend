@@ -1,6 +1,7 @@
 import unittest
 
 import numpy as np
+import pytest
 
 from custom_types.detector_calibration import WavelengthCalibration
 from custom_types.detector_parameters import DetectorParameters
@@ -18,6 +19,8 @@ from modules.simulation.simulation import Simulation
 
 ENTRY_ANGLE = 40
 ANGLE_PRISM = 60
+
+pytestmark = pytest.mark.unit
 
 
 class TestSimulation(unittest.TestCase):

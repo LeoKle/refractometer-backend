@@ -2,9 +2,12 @@ import math
 import unittest
 
 import numpy as np
+import pytest
 from numba import njit, prange
 
 from modules.simulation.calc.physics.refraction import refracted_direction_vector
+
+pytestmark = pytest.mark.unit
 
 
 class TestRefraction(unittest.TestCase):

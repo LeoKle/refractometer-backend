@@ -1,6 +1,7 @@
 import unittest
 
 import numpy as np
+import pytest
 
 from custom_types.lightsource_parameters import LightsourceParameters
 from custom_types.plane import Plane
@@ -8,6 +9,8 @@ from custom_types.spectrum import Spectrum
 from custom_types.vector import Vector
 from modules.simulation.constants.units import MILLI_METERS
 from modules.simulation.core.setup_lightrays import setup_lightrays
+
+pytestmark = pytest.mark.unit
 
 
 class TestAllocLightrays(unittest.TestCase):

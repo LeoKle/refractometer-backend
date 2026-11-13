@@ -1,9 +1,12 @@
 import unittest
 
 import numpy as np
+import pytest
 from numba import njit, prange
 
 from modules.simulation.calc.numba.vector_matrix import dot_product_matrix_vector
+
+pytestmark = pytest.mark.unit
 
 
 class TestNumbaDotProductMatrixVector(unittest.TestCase):
