@@ -80,7 +80,7 @@ class SimulationHandler(SimulationHandlerInterface):
                     values=detector_image.values, shape=detector_image.shape
                 )
 
-                image_id = self.image_service.post_image(request)
+                image_id = self.image_service.create_image(request)
             except ImageClientException as err:
                 logger.error(f"{err.with_traceback()}")
                 continue
