@@ -84,7 +84,7 @@ class SimulationHandler(SimulationHandlerInterface):
         try:
             request = CreateImageRequest(values=detector_image.values, shape=detector_image.shape)
 
-            image_id = self.image_service.post_image(
+            image_id = self.image_service.create_image(
                 request, idempotency_key=f"{queued_element.id}:upload_image"
             )
         except ImageClientException:
