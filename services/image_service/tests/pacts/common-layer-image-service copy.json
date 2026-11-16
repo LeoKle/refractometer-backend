@@ -1,6 +1,6 @@
 {
     "consumer": {
-        "name": "refractometer-frontend"
+        "name": "refractometer-common-layer"
     },
     "provider": {
         "name": "image-service"
