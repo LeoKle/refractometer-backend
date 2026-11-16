@@ -70,34 +70,40 @@ class SimulationHandler(SimulationHandlerInterface):
                 time.sleep(5)
                 continue
 
-            # setup planes, simulate, simulate detector
-            self.simulation.set_parameters(queued_element.parameters)
-            self.simulation.simulate()
-            detector_image = self.simulation.get_detector_image()
-
             try:
-                request = CreateImageRequest(
-                    values=detector_image.values, shape=detector_image.shape
-                )
+                self._process_element(queued_element)
+            except Exception:  # noqa: BLE001 - never let an error kill the worker thread
+                logger.exception(f"Failed to process queued element {queued_element.id}")
 
-                image_id = self.image_service.create_image(request)
-            except ImageClientException as err:
-                logger.error(f"{err.with_traceback()}")
-                continue
+    def _process_element(self, queued_element: SimulationQueueElement):
+        # setup planes, simulate, simulate detector
+        self.simulation.set_parameters(queued_element.parameters)
+        self.simulation.simulate()
+        detector_image = self.simulation.get_detector_image()
 
-            # delete element from queue DB, add to result DB
-            self.simulation_result_client.create_result(
-                queued_element.parameters,
-                image_id,
-                queued_element.issued_at,
-                completed_at=datetime.now(UTC),
+        try:
+            request = CreateImageRequest(values=detector_image.values, shape=detector_image.shape)
+
+            image_id = self.image_service.post_image(
+                request, idempotency_key=f"{queued_element.id}:upload_image"
             )
-            deleted = self.queue_client.delete_queued_element(queued_element.id)
+        except ImageClientException:
+            logger.exception(f"Failed to upload image for queued element {queued_element.id}")
+            return
 
-            if deleted:
-                logger.info("Deleted queued element")
-            else:
-                logger.info("Couldn't delete queued element")
+        # delete element from queue DB, add to result DB
+        self.simulation_result_client.create_result(
+            queued_element.parameters,
+            image_id,
+            queued_element.issued_at,
+            completed_at=datetime.now(UTC),
+        )
+        deleted = self.queue_client.delete_queued_element(queued_element.id)
 
-            if queued_element.callback_url:
-                logger.info("Callback to invoke found")
+        if deleted:
+            logger.info("Deleted queued element")
+        else:
+            logger.info("Couldn't delete queued element")
+
+        if queued_element.callback_url:
+            logger.info("Callback to invoke found")
