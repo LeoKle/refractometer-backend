@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, Header, HTTPException, status
 
 from api.controllers.v1.simulation_dtos import (
     CreateSimulationResultRequest,
@@ -56,10 +56,11 @@ def post_result(
         SimulationResultRepositoryInterface,
         Depends(Provide[DependencyContainer.sim_result_repository]),
     ],
+    idempotency_key: Annotated[str | None, Header()] = None,
 ):
     result = SimulationResult(**result_dto.model_dump())
 
-    saved_result = sim_result_repository.save_result(result)
+    saved_result = sim_result_repository.save_result(result, idempotency_key=idempotency_key)
 
     return SimulationResultResponse(**saved_result.model_dump())
 
