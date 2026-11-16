@@ -38,6 +38,9 @@ class FakeImageRepository(ImageRepositoryInterface):
     def get_image(self, id): ...
     def save_image(self, detector_image): ...
 
+    def delete_image(self, image_id):
+        return self.store.pop(image_id, None) is not None
+
 
 @pytest.fixture
 def repo():

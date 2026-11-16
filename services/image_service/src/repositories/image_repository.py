@@ -102,3 +102,11 @@ class ImageRepository(ImageRepositoryInterface):
         data = b"".join(raw.iter_chunks())
         matrix = np.frombuffer(data, dtype=raw.dtype).reshape(raw.shape)
         return DetectorImage(id=id, values=matrix.tolist(), shape=raw.shape)
+
+    def delete_image(self, image_id: uuid.UUID) -> bool:
+        grid_out = self.fs.find_one({"metadata.uuid": str(image_id)})
+        if grid_out is None:
+            return False
+        # removes the files document (incl. its idempotency key) and all chunks
+        self.fs.delete(grid_out._id)
+        return True

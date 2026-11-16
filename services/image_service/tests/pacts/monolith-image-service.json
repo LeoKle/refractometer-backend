@@ -7,13 +7,14 @@
     },
     "interactions": [
         {
-            "description": "a request to create a new image",
+            "description": "a request to create a new image with an idempotency key",
             "providerState": "no special state required",
             "request": {
                 "method": "POST",
                 "path": "/api/image",
                 "headers": {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "idempotency-key": "123e4567-e89b-12d3-a456-426614174999:upload_image"
                 },
                 "body": {
                     "values": [
@@ -44,6 +45,31 @@
                     "$.body.id": {
                         "match": "type"
                     }
+                }
+            }
+        },
+        {
+            "description": "a request to delete an existing image",
+            "providerState": "an image with ID 123e4567-e89b-12d3-a456-426614174000 exists",
+            "request": {
+                "method": "DELETE",
+                "path": "/api/image/123e4567-e89b-12d3-a456-426614174000"
+            },
+            "response": {
+                "status": 204
+            }
+        },
+        {
+            "description": "a request to delete a non-existent image",
+            "providerState": "no image exists with ID 00000000-0000-0000-0000-000000000000",
+            "request": {
+                "method": "DELETE",
+                "path": "/api/image/00000000-0000-0000-0000-000000000000"
+            },
+            "response": {
+                "status": 404,
+                "headers": {
+                    "Content-Type": "application/json"
                 }
             }
         }

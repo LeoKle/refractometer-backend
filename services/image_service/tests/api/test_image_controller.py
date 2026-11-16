@@ -177,3 +177,27 @@ class TestPostImage:
         response = client.post(f"{BASE_URL}/image", json=self._payload())
 
         uuid.UUID(response.json()["id"])  # raises if invalid
+
+
+class TestDeleteImage:
+    def test_returns_204_when_deleted(self, client, mock_repo):
+        mock_repo.delete_image.return_value = True
+        response = client.delete(f"{BASE_URL}/image/{FIXED_ID}")
+        assert response.status_code == 204
+        assert response.content == b""
+
+    def test_calls_repo_with_correct_uuid(self, client, mock_repo):
+        mock_repo.delete_image.return_value = True
+        client.delete(f"{BASE_URL}/image/{FIXED_ID}")
+        mock_repo.delete_image.assert_called_once_with(FIXED_ID)
+
+    def test_returns_404_when_image_not_found(self, client, mock_repo):
+        mock_repo.delete_image.return_value = False
+        response = client.delete(f"{BASE_URL}/image/{FIXED_ID}")
+        assert response.status_code == 404
+        assert str(FIXED_ID) in response.json()["detail"]
+
+    def test_returns_400_for_malformed_uuid(self, client, mock_repo):
+        response = client.delete(f"{BASE_URL}/image/not-a-uuid")
+        assert response.status_code == 400
+        mock_repo.delete_image.assert_not_called()
