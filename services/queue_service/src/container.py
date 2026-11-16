@@ -28,4 +28,5 @@ class DependencyContainer(containers.DeclarativeContainer):
     queue_service = providers.Factory(
         QueueService,
         collection=queue_collection,
+        max_attempts=config.MAX_ATTEMPTS,
     )

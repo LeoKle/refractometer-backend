@@ -10,6 +10,8 @@ class QueueElement(BaseModel):
 
     index: int | None = Field(default=None)
     being_processed: bool = False
+    attempts: int = 0
+    last_error: str | None = None
 
     issuer: str | None = Field(default=None)
     callback_url: str | None = Field(default=None)

@@ -21,3 +21,14 @@ class QueueServiceInterface(ABC):
 
     @abstractmethod
     def claim_next_simulation(self): ...
+
+    @abstractmethod
+    def release_simulation(self, queue_id: str, error: str | None = None) -> bool:
+        """Hand a claimed element back to the queue (saga compensation of the claim).
+
+        Stores the error that caused the release. Returns False if the element does
+        not exist. Releasing twice has the same effect as releasing once.
+        """
+
+    @abstractmethod
+    def complete_simulation(sel, queue_id: str) -> None: ...

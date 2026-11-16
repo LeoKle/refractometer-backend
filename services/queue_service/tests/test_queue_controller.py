@@ -96,3 +96,50 @@ class TestPatchQueue:
         response = client.patch(f"/api/queue/{uuid.uuid4()}", json=CREATE_PAYLOAD)
 
         assert response.status_code == 404
+
+
+class TestReleaseElement:
+    def test_release_returns_204(self, client, service):
+        element_id = client.post("/api/queue", json=CREATE_PAYLOAD).json()["id"]
+        client.get("/api/queue/claim")
+
+        response = client.post(f"/api/queue/{element_id}/release", json={"error": "boom"})
+
+        assert response.status_code == 204
+        assert response.content == b""
+
+    def test_released_element_shows_attempts_and_error(self, client):
+        element_id = client.post("/api/queue", json=CREATE_PAYLOAD).json()["id"]
+        client.get("/api/queue/claim")
+        client.post(f"/api/queue/{element_id}/release", json={"error": "boom"})
+
+        body = client.get(f"/api/queue/{element_id}").json()
+
+        assert body["being_processed"] is False
+        assert body["attempts"] == 1
+        assert body["last_error"] == "boom"
+
+    def test_released_element_can_be_claimed_again(self, client):
+        element_id = client.post("/api/queue", json=CREATE_PAYLOAD).json()["id"]
+        client.get("/api/queue/claim")
+        client.post(f"/api/queue/{element_id}/release", json={})
+
+        response = client.get("/api/queue/claim")
+
+        assert response.status_code == 200
+        assert response.json()["id"] == element_id
+        assert response.json()["attempts"] == 2
+
+    def test_release_without_body_error_is_allowed(self, client):
+        element_id = client.post("/api/queue", json=CREATE_PAYLOAD).json()["id"]
+        response = client.post(f"/api/queue/{element_id}/release", json={})
+        assert response.status_code == 204
+
+    def test_release_unknown_returns_404(self, client):
+        response = client.post(f"/api/queue/{uuid.uuid4()}/release", json={"error": "boom"})
+        assert response.status_code == 404
+
+    def test_new_element_reports_zero_attempts(self, client):
+        body = client.post("/api/queue", json=CREATE_PAYLOAD).json()
+        assert body["attempts"] == 0
+        assert body["last_error"] is None
