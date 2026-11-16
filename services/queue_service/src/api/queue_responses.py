@@ -8,6 +8,8 @@ class SimulationQueueResponse(BaseModel):
 
     index: int | None = Field(default=None)
     being_processed: bool | None = Field(default=None)
+    attempts: int = 0
+    last_error: str | None = Field(default=None)
 
     issuer: str | None = Field(default=None)
     callback_url: str | None = Field(default=None)

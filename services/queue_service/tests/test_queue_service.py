@@ -204,3 +204,124 @@ class TestClaimNextSimulation:
 
         # The 5 extra callers (25 - 20) should have gotten None.
         assert results.count(None) == 5
+
+
+class TestAttempts:
+    def test_new_element_has_no_attempts(self, service):
+        element = make_element()
+        service.save_queued_simulation(element)
+        loaded = service.load_queued_simulation(str(element.id))
+        assert loaded.attempts == 0
+        assert loaded.last_error is None
+
+    def test_claim_increments_attempts(self, service):
+        service.save_queued_simulation(make_element())
+        assert service.claim_next_simulation().attempts == 1
+
+    def test_element_at_max_attempts_is_not_claimed(self, collection):
+        service = QueueService(collection, max_attempts=2)
+        element = make_element()
+        service.save_queued_simulation(element)
+
+        for _ in range(2):
+            service.claim_next_simulation()
+            service.release_simulation(str(element.id), "boom")
+
+        assert service.claim_next_simulation() is None
+        stored = service.load_queued_simulation(str(element.id))
+        assert stored.attempts == 2
+        assert stored.being_processed is False
+        assert stored.last_error == "boom"
+
+    def test_exhausted_element_does_not_block_others(self, collection):
+        service = QueueService(collection, max_attempts=1)
+        poison = make_element(name="poison")
+        healthy = make_element(name="healthy")
+        service.save_queued_simulation(poison)
+        service.save_queued_simulation(healthy)
+
+        service.claim_next_simulation()
+        service.release_simulation(str(poison.id), "boom")
+
+        assert service.claim_next_simulation().name == "healthy"
+
+    def test_legacy_document_without_attempts_is_claimable(self, service, collection):
+        legacy_id = str(uuid.uuid4())
+        collection.insert_one({
+            "id": legacy_id,
+            "issued_at": datetime(2024, 1, 1, tzinfo=UTC),
+            "parameters": {},
+            "issuer": None,
+            "being_processed": False,
+            "callback_url": None,
+        })
+
+        claimed = service.claim_next_simulation()
+
+        assert str(claimed.id) == legacy_id
+        assert claimed.attempts == 1
+
+    def test_update_does_not_overwrite_attempts_or_error(self, service):
+        element = make_element()
+        service.save_queued_simulation(element)
+        stale = service.load_queued_simulation(str(element.id))
+
+        service.claim_next_simulation()
+        service.release_simulation(str(element.id), "boom")
+        stale.name = "renamed"
+        service.update_queued_simulation(stale)
+
+        stored = service.load_queued_simulation(str(element.id))
+        assert stored.name == "renamed"
+        assert stored.attempts == 1
+        assert stored.last_error == "boom"
+
+
+class TestReleaseSimulation:
+    def test_release_makes_element_claimable_again(self, service):
+        element = make_element()
+        service.save_queued_simulation(element)
+        service.claim_next_simulation()
+
+        assert service.release_simulation(str(element.id), "image service down") is True
+
+        reclaimed = service.claim_next_simulation()
+        assert reclaimed.id == element.id
+        assert reclaimed.attempts == 2
+
+    def test_release_stores_error(self, service):
+        element = make_element()
+        service.save_queued_simulation(element)
+        service.claim_next_simulation()
+
+        service.release_simulation(str(element.id), "image service down")
+
+        stored = service.load_queued_simulation(str(element.id))
+        assert stored.being_processed is False
+        assert stored.last_error == "image service down"
+
+    def test_release_without_error_clears_it(self, service):
+        element = make_element()
+        service.save_queued_simulation(element)
+        service.claim_next_simulation()
+        service.release_simulation(str(element.id), "first")
+        service.claim_next_simulation()
+
+        service.release_simulation(str(element.id))
+
+        assert service.load_queued_simulation(str(element.id)).last_error is None
+
+    def test_release_is_idempotent(self, service):
+        element = make_element()
+        service.save_queued_simulation(element)
+        service.claim_next_simulation()
+
+        service.release_simulation(str(element.id), "boom")
+        assert service.release_simulation(str(element.id), "boom") is True
+
+        stored = service.load_queued_simulation(str(element.id))
+        assert stored.being_processed is False
+        assert stored.attempts == 1
+
+    def test_release_unknown_returns_false(self, service):
+        assert service.release_simulation(str(uuid.uuid4()), "boom") is False

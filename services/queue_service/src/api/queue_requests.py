@@ -7,3 +7,7 @@ class SimulationQueueRequest(BaseModel):
     issuer: str | None = Field(default=None)
     callback_url: str | None = Field(default=None)
     name: str | None = Field(default=None)
+
+
+class ReleaseRequest(BaseModel):
+    error: str | None = Field(default=None)

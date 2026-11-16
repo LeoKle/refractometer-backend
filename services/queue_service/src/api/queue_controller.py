@@ -4,7 +4,7 @@ from typing import Annotated
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.queue_requests import SimulationQueueRequest
+from api.queue_requests import ReleaseRequest, SimulationQueueRequest
 from api.queue_responses import SimulationQueueResponse
 from container import DependencyContainer
 from interfaces.queue_service_interface import QueueServiceInterface
@@ -18,6 +18,8 @@ def to_response(element: QueueElement) -> SimulationQueueResponse:
         parameters=element.parameters,
         index=element.index,
         being_processed=element.being_processed,
+        attempts=element.attempts,
+        last_error=element.last_error,
         issuer=element.issuer,
         callback_url=element.callback_url,
         id=str(element.id),
@@ -145,3 +147,20 @@ def delete_result(
         )
 
     queue_service.delete_queued_simulation(queued_element_id)
+
+
+@router.post("/queue/{queued_element_id}/release", status_code=status.HTTP_204_NO_CONTENT)
+@inject
+def release_element(
+    queued_element_id: str,
+    release: ReleaseRequest,
+    queue_service: Annotated[
+        QueueServiceInterface,
+        Depends(Provide[DependencyContainer.queue_service]),
+    ],
+):
+    if not queue_service.release_simulation(queued_element_id, release.error):
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Queue element '{queued_element_id}' not found",
+        )
