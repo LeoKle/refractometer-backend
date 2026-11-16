@@ -59,3 +59,26 @@ def post_image(
     )
 
     return DetectorPostResult(id=str(image_id))
+
+
+@router.delete("/image/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
+@inject
+def delete_image(
+    image_id: str,
+    image_repo: Annotated[
+        ImageRepositoryInterface, Depends(Provide[DependencyContainer.image_repo])
+    ],
+) -> None:
+    try:
+        image_uuid = uuid.UUID(image_id)
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid UUID: {image_id}"
+        ) from None
+
+    if not image_repo.delete_image(image_uuid):
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Image {image_id} not found"
+        )
+
+    logger.info("Deleted image {image_id}", image_id=image_id)

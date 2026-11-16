@@ -318,3 +318,47 @@ class TestIdempotency:
     def test_index_creation_is_repeatable(self, db):
         ImageRepository(db)
         ImageRepository(db)  # must not raise
+
+
+class TestDeleteImage:
+    def test_returns_true_for_existing_image(self, repo, image):
+        repo.save_image(image)
+        assert repo.delete_image(image.id) is True
+
+    def test_image_is_gone_after_delete(self, repo, image):
+        repo.save_image(image)
+        repo.delete_image(image.id)
+        with pytest.raises(FileNotFoundError):
+            repo.open_raw(image.id)
+
+    def test_removes_files_and_chunks(self, repo, db, image):
+        repo.save_image(image)
+        repo.delete_image(image.id)
+        assert db["fs.files"].count_documents({}) == 0
+        assert db["fs.chunks"].count_documents({}) == 0
+
+    def test_returns_false_for_unknown_id(self, repo):
+        assert repo.delete_image(uuid.uuid4()) is False
+
+    def test_repeated_delete_returns_false(self, repo, image):
+        repo.save_image(image)
+        repo.delete_image(image.id)
+        assert repo.delete_image(image.id) is False
+
+    def test_does_not_touch_other_images(self, repo, image):
+        other = DetectorImage(values=image.values, shape=IMAGE_SHAPE)
+        repo.save_image(image)
+        repo.save_image(other)
+        repo.delete_image(image.id)
+        assert repo.get_image(other.id).id == other.id
+
+    def test_frees_idempotency_key_for_new_image(self, repo, image):
+        # backward recovery: after compensation a retry must create a new image
+        first = repo.save_image(image, idempotency_key="sim-1:upload_image")
+        repo.delete_image(first)
+
+        retry = DetectorImage(values=image.values, shape=IMAGE_SHAPE)
+        second = repo.save_image(retry, idempotency_key="sim-1:upload_image")
+
+        assert second == retry.id
+        assert second != first

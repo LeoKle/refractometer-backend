@@ -34,3 +34,11 @@ class ImageRepositoryInterface(ABC):
         self, detector_image: DetectorImage, idempotency_key: str | None = None
     ) -> uuid.UUID:
         """Same idempotency semantics as save_raw."""
+
+    @abstractmethod
+    def delete_image(self, image_id: uuid.UUID) -> bool:
+        """Delete an image and its idempotency key.
+
+        Returns False if no image with this id exists, so callers can treat a
+        repeated delete as already done.
+        """
