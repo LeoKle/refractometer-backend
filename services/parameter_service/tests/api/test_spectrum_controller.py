@@ -5,7 +5,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from api.models.spectrum_dto import SpectrumDTO
+from api.models.spectrum_dto import CreateSpectrumDTO, SpectrumDTO
 from interfaces.services.spectrum_service_interface import SpectrumServiceInterface
 from models.spectrum import Spectrum
 
@@ -110,7 +110,7 @@ class TestGetSpectrum:
 class TestPostSpectrum:
     def test_creates_spectrum_successfully(self, client, mock_service):
         mock_service.save_spectrum.return_value = SAMPLE_SPECTRUM
-        payload = SAMPLE_DTO.model_dump(mode="json")
+        payload = CreateSpectrumDTO(**SAMPLE_DTO.model_dump()).model_dump(mode="json")
 
         response = client.post("/spectrum", json=payload)
 
@@ -119,7 +119,7 @@ class TestPostSpectrum:
 
     def test_calls_save_spectrum(self, client, mock_service):
         mock_service.save_spectrum.return_value = SAMPLE_SPECTRUM
-        payload = SAMPLE_DTO.model_dump(mode="json")
+        payload = CreateSpectrumDTO(**SAMPLE_DTO.model_dump()).model_dump(mode="json")
         client.post("/spectrum", json=payload)
         mock_service.save_spectrum.assert_called_once()
 

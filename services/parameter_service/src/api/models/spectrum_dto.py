@@ -8,3 +8,9 @@ class SpectrumDTO(BaseModel):
     id: uuid.UUID | None = Field(default=None)
     wavelengths: list[float]
     intensities: list[float]
+
+
+class CreateSpectrumDTO(BaseModel):
+    name: str
+    wavelengths: list[float]
+    intensities: list[float]

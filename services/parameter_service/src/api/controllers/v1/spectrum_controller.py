@@ -4,7 +4,7 @@ from typing import Annotated
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.models.spectrum_dto import SpectrumDTO
+from api.models.spectrum_dto import CreateSpectrumDTO, SpectrumDTO
 from containers.container import DependencyContainer
 from interfaces.services.spectrum_service_interface import SpectrumServiceInterface
 from models.spectrum import Spectrum
@@ -40,7 +40,7 @@ def get_spectrum(
 @router.post("/spectrum", status_code=status.HTTP_201_CREATED, response_model=SpectrumDTO)
 @inject
 def post_spectrum(
-    spectrum_input: SpectrumDTO,
+    spectrum_input: CreateSpectrumDTO,
     spectrum_service: Annotated[
         SpectrumServiceInterface, Depends(Provide[DependencyContainer.spectrum_service])
     ],
