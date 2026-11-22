@@ -6,6 +6,8 @@ from pathlib import Path
 import pytest
 from pact import Verifier
 
+# Copies of the consumer contracts. The common layer contract is generated in
+# refractometer-api-gateway (tests/contract/pacts) and copied here when it changes.
 PACT_DIR = Path(__file__).parent / "pacts"
 PROVIDER_URL = "http://localhost:8001"
 
@@ -38,16 +40,14 @@ def provider_server():
 
 
 def test_provider_against_pacts(provider_server):
+    # The verifier passes silently without sources, so fail loudly instead.
+    assert any(PACT_DIR.glob("*.json")), f"No pact files in {PACT_DIR}"
+
     verifier = (
         Verifier("parameter-service")
         .add_source(PACT_DIR)
         .add_transport(url=PROVIDER_URL)
-        .state_handler(f"{PROVIDER_URL}/_pact/provider_states", body=True)
+        .state_handler(f"{PROVIDER_URL}/_pact/provider_states", teardown=True, body=True)
     )
-
-    # files = []
-    # for file in PACT_DIR.iterdir():
-    #     files.append(file)
-    # raise ValueError(str(files))
 
     verifier.verify()
