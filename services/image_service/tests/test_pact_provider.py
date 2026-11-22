@@ -38,11 +38,14 @@ def provider_server():
 
 
 def test_provider_against_pacts(provider_server):
+    # The verifier passes silently without sources, so fail loudly instead.
+    assert any(PACT_DIR.glob("*.json")), f"No pact files in {PACT_DIR}"
+
     verifier = (
         Verifier("image-service")
         .add_source(PACT_DIR)
         .add_transport(url=PROVIDER_URL)
-        .state_handler(f"{PROVIDER_URL}/_pact/provider_states", body=True)
+        .state_handler(f"{PROVIDER_URL}/_pact/provider_states", teardown=True, body=True)
     )
 
     verifier.verify()
