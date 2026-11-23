@@ -26,6 +26,9 @@ class Settings(BaseSettings):
     QUEUE_SERVICE_URL: str = "http://localhost:8003"
     SIM_RESULT_SERVICE_URL: str = "http://localhost:8004"
 
+    SAGA_RETRIES: int = 3
+    SAGA_BACKOFF_SECONDS: float = 1.0
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",
