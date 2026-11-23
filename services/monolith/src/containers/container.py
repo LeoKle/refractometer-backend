@@ -40,4 +40,6 @@ class DependencyContainer(containers.DeclarativeContainer):
         queue_client=queue_client,
         image_service=image_client,
         simulation_result_client=sim_result_client,
+        retries=config.SAGA_RETRIES,
+        backoff_seconds=config.SAGA_BACKOFF_SECONDS,
     )
